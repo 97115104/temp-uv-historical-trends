@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "attestation": {
+    "version": "3.0",
+    "id": "2026-07-07-3bf437",
+    "content_name": "uv-temperature-knowledge-graph.json",
+    "model": "Auto",
+    "role": "collaborated",
+    "authorship_type": "collab",
+    "timestamp": "2026-07-07T22:58:20.799Z",
+    "author": "97115104",
+    "document_type": "json",
+    "platform": "Cursor",
+    "content_hash": "sha256:a9ab433b0678f87c43bfcf9a2fca3cdd2d6bbbe91e2bfb3a676187f48ff3f69b",
+    "signature": {
+      "type": "hmac-sha256",
+      "algorithm": "HMAC-SHA256",
+      "value": "94c7c046af1b0166b78a5c19cfb93ee56c61b0158dd85aa2286bee6fa297d30f",
+      "data_to_sign": "{\"content_hash\":\"sha256:a9ab433b0678f87c43bfcf9a2fca3cdd2d6bbbe91e2bfb3a676187f48ff3f69b\",\"model\":\"Auto\",\"timestamp\":\"2026-07-07T22:58:20.799Z\",\"authorship_type\":\"collab\",\"role\":\"collaborated\"}"
+    },
+    "signer": {
+      "name": "97115104",
+      "id": "97115104"
+    }
+  },
+  "urls": {
+    "verify": "https://attest.97115104.com/verify/?data=eyJ2ZXJzaW9uIjoiMy4wIiwiaWQiOiIyMDI2LTA3LTA3LTNiZjQzNyIsImNvbnRlbnRfbmFtZSI6InV2LXRlbXBlcmF0dXJlLWtub3dsZWRnZS1ncmFwaC5qc29uIiwibW9kZWwiOiJBdXRvIiwicm9sZSI6ImNvbGxhYm9yYXRlZCIsImF1dGhvcnNoaXBfdHlwZSI6ImNvbGxhYiIsInRpbWVzdGFtcCI6IjIwMjYtMDctMDdUMjI6NTg6MjAuNzk5WiIsImF1dGhvciI6Ijk3MTE1MTA0IiwiZG9jdW1lbnRfdHlwZSI6Impzb24iLCJwbGF0Zm9ybSI6IkN1cnNvciIsImNvbnRlbnRfaGFzaCI6InNoYTI1NjphOWFiNDMzYjA2NzhmODdjNDNiZmNmOWEyZmNhM2NkZDJkNmJiYmU5MWUyYmZiM2E2NzYxODdmNDhmZjNmNjliIiwic2lnbmF0dXJlIjp7InR5cGUiOiJobWFjLXNoYTI1NiIsImFsZ29yaXRobSI6IkhNQUMtU0hBMjU2IiwidmFsdWUiOiI5NGM3YzA0NmFmMWIwMTY2Yjc4YTVjMTljZmI5M2VlNTZjNjFiMDE1OGRkODVhYTIyODZiZWU2ZmEyOTdkMzBmIiwiZGF0YV90b19zaWduIjoie1wiY29udGVudF9oYXNoXCI6XCJzaGEyNTY6YTlhYjQzM2IwNjc4Zjg3YzQzYmZjZjlhMmZjYTNjZGQyZDZiYmJlOTFlMmJmYjNhNjc2MTg3ZjQ4ZmYzZjY5YlwiLFwibW9kZWxcIjpcIkF1dG9cIixcInRpbWVzdGFtcFwiOlwiMjAyNi0wNy0wN1QyMjo1ODoyMC43OTlaXCIsXCJhdXRob3JzaGlwX3R5cGVcIjpcImNvbGxhYlwiLFwicm9sZVwiOlwiY29sbGFib3JhdGVkXCJ9In0sInNpZ25lciI6eyJuYW1lIjoiOTcxMTUxMDQiLCJpZCI6Ijk3MTE1MTA0In19",
+    "short": "https://attest.97115104.com/s/nhy04go8"
+  }
+}

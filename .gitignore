@@ -1,0 +1,16 @@
+# Deprecated / local data caches (not used by NASA POWER pipeline)
+data/cache/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store

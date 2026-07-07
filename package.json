@@ -1,0 +1,12 @@
+{
+  "name": "covina-uv-historical-trends",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "attest": "node scripts/attest.mjs"
+  },
+  "devDependencies": {
+    "attest-client": "^3.0.0"
+  }
+}

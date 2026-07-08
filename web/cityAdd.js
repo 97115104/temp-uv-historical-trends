@@ -189,22 +189,6 @@ function pickClosestGeocodeResult(results, lat, lon, countryCode = "") {
 }
 
 async function reverseGeocode(lat, lon) {
-  // #region agent log
-  fetch("http://127.0.0.1:7287/ingest/755ead2c-e358-4614-ab66-2eb5a9e774d8", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "530b69" },
-    body: JSON.stringify({
-      sessionId: "530b69",
-      runId: "post-fix",
-      hypothesisId: "A",
-      location: "cityAdd.js:reverseGeocode:start",
-      message: "reverse geocode start",
-      data: { lat, lon, provider: "nominatim+open-meteo-search" },
-      timestamp: Date.now(),
-    }),
-  }).catch(() => {});
-  // #endregion
-
   const nomUrl = new URL(NOMINATIM_REVERSE);
   nomUrl.searchParams.set("lat", String(lat));
   nomUrl.searchParams.set("lon", String(lon));
@@ -214,21 +198,6 @@ async function reverseGeocode(lat, lon) {
   nomUrl.searchParams.set("zoom", "10");
 
   const nomRes = await fetch(nomUrl);
-  // #region agent log
-  fetch("http://127.0.0.1:7287/ingest/755ead2c-e358-4614-ab66-2eb5a9e774d8", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "530b69" },
-    body: JSON.stringify({
-      sessionId: "530b69",
-      runId: "post-fix",
-      hypothesisId: "A",
-      location: "cityAdd.js:reverseGeocode:nominatim",
-      message: "nominatim reverse response",
-      data: { ok: nomRes.ok, status: nomRes.status },
-      timestamp: Date.now(),
-    }),
-  }).catch(() => {});
-  // #endregion
   if (!nomRes.ok) throw new Error("Could not look up your location.");
 
   const nomData = await nomRes.json();
@@ -241,23 +210,7 @@ async function reverseGeocode(lat, lon) {
   );
   if (!results.length) throw new Error("No city found near your location.");
 
-  const best = pickClosestGeocodeResult(results, lat, lon, countryCode);
-  // #region agent log
-  fetch("http://127.0.0.1:7287/ingest/755ead2c-e358-4614-ab66-2eb5a9e774d8", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "530b69" },
-    body: JSON.stringify({
-      sessionId: "530b69",
-      runId: "post-fix",
-      hypothesisId: "A",
-      location: "cityAdd.js:reverseGeocode:success",
-      message: "reverse geocode resolved",
-      data: { placeName, resolvedName: best.name, countryCode: best.country_code },
-      timestamp: Date.now(),
-    }),
-  }).catch(() => {});
-  // #endregion
-  return best;
+  return pickClosestGeocodeResult(results, lat, lon, countryCode);
 }
 
 function normalizeGeoResult(result) {
@@ -280,6 +233,35 @@ export async function resolveCityByName(query) {
 /** Resolve the user's coordinates to a normalized city meta. */
 export async function resolveCityByCoords(lat, lon) {
   return normalizeGeoResult(await reverseGeocode(lat, lon));
+}
+
+/** Resolve a city slug from share links (e.g. bend-oregon) to normalized city meta. */
+export async function resolveCityBySlug(slug) {
+  const parts = slug.split("-").filter(Boolean);
+  if (parts.length < 2) {
+    const meta = await resolveCityByName(parts.join(" "));
+    return meta?.id === slug ? meta : null;
+  }
+
+  const regionSlug = parts[parts.length - 1];
+  const nameQuery = parts.slice(0, -1).join(" ");
+  const results = await searchCities(nameQuery);
+  if (!results.length) return null;
+
+  const regionMatches = (result) => {
+    const adminSlug = slugify(result.admin1?.split(" ").pop() || "");
+    const fullAdminSlug = slugify(result.admin1 || "");
+    const countrySlug = slugify(result.country_code || "");
+    return adminSlug === regionSlug || fullAdminSlug === regionSlug || countrySlug === regionSlug;
+  };
+
+  const exactId = results.find((result) => makeCityId(result) === slug);
+  if (exactId) return normalizeGeoResult(exactId);
+
+  const byRegion = results.find(regionMatches);
+  if (byRegion) return normalizeGeoResult(byRegion);
+
+  return null;
 }
 
 async function searchCities(query) {

@@ -3,11 +3,11 @@ import {
   initCityAdd,
   mergeCustomCities,
   removeCity,
-  getVisibleCities,
   ensureCityDataLoaded,
   setBuiltInCityIds,
   resolveCityByName,
   resolveCityByCoords,
+  resolveCityBySlug,
   addCityByMeta,
   resolveUvDisplayTrend,
 } from "./cityAdd.js";
@@ -161,7 +161,7 @@ async function loadData() {
   state.periodMax = period.end || period.latest_nasa || "2025-12";
   state.periodStart = period.default_start || period.start || state.periodMin;
 
-  applyUrlParams();
+  const urlCityState = applyUrlParams();
   if (!window.location.search.includes("start=")) {
     state.periodStart = period.default_start || period.start || state.periodMin;
   } else if (state.periodStart < state.periodMin) {
@@ -178,8 +178,23 @@ async function loadData() {
 
   initUI();
   renderHeader();
-  await loadSelectedCityData();
+  if (urlCityState.unknownCityIds.length) {
+    setLoading("Loading cities from link…");
+    await resolveUrlCitySlugs(urlCityState.unknownCityIds);
+  }
+  if (state.selected.size === 0 && urlCityState.hadCitiesParam) {
+    showToast("Could not load the city from this link — try searching by name.");
+  } else if (state.selected.size === 0 && !urlCityState.hadCitiesParam) {
+    setLoading("Finding your location…");
+    await loadLocation({ prompt: false });
+  }
+  if (state.selected.size > 0) {
+    await loadSelectedCityData();
+    revealCharts();
+    syncControlsToState();
+  }
   renderAll();
+  setLoading(null);
 }
 
 async function loadSelectedCityData() {
@@ -232,6 +247,7 @@ function applyUrlParams() {
   const month = params.get("month");
   const start = params.get("start");
   const end = params.get("end");
+  const unknownCityIds = [];
 
   if (cities) {
     state.selected.clear();
@@ -241,9 +257,10 @@ function applyUrlParams() {
     ]);
     cities.split(",").slice(0, MAX_CITIES).forEach((id) => {
       const trimmed = id.trim();
+      if (!trimmed) return;
       if (validIds.has(trimmed)) state.selected.add(trimmed);
+      else unknownCityIds.push(trimmed);
     });
-    if (state.selected.size === 0) state.selected.add(state.graph.metadata.default_city);
   }
   if (metric && (metric === "uv" || metric === "temperature")) state.metric = metric;
   if (view && CHART_VIEWS.has(view)) state.chartView = view;
@@ -255,6 +272,19 @@ function applyUrlParams() {
   }
   if (end && /^\d{4}-\d{2}$/.test(end)) {
     state.periodEnd = end > state.periodMax ? state.periodMax : end;
+  }
+
+  return { unknownCityIds, hadCitiesParam: Boolean(cities) };
+}
+
+async function resolveUrlCitySlugs(slugs) {
+  for (const slug of slugs) {
+    try {
+      const meta = await resolveCityBySlug(slug);
+      if (meta) await addCityByMeta(state, meta, { select: true });
+    } catch (err) {
+      console.warn(`Could not resolve city from URL slug: ${slug}`, err);
+    }
   }
 }
 
@@ -485,12 +515,19 @@ async function onCityRemove(cityId, event) {
   renderAll();
 }
 
+function renderEmptyPrompt() {
+  const understood = document.getElementById("ask-understood");
+  if (!understood || state.selected.size > 0) return;
+  understood.textContent = "Search for a city, use your location, or try an example below.";
+}
+
 function renderCityList() {
   const container = document.getElementById("city-list");
   if (!container) return;
   container.innerHTML = "";
 
-  for (const city of getVisibleCities(state)) {
+  const cities = state.citiesConfig.cities.filter((city) => state.selected.has(city.id));
+  for (const city of cities) {
     const selected = state.selected.has(city.id);
     const loading = state.loadingCities.has(city.id);
     const color = selected ? getCityColor(city.id) : "transparent";
@@ -736,10 +773,15 @@ function renderAll() {
   updateSelectionVisibility();
   if (state.selected.size === 0) {
     renderCityList();
+    renderEmptyPrompt();
+    if (window.location.search) {
+      history.replaceState(null, "", window.location.pathname);
+    }
     return;
   }
   updateUrl();
   renderHeader();
+  renderCityList();
   updateViewVisibility();
   syncDateInputs();
   updateDateRangeHint();
@@ -1568,7 +1610,7 @@ function renderComparisonTable() {
 function renderAttestation() {
   const el = document.getElementById("attestation-line");
   if (state.attestationUrl) {
-    el.innerHTML = `Attestation: <a href="${state.attestationUrl}" target="_blank" rel="noopener">Verify data provenance (Cursor + Auto)</a>`;
+    el.innerHTML = `Attestation: <a href="${state.attestationUrl}" target="_blank" rel="noopener">(Cursor + Auto)</a>`;
   }
 }
 

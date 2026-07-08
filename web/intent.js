@@ -42,6 +42,13 @@ function detectMetric(q) {
   return null;
 }
 
+function detectExplainDivergence(q) {
+  const asksWhy = /\bwhy\b|\bhow come\b|\breason\b|\bexplain\b/.test(q);
+  const bothMetrics = /temp|warm|hot|heat|cool|degrees?/.test(q) && /\buv\b|ultra[-\s]?violet|sunburn|sunlight/.test(q);
+  const opposite = /opposite|diverg|decreas|lower|drop|fall/.test(q) && /increas|warm|higher|rise/.test(q);
+  return (asksWhy && bothMetrics) || (bothMetrics && opposite);
+}
+
 function detectView(q) {
   if (/year[-\s]?over[-\s]?year|\byoy\b|percent|year of year|% ?change/.test(q)) return "yoy-pct";
   if (/same month|month across years|each (january|february|march|april|may|june|july|august|september|october|november|december)/.test(q)) {
@@ -138,6 +145,7 @@ export function parseQuery(rawQuery, options = {}) {
     cityQueries: detectCities(query),
     periodStart: dates.periodStart,
     periodEnd: dates.periodEnd,
+    explainDivergence: detectExplainDivergence(q),
   };
 }
 

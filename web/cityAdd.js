@@ -414,11 +414,11 @@ function linearSlopePerYear(annual) {
   return num / den;
 }
 
-function computeTrend(records, metric) {
+function computeTrend(records, metric, { allSources = false } = {}) {
   if (!records.length) return null;
   let source = null;
   let confident = true;
-  if (metric === "uv") {
+  if (metric === "uv" && !allSources) {
     let bestSpan = -1;
     const sources = [...new Set(records.map((r) => r.source).filter(Boolean))];
     for (const src of sources) {
@@ -431,7 +431,7 @@ function computeTrend(records, metric) {
     }
     confident = bestSpan >= 10;
   }
-  const annual = annualMeans(records, source);
+  const annual = annualMeans(records, allSources ? null : source);
   if (annual.length < 3) return null;
   const slope = linearSlopePerYear(annual);
   if (slope == null) return null;
@@ -451,9 +451,39 @@ function computeTrend(records, metric) {
     recent_period: `${annual[annual.length - window].year}-${annual[annual.length - 1].year}`,
     unit: metric === "temperature" ? "degC" : "uv",
     source_window: `${annual[0].year}-${annual[annual.length - 1].year}`,
-    source,
-    confident: confident && spanYears >= 10,
+    source: allSources ? null : source,
+    confident: allSources ? false : (confident && spanYears >= 10),
+    indicative: allSources,
   };
+}
+
+export function computeIndicativeUvTrend(records) {
+  return computeTrend(records, "uv", { allSources: true });
+}
+
+function trendSpanYears(trend) {
+  const match = trend?.source_window?.match(/^(\d{4})-(\d{4})$/);
+  if (!match) return 0;
+  return Number(match[2]) - Number(match[1]);
+}
+
+/** Best UV trend to show: confident single-source, else long indicative, else short record. */
+export function resolveUvDisplayTrend(records, summary = {}) {
+  if (!records?.length) return null;
+  const single = summary.trend || computeTrend(records, "uv");
+  const indicative = summary.indicative_trend || computeTrend(records, "uv", { allSources: true });
+
+  if (single?.confident !== false) return single;
+  if (indicative && trendSpanYears(indicative) >= 10) {
+    return { ...indicative, _display: "indicative" };
+  }
+  if (single && trendSpanYears(single) >= 3) {
+    return { ...single, _display: "short" };
+  }
+  if (indicative && trendSpanYears(indicative) >= 3) {
+    return { ...indicative, _display: "short" };
+  }
+  return indicative || single;
 }
 
 function computeSummary(records, metric) {
@@ -486,6 +516,11 @@ function computeSummary(records, metric) {
     ),
     trend: computeTrend(records, metric),
   };
+
+  if (metric === "uv" && summary.trend?.confident === false) {
+    const indicative = computeTrend(records, metric, { allSources: true });
+    if (indicative) summary.indicative_trend = indicative;
+  }
 
   if (metric === "uv") {
     const yoy = records.map((r) => r.yoy_pct).filter((v) => v != null);

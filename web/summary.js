@@ -58,10 +58,74 @@ function tempVerb(trend, unit) {
   return "held about steady";
 }
 
-function uvVerb(trend) {
-  if (!trend || trend.confident === false) return "is hard to gauge from the consistent record";
-  if (trend.total >= 0.3) return "has trended higher";
-  if (trend.total <= -0.3) return "has trended lower";
+function trendSpanYears(trend) {
+  const match = trend?.source_window?.match(/^(\d{4})-(\d{4})$/);
+  if (!match) return 0;
+  return Number(match[2]) - Number(match[1]);
+}
+
+function uvDisplayTrend(city, ctx) {
+  const records = ctx.getSeries?.(city.id, "uv") || city.graph?.series?.uv || [];
+  const summary = city.graph?.summary?.uv || {};
+  if (ctx.resolveUvDisplayTrend) return ctx.resolveUvDisplayTrend(records, summary);
+  const trend = summary.trend;
+  if (!trend) return null;
+  if (trend.confident !== false) return trend;
+  const indicative = summary.indicative_trend;
+  if (indicative && trendSpanYears(indicative) >= 10) return indicative;
+  if (trendSpanYears(trend) >= 3) return trend;
+  return indicative || trend;
+}
+
+function tempDirection(trend, unit) {
+  const total = tempDelta(trend?.total, unit);
+  if (total == null) return "flat";
+  const threshold = unit === "F" ? 0.9 : 0.5;
+  if (total >= threshold) return "up";
+  if (total <= -threshold) return "down";
+  return "flat";
+}
+
+function uvDirection(trend) {
+  if (!trend || trend.total == null) return "flat";
+  if (trend.total >= 0.3) return "up";
+  if (trend.total <= -0.3) return "down";
+  return "flat";
+}
+
+function divergenceExplanation(city, ctx) {
+  const temp = cityTrend(city, "temperature");
+  const uv = uvDisplayTrend(city, ctx);
+  if (!temp || !uv) return null;
+
+  const tDir = tempDirection(temp, ctx.tempUnit);
+  const uDir = uvDirection(uv);
+  const tempMag = Math.abs(tempDelta(temp.total, ctx.tempUnit)).toFixed(1);
+  const uvMag = Math.abs(uv.total).toFixed(1);
+
+  if (tDir === "up" && uDir === "down") {
+    return `Here, average temperature rose about ${tempMag}°${ctx.tempUnit} since ${decadeLabel(temp)} while UV index trended about ${uvMag} points lower — they measure different things. Warming is long-run air temperature; UV peak depends on ozone, clouds, aerosols, and sun angle. Pre-2021 UV is scaled to the WHO index, so treat its long-run UV trend as indicative.`;
+  }
+  if (tDir === "down" && uDir === "up") {
+    return `Cooler air on average (${tempMag}°${ctx.tempUnit} since ${decadeLabel(temp)}) can coexist with higher UV peaks (~${uvMag} index points) when cloud cover or pollution shifts differ from the temperature average.`;
+  }
+  if (ctx.explainDivergence && tDir !== uDir && tDir !== "flat" && uDir !== "flat") {
+    return `Temperature and UV are trending in different directions here — normal, because one tracks average heat and the other tracks peak sunburn risk drivers.`;
+  }
+  return null;
+}
+
+function chartViewNote(ctx) {
+  if (ctx.chartView !== "yoy-pct") return null;
+  const metric = ctx.metric === "temperature" ? "temperature" : "UV";
+  return `The chart shows year-over-year ${metric} change (each month vs the same month last year) — a noisier, shorter lens than the long-term trends in the cards.`;
+}
+
+function uvVerb(trend, city, ctx) {
+  const active = city ? uvDisplayTrend(city, ctx) : trend;
+  if (!active) return "is hard to gauge from the consistent record";
+  if (active.total >= 0.3) return "has trended higher";
+  if (active.total <= -0.3) return "has trended lower";
   return "has stayed about the same";
 }
 
@@ -93,9 +157,13 @@ function caveat() {
 
 function singleCity(city, ctx) {
   const temp = cityTrend(city, "temperature");
-  const uv = cityTrend(city, "uv");
-  const lead = `${city.label}: temperatures have ${tempVerb(temp, ctx.tempUnit)}, and UV ${uvVerb(uv)}.`;
-  return [lead, latestLine(city, ctx)];
+  const lead = `${city.label}: temperatures have ${tempVerb(temp, ctx.tempUnit)}, and UV ${uvVerb(null, city, ctx)}.`;
+  const lines = [lead, latestLine(city, ctx)];
+  const divergence = divergenceExplanation(city, ctx);
+  if (divergence) lines.push(divergence);
+  const chartNote = chartViewNote(ctx);
+  if (chartNote) lines.push(chartNote);
+  return lines;
 }
 
 function multiCity(cities, ctx) {
@@ -119,9 +187,9 @@ function multiCity(cities, ctx) {
     }
   }
 
-  const uvTrends = cities.map((c) => cityTrend(c, "uv")).filter(Boolean);
-  const lower = uvTrends.filter((t) => t.confident !== false && t.total <= -0.3).length;
-  const higher = uvTrends.filter((t) => t.confident !== false && t.total >= 0.3).length;
+  const uvTrends = cities.map((c) => uvDisplayTrend(c, ctx)).filter(Boolean);
+  const lower = uvTrends.filter((t) => t.total <= -0.3).length;
+  const higher = uvTrends.filter((t) => t.total >= 0.3).length;
   if (higher > lower && higher > 0) lines.push("UV has generally trended higher.");
   else if (lower > higher && lower > 0) lines.push("UV has generally trended lower.");
   else lines.push("UV is about the same across them.");
@@ -135,6 +203,8 @@ function buildDataSummary(ctx, { withCaveat = true } = {}) {
     return "Pick a city to see how its UV and temperature have changed.";
   }
   const lines = active.length === 1 ? singleCity(active[0], ctx) : multiCity(active, ctx);
+  const chartNote = active.length === 1 ? null : chartViewNote(ctx);
+  if (chartNote) lines.push(chartNote);
   if (withCaveat) lines.push(caveat());
   return lines.filter(Boolean).join(" ");
 }

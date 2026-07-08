@@ -341,16 +341,23 @@ def _linear_slope_per_year(annual: pd.Series) -> float | None:
     return float(((years - years.mean()) * (vals - vals.mean())).sum() / denom)
 
 
-def compute_trend(series_df: pd.DataFrame, metric: str, value_col: str = "value") -> dict[str, Any] | None:
+def compute_trend(
+    series_df: pd.DataFrame,
+    metric: str,
+    value_col: str = "value",
+    *,
+    all_sources: bool = False,
+) -> dict[str, Any] | None:
     """Long-term trend from annual means: per-decade slope, total change, and
     baseline vs recent decade. UV is computed within a single consistent source
-    window (the 2021 NASA->WHO splice would otherwise fabricate a trend)."""
+    window (the 2021 NASA->WHO splice would otherwise fabricate a trend).
+    Pass all_sources=True for a blended indicative UV trend across sources."""
     if series_df.empty:
         return None
 
     source = None
     confident = True
-    if metric == "uv" and "source" in series_df.columns:
+    if metric == "uv" and "source" in series_df.columns and not all_sources:
         # Prefer the source group covering the longest span of full years.
         best_span = -1
         for src in series_df["source"].dropna().unique():
@@ -359,6 +366,8 @@ def compute_trend(series_df: pd.DataFrame, metric: str, value_col: str = "value"
             if span > best_span:
                 best_span, source = span, src
         confident = best_span >= 10
+    elif metric == "uv" and all_sources:
+        confident = False
 
     annual = _annual_means(series_df, value_col, source=source)
     if len(annual) < 3:
@@ -373,7 +382,7 @@ def compute_trend(series_df: pd.DataFrame, metric: str, value_col: str = "value"
     recent = float(annual.iloc[-window:].mean())
     years = list(annual.index)
 
-    return {
+    result = {
         "per_decade": round(slope * 10, 4),
         "total": round(slope * span_years, 4),
         "baseline": round(baseline, 4),
@@ -385,6 +394,10 @@ def compute_trend(series_df: pd.DataFrame, metric: str, value_col: str = "value"
         "source": source,
         "confident": bool(confident and span_years >= 10),
     }
+    if all_sources:
+        result["indicative"] = True
+        result["confident"] = False
+    return result
 
 
 def compute_summary(series_df: pd.DataFrame, metric: str, value_col: str = "value") -> dict[str, Any]:
@@ -423,6 +436,11 @@ def compute_summary(series_df: pd.DataFrame, metric: str, value_col: str = "valu
     }
 
     if metric == "uv":
+        trend = summary["trend"]
+        if trend and not trend.get("confident"):
+            indicative = compute_trend(series_df, metric, value_col, all_sources=True)
+            if indicative:
+                summary["indicative_trend"] = indicative
         yoy = series_df["yoy_pct"].dropna() if "yoy_pct" in series_df else pd.Series(dtype=float)
         change_pct = ((sm_end - sm_start) / sm_start * 100) if sm_start else None
         summary["avg_yoy_pct"] = round(float(yoy.mean()), 4) if not yoy.empty else None

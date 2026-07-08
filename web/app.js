@@ -9,6 +9,7 @@ import {
   resolveCityByName,
   resolveCityByCoords,
   addCityByMeta,
+  resolveUvDisplayTrend,
 } from "./cityAdd.js";
 import { parseQuery, describeIntent } from "./intent.js";
 
@@ -87,6 +88,7 @@ const state = {
   sortKey: "name",
   sortAsc: true,
   sortBound: false,
+  explainDivergence: false,
   attestationUrl: null,
   summaryRequestId: 0,
   loadedCities: new Set(),
@@ -350,6 +352,7 @@ async function applyIntent(intent) {
 
   if (intent.metric) state.metric = intent.metric;
   if (intent.chartView) state.chartView = intent.chartView;
+  state.explainDivergence = Boolean(intent.explainDivergence);
 
   state.periodMin = computeDataPeriodMin();
   state.periodMax = computeDataPeriodMax();
@@ -665,10 +668,16 @@ function getSeries(cityId, metric) {
   );
 }
 
+function updateComparisonVisibility() {
+  const panel = document.querySelector(".comparison-panel");
+  if (panel) panel.classList.toggle("hidden", state.selected.size <= 1);
+}
+
 function updateSelectionVisibility() {
   const hasSelection = state.selected.size > 0;
   document.getElementById("insights-bar")?.classList.toggle("hidden", !hasSelection);
   document.querySelector(".charts-reveal")?.classList.toggle("hidden", !hasSelection);
+  updateComparisonVisibility();
   // Example prompts only make sense before a selection exists.
   document.getElementById("ask-pills")?.classList.toggle("hidden", hasSelection);
   if (!hasSelection) {
@@ -725,6 +734,8 @@ function summaryContext() {
     formatMonthLabel,
     monthName,
     getSeries,
+    explainDivergence: state.explainDivergence,
+    resolveUvDisplayTrend,
   };
 }
 
@@ -846,6 +857,74 @@ function isTrendLabel(label) {
   return typeof label === "string" && label.endsWith(" · trend");
 }
 
+/** Month key (YYYY-MM) → ISO date for Chart.js time scale. */
+function chartMonthDate(ym) {
+  return `${ym}-01`;
+}
+
+function chartYearDate(year) {
+  return `${year}-01-01`;
+}
+
+function chartTimeScale({ unit = "month", maxTicksLimit = 14 } = {}) {
+  return {
+    type: "time",
+    time: {
+      unit,
+      tooltipFormat: unit === "year" ? "yyyy" : "yyyy-MM",
+      displayFormats: { month: "yyyy-MM", year: "yyyy" },
+    },
+    ticks: { color: CHART_MUTED, maxTicksLimit, autoSkip: true },
+    grid: { color: CHART_GRID },
+  };
+}
+
+/** Pick the best UV trend to show when the single-source record is too short. */
+function getUvDisplayTrend(cityId) {
+  const data = getCityData(cityId);
+  return resolveUvDisplayTrend(data?.series?.uv || [], data?.summary?.uv || {});
+}
+
+function longTermTempDirection(cityId) {
+  const total = convertTempDelta(getCityData(cityId)?.summary?.temperature?.trend?.total);
+  if (total == null || Number.isNaN(total)) return "flat";
+  const threshold = state.tempUnit === "F" ? 0.9 : 0.5;
+  if (total >= threshold) return "up";
+  if (total <= -threshold) return "down";
+  return "flat";
+}
+
+function longTermUvDirection(cityId) {
+  const total = getUvDisplayTrend(cityId)?.total;
+  if (total == null || Number.isNaN(total)) return "flat";
+  if (total >= 0.3) return "up";
+  if (total <= -0.3) return "down";
+  return "flat";
+}
+
+function divergentTrendsNote(cityId) {
+  const tempDir = longTermTempDirection(cityId);
+  const uvDir = longTermUvDirection(cityId);
+  if (tempDir === "up" && uvDir === "down") {
+    return "Temperature and UV can move opposite ways: warming is average air heat over decades, while UV peak depends more on ozone, clouds, and season. Pre-2021 UV is scaled to the WHO index, so its long-run trend is indicative.";
+  }
+  if (tempDir === "down" && uvDir === "up") {
+    return "Cooler decades alongside higher UV can happen when cloud cover or pollution shifts differ from the temperature average — UV peaks also track ozone and sun angle.";
+  }
+  return "";
+}
+
+function yoyChartContextLine(cityId, metric) {
+  if (state.chartView !== "yoy-pct") return "";
+  const stats = yoyStatsFromSeries(getSeries(cityId, metric), metric);
+  if (stats.empty || stats.avg_yoy_pct == null) return "";
+  const mean = stats.avg_yoy_pct;
+  if (metric === "temperature") {
+    return `Chart: avg YoY Δ ${mean >= 0 ? "+" : ""}${mean.toFixed(2)}°${state.tempUnit} (month vs same month last year — not the long-term trend above).`;
+  }
+  return `Chart: avg YoY ${mean >= 0 ? "+" : ""}${mean.toFixed(2)}% (month vs same month last year — not the long-term trend above).`;
+}
+
 function renderMainChart() {
   const ctx = document.getElementById("main-chart");
   const datasets = [];
@@ -867,7 +946,7 @@ function renderMainChart() {
       const styles = useTempGradient
         ? buildTempPointStyles(values, globalRange.min, globalRange.max, multiCity ? cityColor : null)
         : null;
-      const monthData = filtered.map((p) => ({ x: p.date.slice(0, 4), y: metricValue(p.value) }));
+      const monthData = filtered.map((p) => ({ x: chartYearDate(p.date.slice(0, 4)), y: metricValue(p.value) }));
       datasets.push({
         label: getCityLabel(cityId),
         data: monthData,
@@ -884,7 +963,7 @@ function renderMainChart() {
         label: getCityLabel(cityId),
         data: series
           .filter((p) => hasYoyData(p))
-          .map((p) => ({ x: p.date, y: yoySeriesValue(p) }))
+          .map((p) => ({ x: chartMonthDate(p.date), y: yoySeriesValue(p) }))
           .filter((p) => p.y != null),
         borderColor: cityColor,
         backgroundColor: cityColor + "22",
@@ -892,7 +971,7 @@ function renderMainChart() {
       });
     } else {
       const values = series.map((p) => metricValue(p.value));
-      const timelineData = series.map((p) => ({ x: p.date, y: metricValue(p.value) }));
+      const timelineData = series.map((p) => ({ x: chartMonthDate(p.date), y: metricValue(p.value) }));
       const styles = useTempGradient
         ? buildTempPointStyles(values, globalRange.min, globalRange.max, multiCity ? cityColor : null)
         : null;
@@ -937,10 +1016,9 @@ function renderMainChart() {
         },
       },
       scales: {
-        x: {
-          ticks: { color: CHART_MUTED, maxTicksLimit: 14, autoSkip: true },
-          grid: { color: CHART_GRID },
-        },
+        x: state.chartView === "yoy-month"
+          ? chartTimeScale({ unit: "year", maxTicksLimit: 12 })
+          : chartTimeScale({ unit: "month", maxTicksLimit: 14 }),
         y: {
           title: { display: true, text: yAxisLabel(), color: CHART_MUTED },
           ticks: { color: CHART_MUTED },
@@ -968,7 +1046,7 @@ function renderYoyChart() {
     datasets.push({
       label: getCityLabel(cityId),
       data: series
-        .map((p) => ({ x: p.date, y: yoySeriesValue(p) }))
+        .map((p) => ({ x: chartMonthDate(p.date), y: yoySeriesValue(p) }))
         .filter((p) => p.y != null),
       borderColor: cityColor,
       backgroundColor: cityColor + "22",
@@ -989,7 +1067,7 @@ function renderYoyChart() {
         legend: { labels: { color: CHART_TEXT } },
       },
       scales: {
-        x: { ticks: { color: CHART_MUTED, maxTicksLimit: 24 }, grid: { color: CHART_GRID } },
+        x: chartTimeScale({ unit: "month", maxTicksLimit: 24 }),
         y: {
           title: { display: true, text: yAxisLabel(), color: CHART_MUTED },
           ticks: { color: CHART_MUTED },
@@ -1228,6 +1306,32 @@ function trendVerdict(trend, metric) {
   }
 
   // UV
+  if (!trend) {
+    return {
+      hero: "Trend unclear",
+      sub: "Not enough UV history to estimate a trend.",
+      tone: "flat",
+    };
+  }
+  if (trend._display === "indicative") {
+    const total = trend.total;
+    const perDec = trend.per_decade;
+    let hero = "About the same";
+    if (total >= 0.3) hero = `+${total.toFixed(1)} higher`;
+    else if (total <= -0.3) hero = `${total.toFixed(1)} lower`;
+    const sub = `${perDec >= 0 ? "+" : ""}${perDec.toFixed(2)}/decade · Indicative · ${trend.source_window} (NASA scaled pre-2021)`;
+    return { hero, sub, tone: "flat" };
+  }
+  if (trend._display === "short") {
+    const total = trend.total;
+    const perDec = trend.per_decade;
+    let hero = "About the same";
+    if (total >= 0.3) hero = `+${total.toFixed(1)} higher`;
+    else if (total <= -0.3) hero = `${total.toFixed(1)} lower`;
+    const startYear = trend.source_window?.split("-")[0] || "";
+    const sub = `${perDec >= 0 ? "+" : ""}${perDec.toFixed(2)}/decade · Since ${startYear} · short WHO record`;
+    return { hero, sub, tone: "flat" };
+  }
   if (trend.confident === false) {
     return {
       hero: "Trend unclear",
@@ -1265,7 +1369,9 @@ function metricSnapshot(cityId, metric) {
     latest_date: last.date,
     monthNum,
     typical: getTypicalForMonth(cityId, metric, monthNum),
-    trend: data?.summary?.[metric]?.trend || null,
+    trend: metric === "uv"
+      ? getUvDisplayTrend(cityId)
+      : (data?.summary?.[metric]?.trend || null),
   };
 }
 
@@ -1296,11 +1402,15 @@ function metricVerdictBlock(cityId, metric, label) {
     latestLine = `Latest (${formatMonthLabel(snap.latest_date)}): <strong>${latestStr}</strong> · typical ${monthLbl}: ${typicalStr}`;
   }
 
+  const chartCtx = yoyChartContextLine(cityId, metric);
+  const chartCtxBlock = chartCtx ? `<p class="chart-context hint">${chartCtx}</p>` : "";
+
   return `
     <div class="metric-verdict">
       <span class="mv-label">${label}</span>
       ${verdictBlock}
       <p class="latest-line">${latestLine}</p>
+      ${chartCtxBlock}
     </div>`;
 }
 
@@ -1310,6 +1420,10 @@ function renderInsights() {
 
   const cards = [...state.selected].map((cityId) => {
     const cityColor = getCityColor(cityId);
+    const divergence = divergentTrendsNote(cityId);
+    const divergenceBlock = divergence
+      ? `<p class="divergence-note hint">${divergence}</p>`
+      : "";
     return `
       <article class="insight-card">
         <h3><span class="city-dot" style="background:${cityColor}"></span>${getCityLabel(cityId)}</h3>
@@ -1317,6 +1431,7 @@ function renderInsights() {
           ${metricVerdictBlock(cityId, "temperature", "Temperature")}
           ${metricVerdictBlock(cityId, "uv", "UV")}
         </div>
+        ${divergenceBlock}
       </article>
     `;
   });

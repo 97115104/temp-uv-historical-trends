@@ -117,8 +117,11 @@ function divergenceExplanation(city, ctx) {
 
 function chartViewNote(ctx) {
   if (ctx.chartView !== "yoy-pct") return null;
-  const metric = ctx.metric === "temperature" ? "temperature" : "UV";
-  return `The chart shows year-over-year ${metric} change (each month vs the same month last year) — a noisier, shorter lens than the long-term trends in the cards.`;
+  const u = ctx.tempUnit;
+  if (ctx.metric === "temperature") {
+    return `The chart shows degree change vs the same month last year (e.g. +2°${u} = warmer than last year) — not the long-term trend in the cards above.`;
+  }
+  return "The chart shows percent change in UV vs the same month last year (e.g. +10% = higher peak than last year) — not the long-term trend in the cards above.";
 }
 
 function uvVerb(trend, city, ctx) {

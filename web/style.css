@@ -581,6 +581,12 @@ select {
 
 .comparison-panel.hidden { display: none; }
 
+.chart-view-hint {
+  margin-top: 0.5rem;
+  max-width: 42rem;
+  line-height: 1.45;
+}
+
 .divergence-note,
 .chart-context {
   margin-top: 0.5rem;

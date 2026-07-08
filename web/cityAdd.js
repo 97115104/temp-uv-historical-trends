@@ -664,7 +664,7 @@ function formatSuggestion(result) {
   return `${region}${country}`.replace(/^, /, "");
 }
 
-export function initCityAdd(state, { onAdded, onDuplicate, showToast, ensureCityData }) {
+export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showToast, ensureCityData }) {
   const btn = document.getElementById("city-add-btn");
   const panel = document.getElementById("city-add-panel");
   const input = document.getElementById("city-search");
@@ -758,6 +758,11 @@ export function initCityAdd(state, { onAdded, onDuplicate, showToast, ensureCity
 
   if (locateBtn) {
     locateBtn.addEventListener("click", async () => {
+      if (onUseLocation) {
+        closePanel();
+        await onUseLocation();
+        return;
+      }
       if (!navigator.geolocation) {
         setStatus("Location is not supported in this browser.", true);
         return;

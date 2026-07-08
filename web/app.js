@@ -305,6 +305,30 @@ function initChartsReveal() {
   });
 }
 
+function revealCharts() {
+  const view = document.getElementById("charts-view");
+  const btn = document.getElementById("toggle-charts");
+  if (view) view.classList.remove("charts-collapsed");
+  if (btn) btn.textContent = "Hide charts";
+  setTimeout(() => { mainChart?.resize(); yoyChart?.resize(); }, 30);
+}
+
+async function resetToLocationCity(meta) {
+  state.selected.clear();
+  state.explainDivergence = false;
+  await addCityByMeta(state, meta, { select: true });
+  state.periodMin = computeDataPeriodMin();
+  state.periodMax = computeDataPeriodMax();
+  state.periodStart = state.periodMin;
+  state.periodEnd = state.periodMax;
+  const understood = document.getElementById("ask-understood");
+  if (understood) understood.textContent = `Showing: ${meta.name}${meta.region ? `, ${meta.region}` : ""}`;
+  syncControlsToState();
+  renderCityList();
+  revealCharts();
+  renderAll();
+}
+
 function initAsk() {
   const form = document.getElementById("ask-form");
   const input = document.getElementById("ask-input");
@@ -400,14 +424,7 @@ async function loadLocation({ prompt = false } = {}) {
         try {
           setLoading("Finding your location…");
           const meta = await resolveCityByCoords(position.coords.latitude, position.coords.longitude);
-          state.selected.clear();
-          await addCityByMeta(state, meta, { select: true });
-          state.periodMin = computeDataPeriodMin();
-          state.periodMax = computeDataPeriodMax();
-          state.periodEnd = state.periodMax;
-          syncControlsToState();
-          renderCityList();
-          renderAll();
+          await resetToLocationCity(meta);
           resolve(true);
         } catch {
           if (prompt) showToast("Couldn't load your location — search for a city instead.");
@@ -445,6 +462,7 @@ function initUI() {
     onDuplicate(city) {
       highlightCityRow(city.id);
     },
+    onUseLocation: () => loadLocation({ prompt: true }),
     showToast,
   });
   renderAttestation();
@@ -559,6 +577,31 @@ function updateTempUnitVisibility() {
 function updateViewVisibility() {
   document.getElementById("month-filter").classList.toggle("hidden", state.chartView !== "yoy-month");
   document.getElementById("yoy-panel").classList.toggle("hidden", state.chartView === "yoy-pct");
+  updateChartViewHint();
+}
+
+function chartViewHintText() {
+  const u = state.tempUnit;
+  if (state.chartView === "timeline") {
+    return state.metric === "temperature"
+      ? "Each point is the average temperature that month — the actual reading, not a change from another year."
+      : "Each point is the peak UV index that month — the actual level, not a change from another year.";
+  }
+  if (state.chartView === "yoy-month") {
+    const month = MONTHS[state.calendarMonth - 1];
+    return state.metric === "temperature"
+      ? `Each bar is the average temperature every ${month}, so you can compare the same season across years.`
+      : `Each bar is the peak UV every ${month}, so you can compare the same season across years.`;
+  }
+  if (state.metric === "temperature") {
+    return `Temperature change in degrees (°${u}) vs the same month last year. Example: +2°${u} means this June was 2 degrees warmer than last June — not a percent.`;
+  }
+  return "UV percent change vs the same month last year. Example: +10% means the UV peak was 10% higher than that month a year ago.";
+}
+
+function updateChartViewHint() {
+  const el = document.getElementById("chart-view-hint");
+  if (el) el.textContent = chartViewHintText();
 }
 
 function updateDateRangeHint() {
@@ -920,9 +963,9 @@ function yoyChartContextLine(cityId, metric) {
   if (stats.empty || stats.avg_yoy_pct == null) return "";
   const mean = stats.avg_yoy_pct;
   if (metric === "temperature") {
-    return `Chart: avg YoY Δ ${mean >= 0 ? "+" : ""}${mean.toFixed(2)}°${state.tempUnit} (month vs same month last year — not the long-term trend above).`;
+    return `Chart avg: ${mean >= 0 ? "+" : ""}${mean.toFixed(2)}°${state.tempUnit} vs same month last year (a degree change, not a percent).`;
   }
-  return `Chart: avg YoY ${mean >= 0 ? "+" : ""}${mean.toFixed(2)}% (month vs same month last year — not the long-term trend above).`;
+  return `Chart avg: ${mean >= 0 ? "+" : ""}${mean.toFixed(2)}% vs same month last year (percent change in UV).`;
 }
 
 function renderMainChart() {
@@ -1082,15 +1125,15 @@ function chartTitle() {
   if (state.chartView === "yoy-month") return `${metricLabel()} — ${MONTHS[state.calendarMonth - 1]} by year`;
   if (state.chartView === "yoy-pct") {
     return usesYoyDelta()
-      ? `Year-over-year change (°${state.tempUnit})`
-      : `YoY % change — ${metricLabel()}`;
+      ? `Same month vs last year (°${state.tempUnit})`
+      : `Same month vs last year (%) — ${metricLabel()}`;
   }
   return metricLabel();
 }
 
 function yAxisLabel() {
   if (state.chartView === "yoy-pct") {
-    return usesYoyDelta() ? `Δ °${state.tempUnit}` : "YoY %";
+    return usesYoyDelta() ? `Change vs last year (°${state.tempUnit})` : "Change vs last year (%)";
   }
   if (state.metric === "temperature") return state.tempUnit === "F" ? "°F" : "°C";
   return "UV Index";
@@ -1212,22 +1255,24 @@ function comparisonColumns() {
   const unitSuffix = isTemp ? ` (°${state.tempUnit})` : "";
 
   if (state.chartView === "yoy-pct") {
-    const yoyLabel = usesYoyDelta() ? `YoY Δ (°${state.tempUnit})` : "YoY %";
+    const yoyLabel = usesYoyDelta()
+      ? `change (°${state.tempUnit})`
+      : "change (%)";
     return [
       { key: "name", label: "City", sortable: true },
       { key: "avg_yoy_pct", label: `Avg ${yoyLabel}`, sortable: true },
       { key: "latest_yoy_pct", label: `Latest ${yoyLabel}`, sortable: true },
-      { key: "min", label: `Min ${yoyLabel}`, sortable: true },
-      { key: "max", label: `Max ${yoyLabel}`, sortable: true },
+      { key: "min", label: "Smallest change", sortable: true },
+      { key: "max", label: "Largest change", sortable: true },
     ];
   }
 
   const avgKey = isTemp ? "avg_yoy_delta" : "avg_yoy_pct";
-  const avgLabel = isTemp ? `Avg YoY Δ (°${state.tempUnit})` : "Avg YoY %";
+  const avgLabel = isTemp ? `Avg change (°${state.tempUnit})` : "Avg change (%)";
   const latestKey = isTemp ? "latest_yoy_delta" : "latest_yoy_pct";
-  const latestLabel = isTemp ? `Latest YoY Δ (°${state.tempUnit})` : "Latest YoY %";
+  const latestLabel = isTemp ? `Latest change (°${state.tempUnit})` : "Latest change (%)";
   const changeKey = isTemp ? "change_delta" : "change_pct";
-  const changeLabel = isTemp ? `Same-month Δ (°${state.tempUnit})` : "Same-month Δ %";
+  const changeLabel = isTemp ? `Total change (°${state.tempUnit})` : "Total change (%)";
 
   if (state.chartView === "yoy-month") {
     return [
@@ -1235,19 +1280,19 @@ function comparisonColumns() {
       { key: avgKey, label: avgLabel, sortable: true },
       { key: latestKey, label: latestLabel, sortable: true },
       { key: changeKey, label: changeLabel, sortable: true },
-      { key: "min", label: `Min${unitSuffix}`, sortable: true },
-      { key: "max", label: `Max${unitSuffix}`, sortable: true },
+      { key: "min", label: `Lowest${unitSuffix}`, sortable: true },
+      { key: "max", label: `Highest${unitSuffix}`, sortable: true },
     ];
   }
   return [
     { key: "name", label: "City", sortable: true },
     { key: avgKey, label: avgLabel, sortable: true },
     ...(isTemp && state.chartView === "timeline"
-      ? [{ key: "avg_mom_delta", label: `Avg MoM Δ (°${state.tempUnit})`, sortable: true }]
+      ? [{ key: "avg_mom_delta", label: `Avg month-to-month (°${state.tempUnit})`, sortable: true }]
       : []),
     { key: changeKey, label: changeLabel, sortable: true },
-    { key: "min", label: `Min${unitSuffix}`, sortable: true },
-    { key: "max", label: `Max${unitSuffix}`, sortable: true },
+    { key: "min", label: `Lowest${unitSuffix}`, sortable: true },
+    { key: "max", label: `Highest${unitSuffix}`, sortable: true },
   ];
 }
 

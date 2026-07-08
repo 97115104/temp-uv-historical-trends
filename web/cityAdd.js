@@ -41,24 +41,47 @@ export function formatFetchError(err) {
   return msg || "Could not load climate data for that city.";
 }
 
+/** Fire-and-forget toast via app.js listener — works even when showToast callback isn't in scope. */
+export function notifyToast(message) {
+  document.dispatchEvent(new CustomEvent("app-toast", { detail: message }));
+}
+
+function openMeteoResponseError(res, label) {
+  if (res.status === 429) {
+    const err = new Error(RATE_LIMIT_TOAST);
+    err.status = 429;
+    throw err;
+  }
+  throw new Error(`Open-Meteo ${label} fetch failed.`);
+}
+
 async function throttleOpenMeteo() {
   const wait = OPEN_METEO_MIN_GAP_MS - (Date.now() - lastOpenMeteoFetchMs);
   if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait));
   lastOpenMeteoFetchMs = Date.now();
 }
 
-async function fetchJsonWithRetry(url, { retries = 5, baseDelayMs = 2000 } = {}) {
+async function fetchJsonWithRetry(url, { retries = 2, baseDelayMs = 1500 } = {}) {
+  let rateLimitNotified = false;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     await throttleOpenMeteo();
     const res = await fetch(url);
-    if ((res.status === 429 || res.status >= 500) && attempt < retries) {
-      await new Promise((resolve) => setTimeout(resolve, baseDelayMs * (2 ** attempt)));
-      continue;
-    }
     if (res.status === 429) {
+      if (!rateLimitNotified) {
+        rateLimitNotified = true;
+        notifyToast(RATE_LIMIT_TOAST);
+      }
+      if (attempt < retries) {
+        await new Promise((resolve) => setTimeout(resolve, baseDelayMs * (2 ** attempt)));
+        continue;
+      }
       const err = new Error(RATE_LIMIT_TOAST);
       err.status = 429;
       throw err;
+    }
+    if (res.status >= 500 && attempt < retries) {
+      await new Promise((resolve) => setTimeout(resolve, baseDelayMs * (2 ** attempt)));
+      continue;
     }
     return res;
   }
@@ -331,7 +354,7 @@ async function searchCities(query) {
   url.searchParams.set("language", "en");
   url.searchParams.set("format", "json");
   const res = await fetchJsonWithRetry(url);
-  if (!res.ok) throw new Error("City search failed.");
+  if (!res.ok) openMeteoResponseError(res, "geocoding");
   const data = await res.json();
   const results = (data.results || []).filter((r) => r.feature_code?.startsWith("PPL") || (r.population || 0) > 0);
   return rankGeocodeResults(results, query).slice(0, 8);
@@ -377,7 +400,7 @@ async function fetchOpenMeteoTemperature(lat, lon, endDate) {
   url.searchParams.set("timezone", "UTC");
 
   const res = await fetchJsonWithRetry(url);
-  if (!res.ok) throw new Error("Open-Meteo temperature fetch failed.");
+  if (!res.ok) openMeteoResponseError(res, "temperature");
   const data = await res.json();
   return aggregateDailyToMonthly(data.daily, "temperature_2m_mean");
 }
@@ -392,7 +415,7 @@ async function fetchOpenMeteoUv(lat, lon, endDate) {
   url.searchParams.set("timezone", "UTC");
 
   const res = await fetchJsonWithRetry(url);
-  if (!res.ok) throw new Error("Open-Meteo UV fetch failed.");
+  if (!res.ok) openMeteoResponseError(res, "UV");
   const data = await res.json();
   return aggregateHourlyToMonthlyMax(data.hourly, "uv_index");
 }
@@ -898,8 +921,9 @@ export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showTo
         delete state.graph.cities[city.id];
       }
       state.selected.delete(city.id);
-      showToast?.(formatFetchError(err));
-      onAdded?.(city, { loading: false, failed: true });
+      const message = formatFetchError(err);
+      notifyToast(message);
+      onAdded?.(city, { loading: false, failed: true, error: err });
       return false;
     }
   }
@@ -948,7 +972,8 @@ export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showTo
       await addCityFromResult(result);
     } catch (err) {
       console.error("selectSuggestion failed:", err);
-      showToast?.(formatFetchError(err));
+      const message = formatFetchError(err);
+      notifyToast(message);
     }
   }
 

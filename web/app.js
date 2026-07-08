@@ -12,6 +12,7 @@ import {
   MAX_SELECTED,
   formatFetchError,
   RATE_LIMIT_TOAST,
+  notifyToast,
 } from "./cityAdd.js";
 const CITY_COLORS = ["#2563eb", "#dc2626", "#16a34a", "#9333ea", "#ea580c"];
 const CHART_TEXT = "#1d1d1f";
@@ -95,10 +96,28 @@ function showToast(message) {
   if (!el) return;
   el.textContent = message;
   el.classList.remove("hidden");
+  el.classList.toggle("toast--error", message === RATE_LIMIT_TOAST);
   clearTimeout(toastTimer);
   const duration = message === RATE_LIMIT_TOAST ? 8000 : 4200;
-  toastTimer = setTimeout(() => el.classList.add("hidden"), duration);
+  toastTimer = setTimeout(() => {
+    el.classList.add("hidden");
+    el.classList.remove("toast--error");
+  }, duration);
 }
+
+document.addEventListener("app-toast", (event) => {
+  if (event.detail) showToast(event.detail);
+});
+
+window.addEventListener("unhandledrejection", (event) => {
+  const reason = event.reason;
+  if (!(reason instanceof Error)) return;
+  const msg = reason.message || "";
+  if (/open-meteo|weather data|429|climate data|too many/i.test(msg)) {
+    showToast(formatFetchError(reason));
+    event.preventDefault();
+  }
+});
 
 const UV_WHO_BANDS = [
   { max: 2, label: "Low", class: "uv-badge-low" },
@@ -282,6 +301,7 @@ async function resolveUrlCitySlugs(slugs) {
       if (meta) await addCityByMeta(state, meta, { select: true });
     } catch (err) {
       console.warn(`Could not resolve city from URL slug: ${slug}`, err);
+      notifyToast(formatFetchError(err));
       showToast(formatFetchError(err));
     }
   }
@@ -383,8 +403,14 @@ async function loadLocation({ prompt = false } = {}) {
           setLoading(null);
         }
       },
-      () => {
-        if (prompt) showToast("Location permission denied — search for a city instead.");
+      (err) => {
+        const messages = {
+          1: "Location permission denied — search for a city instead.",
+          2: "Couldn't determine your location — search for a city instead.",
+          3: "Location request timed out — try again or search by name.",
+        };
+        const message = messages[err?.code] || "Couldn't use your location — search for a city instead.";
+        if (prompt) showToast(message);
         resolve(false);
       },
       { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 }
@@ -399,13 +425,14 @@ function initUI() {
   initHeroActions();
   initChartsReveal();
   initCityAdd(state, {
-    async onAdded(city, { loading, failed } = {}) {
+    async onAdded(city, { loading, failed, error } = {}) {
       if (loading) {
         renderCityList();
         return;
       }
       if (failed) {
         renderCityList();
+        renderAll();
         return;
       }
       state.periodMin = computeDataPeriodMin();

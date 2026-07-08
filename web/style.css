@@ -465,7 +465,13 @@ select {
   border-radius: 10px;
   font-size: 0.88rem;
   box-shadow: var(--shadow);
-  z-index: 100;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.toast.toast--error {
+  background: #7f1d1d;
+  border: 1px solid #fca5a5;
 }
 
 .toast.hidden { display: none; }

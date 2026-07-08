@@ -50,6 +50,12 @@ function lastCompleteDate() {
   return lastDay.toISOString().slice(0, 10);
 }
 
+/** NASA POWER monthly API rejects unpublished calendar years (e.g. 422 for 2026 in mid-2026). */
+function capNasaEndYear(endYear) {
+  const maxYear = new Date().getUTCFullYear() - 1;
+  return Math.min(endYear, maxYear);
+}
+
 function loadCustomCities() {
   try {
     const raw = localStorage.getItem(CUSTOM_CITIES_KEY);
@@ -93,14 +99,14 @@ export function getVisibleCities(state) {
 export function mergeCustomCities(state) {
   const bundle = loadCustomCities();
   for (const city of bundle.cities) {
+    if (builtInCityIds.has(city.id)) continue;
+    if (!bundle.graphEntries[city.id]) continue;
     if (!state.citiesConfig.cities.some((c) => c.id === city.id)) {
       state.citiesConfig.cities.push(city);
     }
-    if (bundle.graphEntries[city.id]) {
-      state.graph.cities[city.id] = bundle.graphEntries[city.id];
-      if (!state.graph.nodes.some((n) => n.id === `loc:${city.id}`)) {
-        state.graph.nodes.push({ id: `loc:${city.id}`, type: "Place", label: cityLabel(city) });
-      }
+    state.graph.cities[city.id] = bundle.graphEntries[city.id];
+    if (!state.graph.nodes.some((n) => n.id === `loc:${city.id}`)) {
+      state.graph.nodes.push({ id: `loc:${city.id}`, type: "Place", label: cityLabel(city) });
     }
   }
   return bundle;
@@ -174,6 +180,17 @@ function distanceKm(lat1, lon1, lat2, lon2) {
     Math.sin(dLat / 2) ** 2 +
     Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
   return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+/** Map a geocoded place to a built-in city id when it is the same location (use baked NASA UV). */
+export function matchBuiltInCityId(meta, state) {
+  if (builtInCityIds.has(meta.id)) return meta.id;
+  for (const city of state.citiesConfig.cities) {
+    if (!builtInCityIds.has(city.id)) continue;
+    if (city.name.toLowerCase() !== meta.name.toLowerCase()) continue;
+    if (distanceKm(meta.lat, meta.lon, city.lat, city.lon) <= 30) return city.id;
+  }
+  return null;
 }
 
 function pickClosestGeocodeResult(results, lat, lon, countryCode = "") {
@@ -352,11 +369,12 @@ function parseNasaUvMonthly(payload) {
 }
 
 async function fetchNasaUv(lat, lon, startYear, endYear) {
+  const cappedEnd = capNasaEndYear(endYear);
   const proxyUrl = new URL("/api/nasa-power", window.location.origin);
   proxyUrl.searchParams.set("latitude", String(lat));
   proxyUrl.searchParams.set("longitude", String(lon));
   proxyUrl.searchParams.set("start", String(startYear));
-  proxyUrl.searchParams.set("end", String(endYear));
+  proxyUrl.searchParams.set("end", String(cappedEnd));
 
   const directUrl = new URL(NASA_POWER_URL);
   directUrl.searchParams.set("parameters", "T2M,ALLSKY_SFC_UV_INDEX");
@@ -364,7 +382,7 @@ async function fetchNasaUv(lat, lon, startYear, endYear) {
   directUrl.searchParams.set("longitude", String(lon));
   directUrl.searchParams.set("latitude", String(lat));
   directUrl.searchParams.set("start", String(startYear));
-  directUrl.searchParams.set("end", String(endYear));
+  directUrl.searchParams.set("end", String(cappedEnd));
   directUrl.searchParams.set("format", "JSON");
 
   let res = await fetch(proxyUrl);
@@ -656,10 +674,31 @@ export async function fetchCityGraphEntry(city) {
   };
 }
 
-export async function ensureCityDataLoaded(state, cityId) {
-  if (state.graph.cities[cityId]?.series?.temperature?.length) {
+function uvSeriesHasNasaHistory(uvSeries = []) {
+  return uvSeries.some((point) => point.source === "nasa_power");
+}
+
+async function refreshCustomCityEntry(state, cityId, bundle) {
+  const cityMeta = state.citiesConfig.cities.find((c) => c.id === cityId);
+  if (!cityMeta) return null;
+  try {
+    const refreshed = await fetchCityGraphEntry(cityMeta);
+    bundle.graphEntries[cityId] = refreshed;
+    saveCustomCities(bundle);
+    state.graph.cities[cityId] = refreshed;
     state.loadedCities.add(cityId);
-    return state.graph.cities[cityId];
+    return refreshed;
+  } catch (err) {
+    console.warn(`Could not refresh custom city data for ${cityId}`, err);
+    return null;
+  }
+}
+
+export async function ensureCityDataLoaded(state, cityId) {
+  const cached = state.graph.cities[cityId];
+  if (cached?.series?.temperature?.length && uvSeriesHasNasaHistory(cached.series?.uv)) {
+    state.loadedCities.add(cityId);
+    return cached;
   }
   if (state.loadingCities.has(cityId)) {
     return null;
@@ -667,29 +706,24 @@ export async function ensureCityDataLoaded(state, cityId) {
 
   state.loadingCities.add(cityId);
   try {
-    const bundle = loadCustomCities();
-    if (bundle.graphEntries[cityId]) {
-      const entry = bundle.graphEntries[cityId];
-      if ((entry.data_version || 0) < DATA_VERSION) {
-        const cityMeta = state.citiesConfig.cities.find((c) => c.id === cityId);
-        if (cityMeta) {
-          const refreshed = await fetchCityGraphEntry(cityMeta);
-          bundle.graphEntries[cityId] = refreshed;
-          saveCustomCities(bundle);
-          state.graph.cities[cityId] = refreshed;
-          state.loadedCities.add(cityId);
-          return refreshed;
-        }
-      }
+    if (isBuiltInCity(cityId)) {
+      const res = await fetch(`data/cities/${cityId}.json`);
+      if (!res.ok) throw new Error(`Could not load data for ${cityId}`);
+      const entry = await res.json();
       state.graph.cities[cityId] = entry;
       state.loadedCities.add(cityId);
       return entry;
     }
 
-    if (isBuiltInCity(cityId)) {
-      const res = await fetch(`data/cities/${cityId}.json`);
-      if (!res.ok) throw new Error(`Could not load data for ${cityId}`);
-      const entry = await res.json();
+    const bundle = loadCustomCities();
+    if (bundle.graphEntries[cityId]) {
+      const entry = bundle.graphEntries[cityId];
+      const stale =
+        (entry.data_version || 0) < DATA_VERSION || !uvSeriesHasNasaHistory(entry.series?.uv);
+      if (stale) {
+        const refreshed = await refreshCustomCityEntry(state, cityId, bundle);
+        if (refreshed) return refreshed;
+      }
       state.graph.cities[cityId] = entry;
       state.loadedCities.add(cityId);
       return entry;
@@ -709,6 +743,8 @@ export async function ensureCityDataLoaded(state, cityId) {
 /** Add a resolved city (built-in or brand-new) to state, fetch its data if needed,
  * and optionally select it. Used by the conversational query + location flows. */
 export async function addCityByMeta(state, meta, { select = true } = {}) {
+  const builtInId = matchBuiltInCityId(meta, state);
+  if (builtInId) meta = { ...meta, id: builtInId };
   const known = builtInCityIds.has(meta.id) || state.citiesConfig.cities.some((c) => c.id === meta.id);
   if (!state.citiesConfig.cities.some((c) => c.id === meta.id)) {
     state.citiesConfig.cities.push(meta);
@@ -732,6 +768,7 @@ export async function addCityByMeta(state, meta, { select = true } = {}) {
 }
 
 export function saveCustomCityGraph(city, graphEntry) {
+  if (builtInCityIds.has(city.id)) return;
   const bundle = loadCustomCities();
   bundle.cities = bundle.cities.filter((c) => c.id !== city.id);
   bundle.cities.push(city);
@@ -780,8 +817,54 @@ export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showTo
     else closePanel();
   });
 
+  async function loadCityOntoChart(city, { isNew = false } = {}) {
+    if (state.selected.size >= MAX_SELECTED) {
+      showToast?.(`You can compare up to ${MAX_SELECTED} cities at once. Remove one to add another.`);
+      return false;
+    }
+
+    if (isNew) {
+      state.citiesConfig.cities.push(city);
+      if (!state.graph.nodes.some((n) => n.id === `loc:${city.id}`)) {
+        state.graph.nodes.push({ id: `loc:${city.id}`, type: "Place", label: cityLabel(city) });
+      }
+    }
+
+    state.selected.add(city.id);
+    closePanel();
+    onAdded?.(city, { loading: true });
+
+    try {
+      let entry;
+      if (isNew) {
+        entry = await fetchCityGraphEntry(city);
+        saveCustomCityGraph(city, entry);
+        state.graph.cities[city.id] = entry;
+      } else {
+        entry = await ensureCityDataLoaded(state, city.id);
+      }
+      if (!entry?.series?.temperature?.length) {
+        throw new Error("Could not load climate data for that city.");
+      }
+      state.loadedCities.add(city.id);
+      onAdded?.(city, { loading: false });
+      return true;
+    } catch (err) {
+      console.error("Add city failed:", city.id, err);
+      if (isNew) {
+        state.citiesConfig.cities = state.citiesConfig.cities.filter((c) => c.id !== city.id);
+        state.graph.nodes = state.graph.nodes.filter((n) => n.id !== `loc:${city.id}`);
+        delete state.graph.cities[city.id];
+      }
+      state.selected.delete(city.id);
+      showToast?.(err.message || "Could not load climate data for that city.");
+      onAdded?.(city, { loading: false, failed: true });
+      return false;
+    }
+  }
+
   async function addCityFromResult(result) {
-    const city = {
+    let city = {
       id: makeCityId(result),
       name: result.name,
       region: result.admin1 || "",
@@ -789,57 +872,43 @@ export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showTo
       lat: Number(result.latitude.toFixed(4)),
       lon: Number(result.longitude.toFixed(4)),
     };
+    const builtInId = matchBuiltInCityId(city, state);
+    if (builtInId) city = { ...city, id: builtInId };
 
-    const hidden = loadHiddenCities();
-    if (hidden.has(city.id)) {
-      unhideCity(city.id);
-      closePanel();
-      onDuplicate?.({ id: city.id, name: city.name, region: city.region });
-      return;
-    }
+    if (loadHiddenCities().has(city.id)) unhideCity(city.id);
 
-    const duplicate = existingCityMatch(state, city);
+    const duplicate = existingCityMatch(state, city, { includeHidden: true });
     if (duplicate) {
+      city = { ...city, id: duplicate.id, name: duplicate.name, region: duplicate.region || city.region };
+    }
+
+    if (state.selected.has(city.id)) {
       closePanel();
-      onDuplicate?.(duplicate);
+      onDuplicate?.(city);
+      showToast?.(`${cityLabel(city)} is already on your chart.`);
       return;
     }
+
+    if (duplicate) {
+      await loadCityOntoChart(city, { isNew: false });
+      return;
+    }
+
     if (state.citiesConfig.cities.length >= 100) {
       setStatus("Too many custom cities saved in this browser.", true);
       return;
     }
 
-    try {
-      state.citiesConfig.cities.push(city);
-      if (!state.graph.nodes.some((n) => n.id === `loc:${city.id}`)) {
-        state.graph.nodes.push({ id: `loc:${city.id}`, type: "Place", label: cityLabel(city) });
-      }
-
-      const autoSelected = state.selected.size < MAX_SELECTED;
-      if (autoSelected) state.selected.add(city.id);
-
-      closePanel();
-      onAdded?.(city, { loading: true });
-
-      const graphEntry = await fetchCityGraphEntry(city);
-      saveCustomCityGraph(city, graphEntry);
-      state.graph.cities[city.id] = graphEntry;
-      state.loadedCities.add(city.id);
-
-      onAdded?.(city, { loading: false });
-      if (!autoSelected) {
-        showToast?.(`Added ${cityLabel(city)}. Uncheck a city to compare it (max ${MAX_SELECTED}).`);
-      }
-    } catch (err) {
-      state.citiesConfig.cities = state.citiesConfig.cities.filter((c) => c.id !== city.id);
-      state.graph.nodes = state.graph.nodes.filter((n) => n.id !== `loc:${city.id}`);
-      state.selected.delete(city.id);
-      setStatus(err.message, true);
-    }
+    await loadCityOntoChart(city, { isNew: true });
   }
 
   async function selectSuggestion(result) {
-    await addCityFromResult(result);
+    try {
+      await addCityFromResult(result);
+    } catch (err) {
+      console.error("selectSuggestion failed:", err);
+      showToast?.(err.message || "Could not add that city.");
+    }
   }
 
   if (locateBtn) {

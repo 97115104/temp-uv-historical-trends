@@ -2,7 +2,7 @@
 
 Multi-city dashboard for historical UV index and temperature. Search for any city, use your location, and compare trends through the latest complete month.
 
-**Live:** [97115104.github.io/covina-uv-historical-trends](https://97115104.github.io/covina-uv-historical-trends/)
+**Live:** [97115104.github.io/temp-uv-historical-trends](https://97115104.github.io/temp-uv-historical-trends/)
 
 ## Run locally
 

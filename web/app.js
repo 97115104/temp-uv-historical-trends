@@ -5,21 +5,11 @@ import {
   removeCity,
   ensureCityDataLoaded,
   setBuiltInCityIds,
-  resolveCityByName,
   resolveCityByCoords,
   resolveCityBySlug,
   addCityByMeta,
   resolveUvDisplayTrend,
 } from "./cityAdd.js";
-import { parseQuery, describeIntent } from "./intent.js";
-
-const SUGGESTION_PILLS = [
-  "UV in Covina since 1993, month by month",
-  "Is Los Angeles getting hotter?",
-  "Compare summer UV: Los Angeles vs Seattle",
-  "New York temperature since 1981",
-  "Seattle UV year over year",
-];
 
 const MAX_CITIES = 5;
 const CITY_COLORS = ["#2563eb", "#dc2626", "#16a34a", "#9333ea", "#ea580c"];
@@ -359,88 +349,9 @@ async function resetToLocationCity(meta) {
   renderAll();
 }
 
-function initAsk() {
-  const form = document.getElementById("ask-form");
-  const input = document.getElementById("ask-input");
-  const pills = document.getElementById("ask-pills");
+function initHeroActions() {
   const locate = document.getElementById("ask-locate");
-
-  if (form && input) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const text = input.value.trim();
-      if (text) runQuery(text);
-    });
-  }
-
-  if (pills) {
-    pills.innerHTML = SUGGESTION_PILLS
-      .map((p) => `<button type="button" class="ask-pill">${p}</button>`)
-      .join("");
-    pills.querySelectorAll(".ask-pill").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        if (input) input.value = btn.textContent;
-        runQuery(btn.textContent);
-      });
-    });
-  }
-
   if (locate) locate.addEventListener("click", () => loadLocation({ prompt: true }));
-}
-
-async function applyIntent(intent) {
-  const resolved = [];
-  for (const cityQuery of intent.cityQueries) {
-    try {
-      const meta = await resolveCityByName(cityQuery);
-      if (meta) resolved.push(meta);
-    } catch { /* skip unresolved */ }
-  }
-
-  if (resolved.length) {
-    state.selected.clear();
-    for (const meta of resolved.slice(0, MAX_CITIES)) {
-      await addCityByMeta(state, meta, { select: true });
-    }
-  }
-
-  if (intent.metric) state.metric = intent.metric;
-  if (intent.chartView) state.chartView = intent.chartView;
-  state.explainDivergence = Boolean(intent.explainDivergence);
-
-  state.periodMin = computeDataPeriodMin();
-  state.periodMax = computeDataPeriodMax();
-  if (intent.periodStart) {
-    state.periodStart = intent.periodStart < state.periodMin ? state.periodMin : intent.periodStart;
-  }
-  if (intent.periodEnd) {
-    state.periodEnd = intent.periodEnd > state.periodMax ? state.periodMax : intent.periodEnd;
-  }
-  if (state.periodStart > state.periodEnd) state.periodStart = state.periodMin;
-
-  syncControlsToState();
-  renderCityList();
-  renderAll();
-  return resolved;
-}
-
-async function runQuery(text) {
-  const intent = parseQuery(text, { periodMin: state.periodMin, periodMax: state.periodMax });
-  const understood = document.getElementById("ask-understood");
-  setLoading("Fetching climate records…");
-  try {
-    await applyIntent(intent);
-    if (understood) {
-      const labels = [...state.selected].map(getCityLabel);
-      const desc = describeIntent(intent, { cityLabels: labels });
-      understood.textContent = desc ? `Showing: ${desc}` : "";
-    }
-  } catch (err) {
-    console.error(err);
-    showToast("Couldn't build that view — try a suggestion or search for a city.");
-  } finally {
-    setLoading(null);
-  }
 }
 
 async function loadLocation({ prompt = false } = {}) {
@@ -476,11 +387,15 @@ function initUI() {
   renderCityList();
   initMonthSelect();
   bindControls();
-  initAsk();
+  initHeroActions();
   initChartsReveal();
   initCityAdd(state, {
-    async onAdded(city, { loading } = {}) {
+    async onAdded(city, { loading, failed } = {}) {
       if (loading) {
+        renderCityList();
+        return;
+      }
+      if (failed) {
         renderCityList();
         return;
       }
@@ -518,7 +433,7 @@ async function onCityRemove(cityId, event) {
 function renderEmptyPrompt() {
   const understood = document.getElementById("ask-understood");
   if (!understood || state.selected.size > 0) return;
-  understood.textContent = "Search for a city, use your location, or try an example below.";
+  understood.textContent = "Use your location or add a city to get started.";
 }
 
 function renderCityList() {
@@ -758,8 +673,6 @@ function updateSelectionVisibility() {
   document.getElementById("insights-bar")?.classList.toggle("hidden", !hasSelection);
   document.querySelector(".charts-reveal")?.classList.toggle("hidden", !hasSelection);
   updateComparisonVisibility();
-  // Example prompts only make sense before a selection exists.
-  document.getElementById("ask-pills")?.classList.toggle("hidden", hasSelection);
   if (!hasSelection) {
     document.getElementById("charts-view")?.classList.add("charts-collapsed");
     const btn = document.getElementById("toggle-charts");

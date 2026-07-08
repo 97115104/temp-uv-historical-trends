@@ -7,9 +7,9 @@ import json
 import os
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.error import HTTPError, URLError
-from urllib.parse import parse_qs, urlencode, urlparse
-from urllib.request import Request, urlopen
+from urllib.parse import parse_qs, urlparse
+
+import requests
 
 ROOT = Path(__file__).resolve().parent
 WEB_DIR = ROOT / "web"
@@ -53,19 +53,26 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             "end": query["end"][0],
             "format": "JSON",
         }
-        url = f"{NASA_POWER_URL}?{urlencode(params)}"
         try:
-            with urlopen(Request(url, headers={"User-Agent": "covina-uv-historical-trends/1.0"}), timeout=120) as resp:
-                payload = resp.read()
+            response = requests.get(
+                NASA_POWER_URL,
+                params=params,
+                headers={"User-Agent": "temp-uv-historical-trends/1.0"},
+                timeout=120,
+            )
+            if response.status_code >= 400:
+                self._json_response(
+                    response.status_code,
+                    {"error": "NASA POWER request failed.", "detail": response.text[:300]},
+                )
+                return
+            payload = response.content
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.end_headers()
             self.wfile.write(payload)
-        except HTTPError as exc:
-            body = exc.read().decode("utf-8", errors="replace")
-            self._json_response(exc.code, {"error": "NASA POWER request failed.", "detail": body[:300]})
-        except URLError as exc:
-            self._json_response(502, {"error": "Could not reach NASA POWER.", "detail": str(exc.reason)})
+        except requests.RequestException as exc:
+            self._json_response(502, {"error": "Could not reach NASA POWER.", "detail": str(exc)})
 
     def _json_response(self, status: int, payload: dict) -> None:
         body = json.dumps(payload).encode("utf-8")

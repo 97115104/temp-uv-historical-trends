@@ -7,11 +7,11 @@ import argparse
 import hashlib
 import json
 import shutil
-from datetime import datetime, timezone
+import time
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
-import numpy as np
 import pandas as pd
 import requests
 
@@ -20,19 +20,47 @@ DATA_DIR = ROOT / "data"
 WEB_DATA_DIR = ROOT / "web" / "data"
 
 PERIOD_START = "1993-11"
-PERIOD_END = "2025-12"
-NASA_START_YEAR = 1993
-NASA_END_YEAR = 2025
-
+DEFAULT_PERIOD_START = "1993-11"
+NASA_START_YEAR = 1981
 NASA_POWER_URL = "https://power.larc.nasa.gov/api/temporal/monthly/point"
+OPEN_METEO_ARCHIVE_URL = "https://archive-api.open-meteo.com/v1/archive"
+OPEN_METEO_HISTORICAL_URL = "https://historical-forecast-api.open-meteo.com/v1/forecast"
+UV_START_DATE = "2021-01-01"
+WHO_UV_START_MONTH = "2021-01"
+NASA_UV_START_YEAR = 2001
+DATA_VERSION = 4
+MIN_TEMP_BASE_C = 3.0
+MIN_UV_BASE = 0.5
+
+_now = datetime.now(timezone.utc)
+_last_complete = (_now.replace(day=1) - timedelta(days=1))
+# Filled after probing NASA; do not assume the calendar month is published yet.
+PERIOD_END = _last_complete.strftime("%Y-%m")
+NASA_END_YEAR = _last_complete.year
 
 SOURCES = [
+    {
+        "id": "open_meteo_era5",
+        "name": "Open-Meteo ERA5",
+        "institution": "ECMWF / Open-Meteo",
+        "url": "https://open-meteo.com/en/docs/historical-weather-api",
+        "role": "temperature",
+        "attribution": "ERA5 reanalysis via Open-Meteo (CC BY 4.0)",
+    },
+    {
+        "id": "open_meteo_historical_forecast",
+        "name": "Open-Meteo Historical Forecast",
+        "institution": "Open-Meteo",
+        "url": "https://open-meteo.com/en/docs/historical-forecast-api",
+        "role": "uv",
+        "attribution": "WHO-compatible UV Index via Open-Meteo (CC BY 4.0)",
+    },
     {
         "id": "nasa_power",
         "name": "NASA POWER",
         "institution": "NASA Langley Research Center",
         "url": "https://power.larc.nasa.gov/",
-        "role": "uv_and_temperature",
+        "role": "legacy_uv",
         "attribution": "NASA POWER Project",
     },
 ]
@@ -50,6 +78,282 @@ def city_label(city: dict[str, Any]) -> str:
     elif city.get("country"):
         parts.append(city["country"])
     return ", ".join(parts)
+
+
+def resolve_nasa_end_year(lat: float, lon: float, preferred_year: int) -> int:
+    """Pick the newest end year NASA POWER monthly API accepts (current year often 422)."""
+    for year in range(preferred_year, NASA_START_YEAR - 1, -1):
+        params = {
+            "parameters": "T2M",
+            "community": "RE",
+            "longitude": lon,
+            "latitude": lat,
+            "start": year,
+            "end": year,
+            "format": "JSON",
+        }
+        response = requests.get(NASA_POWER_URL, params=params, timeout=60)
+        if response.status_code == 422:
+            continue
+        response.raise_for_status()
+        return year
+    return preferred_year - 1
+
+
+def request_json(url: str, *, params: dict[str, Any] | None = None, timeout: int = 180) -> dict[str, Any]:
+    """GET JSON with basic backoff for Open-Meteo rate limits."""
+    last_error: Exception | None = None
+    for attempt in range(6):
+        try:
+            response = requests.get(url, params=params, timeout=timeout)
+            if response.status_code == 429:
+                time.sleep(min(2 ** attempt, 30))
+                continue
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as exc:
+            last_error = exc
+            time.sleep(min(2 ** attempt, 30))
+    raise RuntimeError(f"Request failed for {url}") from last_error
+
+
+def fetch_open_meteo_temperature(lat: float, lon: float) -> pd.DataFrame:
+    start_date = "1981-01-01"
+    end_date = _last_complete.strftime("%Y-%m-%d")
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "start_date": start_date,
+        "end_date": end_date,
+        "daily": "temperature_2m_mean",
+        "models": "era5",
+        "timezone": "UTC",
+    }
+    payload = request_json(OPEN_METEO_ARCHIVE_URL, params=params)
+    daily = payload["daily"]
+    monthly: dict[str, list[float]] = {}
+    for date_str, value in zip(daily["time"], daily["temperature_2m_mean"]):
+        if value is None:
+            continue
+        month = date_str[:7]
+        monthly.setdefault(month, []).append(float(value))
+
+    records = [
+        {"date": month, "temperature": round(sum(values) / len(values), 4)}
+        for month, values in sorted(monthly.items())
+    ]
+    return pd.DataFrame(records)
+
+
+def fetch_open_meteo_uv(lat: float, lon: float) -> pd.DataFrame:
+    """Monthly peak WHO UV Index from Open-Meteo hourly archive (Apple-comparable scale)."""
+    end_date = _last_complete.strftime("%Y-%m-%d")
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "start_date": UV_START_DATE,
+        "end_date": end_date,
+        "hourly": "uv_index",
+        "timezone": "UTC",
+    }
+    try:
+        payload = request_json(OPEN_METEO_HISTORICAL_URL, params=params)
+    except RuntimeError:
+        return pd.DataFrame(columns=["date", "uv"])
+    hourly = payload["hourly"]
+    monthly_max: dict[str, float] = {}
+    for time_str, uv in zip(hourly["time"], hourly["uv_index"]):
+        if uv is None:
+            continue
+        month = time_str[:7]
+        monthly_max[month] = max(monthly_max.get(month, 0.0), float(uv))
+
+    records = [{"date": month, "uv": round(value, 4)} for month, value in sorted(monthly_max.items())]
+    return pd.DataFrame(records)
+
+
+def merge_uv_series(nasa_df: pd.DataFrame, who_df: pd.DataFrame) -> pd.DataFrame:
+    """NASA monthly means through 2020; WHO monthly peaks from 2021 (NASA fills WHO gaps)."""
+    by_date: dict[str, tuple[float, str]] = {}
+    for _, row in nasa_df.iterrows():
+        by_date[row["date"]] = (float(row["uv"]), "nasa_power")
+    for _, row in who_df.iterrows():
+        if row["date"] >= WHO_UV_START_MONTH:
+            by_date[row["date"]] = (float(row["uv"]), "open_meteo_who")
+        elif row["date"] not in by_date:
+            by_date[row["date"]] = (float(row["uv"]), "open_meteo_who")
+
+    records = [
+        {"date": date, "uv": round(value, 4), "source": source}
+        for date, (value, source) in sorted(by_date.items())
+    ]
+    return pd.DataFrame(records)
+
+
+def uv_calibration_factors_from_sources(
+    nasa_df: pd.DataFrame, who_df: pd.DataFrame
+) -> dict[int, float]:
+    """Per calendar-month scale: WHO(2021-MM) / NASA(2020-MM) from raw API frames."""
+    factors: dict[int, float] = {}
+    for month in range(1, 13):
+        mm = f"{month:02d}"
+        nasa_rows = nasa_df[nasa_df["date"] == f"2020-{mm}"] if not nasa_df.empty else pd.DataFrame()
+        who_rows = who_df[who_df["date"] == f"2021-{mm}"] if not who_df.empty else pd.DataFrame()
+        if nasa_rows.empty or who_rows.empty:
+            continue
+        nasa_val = float(nasa_rows.iloc[0]["uv"])
+        who_val = float(who_rows.iloc[0]["uv"])
+        if nasa_val > 0.01:
+            factors[month] = who_val / nasa_val
+    return factors
+
+
+def apply_uv_calibration(uv_df: pd.DataFrame, factors: dict[int, float]) -> pd.DataFrame:
+    if uv_df.empty:
+        return uv_df
+    out = uv_df.copy()
+    out["value_raw"] = out["uv"].astype(float)
+    calibrated: list[float] = []
+    for _, row in out.iterrows():
+        value = float(row["uv"])
+        if row.get("source") == "nasa_power":
+            month = int(str(row["date"]).split("-")[1])
+            factor = factors.get(month)
+            if factor:
+                value = value * factor
+        calibrated.append(round(value, 4))
+    out["uv"] = calibrated
+    out["value"] = calibrated
+    return out
+
+
+def calibrate_uv_series(uv_df: pd.DataFrame) -> pd.DataFrame:
+    """Scale NASA monthly means toward WHO peak scale for a continuous timeline."""
+    if uv_df.empty:
+        return uv_df
+    out = uv_df.copy()
+    out["value_raw"] = out["uv"].astype(float)
+    factors = uv_calibration_factors(out)
+    return apply_uv_calibration(out, factors)
+
+
+def uv_calibration_factors(uv_df: pd.DataFrame) -> dict[int, float]:
+    """Per calendar-month scale factors from merged frame (fallback)."""
+    factors: dict[int, float] = {}
+    if uv_df.empty or "source" not in uv_df.columns:
+        return factors
+    for month in range(1, 13):
+        mm = f"{month:02d}"
+        nasa_rows = uv_df[(uv_df["date"] == f"2020-{mm}") & (uv_df["source"] == "nasa_power")]
+        who_candidates = uv_df[
+            (uv_df["date"].str.endswith(f"-{mm}"))
+            & (uv_df["date"] >= WHO_UV_START_MONTH)
+            & (uv_df["source"] == "open_meteo_who")
+        ]
+        if nasa_rows.empty or who_candidates.empty:
+            continue
+        nasa_val = float(nasa_rows.iloc[0]["uv"])
+        who_val = float(who_candidates.iloc[0]["uv"])
+        if nasa_val > 0.01:
+            factors[month] = who_val / nasa_val
+    return factors
+
+
+def safe_yoy_pct(
+    curr: float | None,
+    prev: float | None,
+    metric: str,
+    curr_source: str | None = None,
+    prev_source: str | None = None,
+) -> float | None:
+    if curr is None or prev is None or pd.isna(curr) or pd.isna(prev):
+        return None
+    if metric == "uv" and curr_source and prev_source and curr_source != prev_source:
+        return None
+    if metric == "temperature" and abs(float(prev)) < MIN_TEMP_BASE_C:
+        return None
+    if metric == "uv" and float(prev) < MIN_UV_BASE:
+        return None
+    if float(prev) <= 0:
+        return None
+    pct = (float(curr) - float(prev)) / float(prev) * 100
+    # >100% drop from a positive baseline implies a negative monthly mean — not credible.
+    if metric == "temperature" and float(prev) > 0 and pct < -100:
+        return None
+    return round(pct, 4)
+
+
+def yoy_delta(curr: float | None, prev: float | None) -> float | None:
+    if curr is None or prev is None or pd.isna(curr) or pd.isna(prev):
+        return None
+    return round(float(curr) - float(prev), 4)
+
+
+def add_yoy(df: pd.DataFrame, value_col: str = "value", metric: str = "temperature") -> pd.DataFrame:
+    out = df.reset_index(drop=True).copy()
+    has_source = "source" in out.columns
+    yoy_list: list[float | None] = []
+    delta_list: list[float | None] = []
+    for i in range(len(out)):
+        if i < 12:
+            yoy_list.append(None)
+            delta_list.append(None)
+            continue
+        prev_row = out.iloc[i - 12]
+        curr_row = out.iloc[i]
+        prev_source = str(prev_row["source"]) if has_source else None
+        curr_source = str(curr_row["source"]) if has_source else None
+        yoy_list.append(
+            safe_yoy_pct(
+                curr_row[value_col],
+                prev_row[value_col],
+                metric,
+                curr_source,
+                prev_source,
+            )
+        )
+        delta_list.append(yoy_delta(curr_row[value_col], prev_row[value_col]))
+    out["yoy_pct"] = yoy_list
+    out["yoy_delta"] = delta_list
+    return out
+
+
+def fetch_combined_uv(lat: float, lon: float) -> pd.DataFrame:
+    nasa_end_year = resolve_nasa_end_year(lat, lon, _last_complete.year)
+    nasa_df = fetch_nasa_uv(lat, lon, NASA_UV_START_YEAR, nasa_end_year)
+    time.sleep(1.2)
+    who_df = fetch_open_meteo_uv(lat, lon)
+    factors = uv_calibration_factors_from_sources(nasa_df, who_df)
+    merged = merge_uv_series(nasa_df, who_df)
+    return apply_uv_calibration(merged, factors)
+
+
+def fetch_nasa_uv(lat: float, lon: float, start_year: int, end_year: int) -> pd.DataFrame:
+    params = {
+        "parameters": "ALLSKY_SFC_UV_INDEX",
+        "community": "RE",
+        "longitude": lon,
+        "latitude": lat,
+        "start": start_year,
+        "end": end_year,
+        "format": "JSON",
+    }
+    response = requests.get(NASA_POWER_URL, params=params, timeout=120)
+    response.raise_for_status()
+    payload = response.json()
+    uv = payload.get("properties", {}).get("parameter", {}).get("ALLSKY_SFC_UV_INDEX", {})
+    records: list[dict[str, Any]] = []
+    for key, uv_val in uv.items():
+        if len(key) != 6 or uv_val == -999.0:
+            continue
+        year, month = int(key[:4]), int(key[4:6])
+        if month < 1 or month > 12:
+            continue
+        date = f"{year:04d}-{month:02d}"
+        if date > PERIOD_END:
+            continue
+        records.append({"date": date, "uv": float(uv_val)})
+    return pd.DataFrame(records).sort_values("date").reset_index(drop=True)
 
 
 def fetch_nasa_power(lat: float, lon: float, start_year: int, end_year: int) -> pd.DataFrame:
@@ -78,7 +382,7 @@ def fetch_nasa_power(lat: float, lon: float, start_year: int, end_year: int) -> 
         if month < 1 or month > 12 or temp == -999.0:
             continue
         date = f"{year:04d}-{month:02d}"
-        if date < PERIOD_START or date > PERIOD_END:
+        if date > PERIOD_END:
             continue
         uv_val = None
         if key in uv and uv[key] != -999.0:
@@ -86,13 +390,6 @@ def fetch_nasa_power(lat: float, lon: float, start_year: int, end_year: int) -> 
         records.append({"date": date, "temperature": float(temp), "uv": uv_val})
 
     return pd.DataFrame(records).sort_values("date").reset_index(drop=True)
-
-
-def add_yoy(df: pd.DataFrame, value_col: str = "value") -> pd.DataFrame:
-    out = df.copy()
-    values = out[value_col].astype(float)
-    out["yoy_pct"] = (values.pct_change(periods=12) * 100).replace([np.inf, -np.inf], np.nan)
-    return out
 
 
 def compute_summary(series_df: pd.DataFrame, value_col: str = "value") -> dict[str, Any]:
@@ -103,7 +400,17 @@ def compute_summary(series_df: pd.DataFrame, value_col: str = "value") -> dict[s
     yoy = series_df["yoy_pct"].dropna() if "yoy_pct" in series_df else pd.Series(dtype=float)
     start_val = float(values.iloc[0])
     end_val = float(values.iloc[-1])
-    change_pct = ((end_val - start_val) / start_val * 100) if start_val else None
+
+    # Seasonally fair change: first vs last same calendar month (not winter→summer endpoints).
+    last_date = str(series_df.iloc[-1]["date"])
+    month_str = last_date.split("-")[1]
+    same_month = series_df[series_df["date"].str.endswith(f"-{month_str}")]
+    if len(same_month) >= 2:
+        sm_start = float(same_month.iloc[0][value_col])
+        sm_end = float(same_month.iloc[-1][value_col])
+        change_pct = ((sm_end - sm_start) / sm_start * 100) if sm_start else None
+    else:
+        change_pct = ((end_val - start_val) / start_val * 100) if start_val else None
 
     seasonal = (
         series_df.assign(month=series_df["date"].str[-2:].astype(int))
@@ -128,13 +435,19 @@ def series_to_records(df: pd.DataFrame, value_col: str = "value") -> list[dict[s
     records = []
     for _, row in df.iterrows():
         yoy = row.get("yoy_pct")
-        records.append(
-            {
-                "date": row["date"],
-                "value": round(float(row[value_col]), 4),
-                "yoy_pct": None if pd.isna(yoy) else round(float(yoy), 4),
-            }
-        )
+        record: dict[str, Any] = {
+            "date": row["date"],
+            "value": round(float(row[value_col]), 4),
+            "yoy_pct": None if yoy is None or pd.isna(yoy) else round(float(yoy), 4),
+        }
+        delta = row.get("yoy_delta")
+        if delta is not None and not pd.isna(delta):
+            record["yoy_delta"] = round(float(delta), 4)
+        if "value_raw" in row and not pd.isna(row["value_raw"]):
+            record["value_raw"] = round(float(row["value_raw"]), 4)
+        if "source" in row and row["source"] is not None:
+            record["source"] = row["source"]
+        records.append(record)
     return records
 
 
@@ -203,20 +516,22 @@ def build_city_data(city: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any
     label = city_label(city)
 
     print(f"Processing {label}...", flush=True)
-    nasa_df = fetch_nasa_power(lat, lon, NASA_START_YEAR, NASA_END_YEAR)
+    temp_df = fetch_open_meteo_temperature(lat, lon)
+    temp_df = temp_df.rename(columns={"temperature": "value"})
+    temp_df = add_yoy(temp_df, metric="temperature")
 
-    temp_df = nasa_df[["date", "temperature"]].rename(columns={"temperature": "value"})
-    temp_df = add_yoy(temp_df)
-    uv_df = nasa_df.dropna(subset=["uv"])[["date", "uv"]].rename(columns={"uv": "value"})
-    uv_df = add_yoy(uv_df)
+    uv_df = fetch_combined_uv(lat, lon)
+    uv_df = add_yoy(uv_df, metric="uv")
 
-    period_end = temp_df["date"].max() if not temp_df.empty else PERIOD_END
+    period_end = max(temp_df["date"].max(), uv_df["date"].max() if not uv_df.empty else temp_df["date"].max())
+    uv_sources = uv_df["source"].value_counts().to_dict() if "source" in uv_df.columns else {}
 
     city_entry = {
         "id": city["id"],
         "name": label,
         "lat": lat,
         "lon": lon,
+        "data_version": DATA_VERSION,
         "series": {
             "uv": series_to_records(uv_df),
             "temperature": series_to_records(temp_df),
@@ -225,7 +540,7 @@ def build_city_data(city: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any
             "uv": compute_summary(uv_df),
             "temperature": compute_summary(temp_df),
         },
-        "period": {"start": PERIOD_START, "end": period_end},
+        "period": {"start": temp_df["date"].min(), "end": period_end},
     }
 
     provenance = {
@@ -234,20 +549,24 @@ def build_city_data(city: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any
         "lat": lat,
         "lon": lon,
         "fetched_at": datetime.now(timezone.utc).isoformat(),
-        "nasa_monthly_points": int(len(nasa_df)),
-        "sources": [s["id"] for s in SOURCES],
+        "temperature_points": int(len(temp_df)),
+        "uv_points": int(len(uv_df)),
+        "uv_sources": uv_sources,
+        "sources": ["open_meteo_era5", "nasa_power", "open_meteo_historical_forecast"],
     }
 
     return city_entry, provenance
 
 
 def build_knowledge_graph(cities_config: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    global PERIOD_END
+
     cities_block: dict[str, Any] = {}
     provenance_cities: list[dict[str, Any]] = []
     all_edges: list[dict[str, Any]] = []
     nodes: list[dict[str, Any]] = [
-        {"id": "metric:uv", "type": "Metric", "unit": "UV index", "source": "nasa_power"},
-        {"id": "metric:temperature", "type": "Metric", "unit": "degC", "source": "nasa_power"},
+        {"id": "metric:uv", "type": "Metric", "unit": "WHO UV Index", "source": "nasa_power+open_meteo_who"},
+        {"id": "metric:temperature", "type": "Metric", "unit": "degC", "source": "open_meteo_era5"},
     ]
 
     for city in cities_config["cities"]:
@@ -256,20 +575,45 @@ def build_knowledge_graph(cities_config: dict[str, Any]) -> tuple[dict[str, Any]
         provenance_cities.append(prov)
         nodes.append({"id": f"loc:{city['id']}", "type": "Place", "label": city_entry["name"]})
         all_edges.extend(build_graph_edges(city["id"], city_entry["series"]))
+        time.sleep(1.5)
 
     for metric in ("uv", "temperature"):
         all_edges.extend(build_comparison_edges(cities_block, metric))
 
     period_end = max(c["period"]["end"] for c in cities_block.values())
-    period_start = PERIOD_START
+    PERIOD_END = period_end
+    earliest_temp = min(
+        city["series"]["temperature"][0]["date"]
+        for city in cities_block.values()
+        if city["series"].get("temperature")
+    )
+    earliest_uv = min(
+        city["series"]["uv"][0]["date"]
+        for city in cities_block.values()
+        if city["series"].get("uv")
+    )
+    earliest_uv_who = min(
+        point["date"]
+        for city in cities_block.values()
+        for point in city["series"].get("uv", [])
+        if point["date"] >= WHO_UV_START_MONTH
+    )
+    period_start = earliest_temp
 
     graph = {
         "metadata": {
+            "data_version": DATA_VERSION,
             "default_city": cities_config.get("default_city", "covina-ca"),
             "period": {
                 "start": period_start,
+                "default_start": DEFAULT_PERIOD_START,
                 "end": period_end,
                 "latest_nasa": period_end,
+                "earliest_temperature": earliest_temp,
+                "earliest_uv": earliest_uv,
+                "earliest_uv_who": earliest_uv_who,
+                "uv_who_start": WHO_UV_START_MONTH,
+                "calendar_month": _last_complete.strftime("%Y-%m"),
             },
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "sources": SOURCES,
@@ -312,6 +656,28 @@ def write_outputs(
     shutil.copy2(graph_path, WEB_DATA_DIR / "knowledge_graph.json")
     with (WEB_DATA_DIR / "cities.json").open("w", encoding="utf-8") as f:
         json.dump(cities_config, f, indent=2)
+
+    per_city_dir = WEB_DATA_DIR / "cities"
+    per_city_dir.mkdir(parents=True, exist_ok=True)
+    for city_id, city_entry in graph["cities"].items():
+        city_path = per_city_dir / f"{city_id}.json"
+        with city_path.open("w", encoding="utf-8") as f:
+            json.dump(city_entry, f, indent=2)
+        data_city_path = DATA_DIR / "cities" / f"{city_id}.json"
+        data_city_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(city_path, data_city_path)
+
+    comparison_edges = [e for e in graph["edges"] if e.get("type") == "comparedWith"]
+    graph_meta = {
+        "metadata": graph["metadata"],
+        "nodes": graph["nodes"],
+        "edges": comparison_edges,
+        "city_ids": list(graph["cities"].keys()),
+    }
+    meta_path = WEB_DATA_DIR / "graph-meta.json"
+    with meta_path.open("w", encoding="utf-8") as f:
+        json.dump(graph_meta, f, indent=2)
+    shutil.copy2(meta_path, DATA_DIR / "graph-meta.json")
 
     for path in (graph_path, summary_path, provenance_path):
         provenance.setdefault("file_hashes", {})[path.name] = file_sha256(path)

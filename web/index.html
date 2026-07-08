@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UV & Temperature Historical Trends</title>
-  <meta name="description" content="Multi-city UV and temperature trends from November 1993 to present. Default: Covina, CA.">
+  <meta name="description" content="Multi-city UV and temperature historical trends. Default: Covina, CA.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
@@ -12,7 +13,7 @@
   <header class="header">
     <div class="header-inner">
       <h1>UV &amp; Temperature Historical Trends</h1>
-      <p class="subtitle">Month-by-month and year-over-year analysis from November 1993</p>
+      <p class="subtitle" id="page-subtitle">Loading data range…</p>
     </div>
   </header>
 
@@ -20,27 +21,34 @@
     <aside class="sidebar">
       <section class="panel">
         <h2>Cities</h2>
-        <p class="hint">Default: Covina, CA. Select up to 5 cities to compare.</p>
+        <p class="hint" id="city-hint">Default: Covina, CA. Compare up to 5 cities at once.</p>
         <div id="city-list" class="city-list"></div>
+        <div class="city-add">
+          <button type="button" id="city-add-btn" class="city-add-btn" aria-expanded="false" title="Add a city">
+            <span class="city-add-icon" aria-hidden="true">+</span>
+            <span>Add city</span>
+          </button>
+          <div id="city-add-panel" class="city-add-panel hidden">
+            <label class="sr-only" for="city-search">Search for a city</label>
+            <div class="city-add-row">
+              <input type="search" id="city-search" placeholder="Search city…" autocomplete="off">
+              <button type="button" id="city-locate-btn" class="city-locate-btn">Use my location</button>
+            </div>
+            <ul id="city-suggestions" class="city-suggestions hidden"></ul>
+          </div>
+          <p id="city-add-status" class="hint city-add-status"></p>
+        </div>
       </section>
 
       <section class="panel">
         <h2>Metric</h2>
         <div class="metric-toggle" id="metric-toggle">
-          <label><input type="radio" name="metric" value="uv" checked> UV Index (all-sky)</label>
+          <label><input type="radio" name="metric" value="uv" checked> UV Index (WHO)</label>
           <label><input type="radio" name="metric" value="temperature"> Temperature</label>
         </div>
         <div id="temp-unit-toggle" class="temp-unit-toggle hidden">
           <label><input type="radio" name="temp-unit" value="F" checked> °F</label>
           <label><input type="radio" name="temp-unit" value="C"> °C</label>
-        </div>
-      </section>
-
-      <section class="panel">
-        <h2>Display</h2>
-        <div class="display-toggle" id="display-toggle">
-          <label><input type="radio" name="display-mode" value="charts" checked> Charts</label>
-          <label><input type="radio" name="display-mode" value="knowledge-graph"> Knowledge graph</label>
         </div>
       </section>
 
@@ -57,11 +65,11 @@
         </div>
         <div id="date-range" class="date-range">
           <label class="date-range-label">Date range</label>
-          <p class="hint" id="date-range-hint">Default: Nov 1993 – latest available</p>
+          <p class="hint" id="date-range-hint">Loading date range…</p>
           <div class="date-inputs">
             <div class="date-field">
               <label for="period-start">Start</label>
-              <input type="month" id="period-start" value="1993-11">
+              <input type="month" id="period-start">
             </div>
             <div class="date-field">
               <label for="period-end">End</label>
@@ -79,13 +87,19 @@
             <p class="insights-eyebrow">Insights</p>
             <p class="insights-context" id="summary-context"></p>
           </div>
+          <div class="nl-summary-block">
+            <p class="nl-summary" id="nl-summary">Analyzing trends…</p>
+            <p class="nl-summary-status hint" id="nl-summary-status"></p>
+          </div>
           <div class="insights-cards" id="summary-table"></div>
         </div>
       </section>
 
       <div id="charts-view">
         <section class="chart-panel">
-          <canvas id="main-chart"></canvas>
+          <div class="chart-wrap">
+            <canvas id="main-chart"></canvas>
+          </div>
           <div id="temp-legend" class="temp-legend hidden" aria-hidden="true">
             <span class="temp-legend-label">Cold</span>
             <div class="temp-legend-gradient"></div>
@@ -93,7 +107,9 @@
           </div>
         </section>
         <section class="chart-panel" id="yoy-panel">
-          <canvas id="yoy-chart"></canvas>
+          <div class="chart-wrap chart-wrap-sm">
+            <canvas id="yoy-chart"></canvas>
+          </div>
         </section>
 
         <section class="panel comparison-panel">
@@ -104,7 +120,7 @@
                 <tr>
                   <th data-sort="name">City</th>
                   <th data-sort="avg_yoy">Avg YoY %</th>
-                  <th data-sort="change">Change 1993→now %</th>
+                  <th data-sort="change">Change %</th>
                   <th data-sort="min">Min</th>
                   <th data-sort="max">Max</th>
                 </tr>
@@ -115,33 +131,17 @@
         </section>
       </div>
 
-      <section class="kg-panel hidden" id="kg-panel">
-        <div class="kg-layout">
-          <div class="kg-main">
-            <div class="kg-toolbar">
-              <p class="kg-hint" id="kg-hint">Explore how cities connect to NASA POWER data.</p>
-              <p class="kg-hint-sub">Click a city to inspect. Click the canvas to reset.</p>
-            </div>
-            <div id="kg-graph" class="kg-graph" aria-label="Interactive knowledge graph"></div>
-            <div id="kg-tooltip" class="kg-tooltip hidden" role="tooltip"></div>
-          </div>
-          <aside class="kg-detail panel" id="kg-detail">
-            <h2>Details</h2>
-            <p class="hint" id="kg-detail-placeholder">Select a node to see relationships and stats.</p>
-            <div id="kg-detail-content" class="hidden"></div>
-          </aside>
-        </div>
-      </section>
-
       <footer class="footer">
         <p>
-          Data: <a href="https://power.larc.nasa.gov/" target="_blank" rel="noopener">NASA POWER</a>.
+          Data: temperature from <a href="https://open-meteo.com/en/docs/historical-weather-api" target="_blank" rel="noopener">Open-Meteo ERA5</a>; UV from <a href="https://power.larc.nasa.gov/" target="_blank" rel="noopener">NASA POWER</a> (2001–2020) and <a href="https://open-meteo.com/en/docs/historical-forecast-api" target="_blank" rel="noopener">Open-Meteo WHO</a> (2021+).
         </p>
         <p id="attestation-line"></p>
       </footer>
     </div>
   </main>
 
-  <script src="app.js"></script>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script type="module" src="app.js"></script>
 </body>
 </html>

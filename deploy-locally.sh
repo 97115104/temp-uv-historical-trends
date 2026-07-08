@@ -87,6 +87,37 @@ start_background() {
   PIDS+=($!)
 }
 
+free_port() {
+  local port="$1"
+  if ! command -v lsof >/dev/null 2>&1; then
+    warn "lsof not found; cannot free port ${port}"
+    return 1
+  fi
+
+  local pids
+  pids="$(lsof -ti ":${port}" -sTCP:LISTEN 2>/dev/null || true)"
+  if [[ -z "$pids" ]]; then
+    return 0
+  fi
+
+  info "Stopping process(es) on port ${port}: ${pids//$'\n'/ }"
+  # shellcheck disable=SC2086
+  kill $pids 2>/dev/null || true
+
+  local elapsed=0
+  while lsof -i ":${port}" -sTCP:LISTEN >/dev/null 2>&1; do
+    if (( elapsed >= 5 )); then
+      warn "Force-killing stubborn listener(s) on port ${port}"
+      # shellcheck disable=SC2086
+      kill -9 $pids 2>/dev/null || true
+      sleep 1
+      break
+    fi
+    sleep 0.5
+    elapsed=$((elapsed + 1))
+  done
+}
+
 ensure_python_deps() {
   if python3 -c "import pandas, numpy, requests" 2>/dev/null; then
     return 0
@@ -98,14 +129,18 @@ ensure_python_deps() {
 
 ensure_data() {
   local graph="$REPO_ROOT/web/data/knowledge_graph.json"
+  local meta="$REPO_ROOT/web/data/graph-meta.json"
   local cities="$REPO_ROOT/web/data/cities.json"
 
-  if [[ -f "$graph" && -f "$cities" ]]; then
-    return 0
+  if [[ ! -f "$graph" || ! -f "$meta" || ! -f "$cities" ]]; then
+    info "Building dashboard data (first run; ~30 seconds)..."
+    if ! python3 "$REPO_ROOT/build_data.py"; then
+      error "build_data.py failed. Fix errors above, then run: python3 build_data.py"
+      exit 1
+    fi
+  else
+    info "Using existing data. Run python3 build_data.py to refresh Open-Meteo/NASA data."
   fi
-
-  info "Building dashboard data (first run; ~30 seconds)..."
-  python3 "$REPO_ROOT/build_data.py"
 }
 
 # --- services ---
@@ -120,11 +155,11 @@ start_services() {
   fi
 
   if command -v lsof >/dev/null 2>&1 && lsof -i ":${WEB_PORT}" -sTCP:LISTEN >/dev/null 2>&1; then
-    error "Port ${WEB_PORT} is in use but $PRIMARY_URL is not responding"
-    return 1
+    warn "Port ${WEB_PORT} is in use but $PRIMARY_URL is not responding — restarting"
+    free_port "$WEB_PORT"
   fi
 
-  start_background "cd \"$REPO_ROOT/web\" && python3 -m http.server ${WEB_PORT}"
+  start_background "WEB_PORT=${WEB_PORT} python3 \"$REPO_ROOT/serve.py\""
 }
 
 # --- main ---

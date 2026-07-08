@@ -1,12 +1,28 @@
 {
-  "generated_at": "2026-07-07T22:57:46.946411+00:00",
+  "generated_at": "2026-07-08T00:19:15.102874+00:00",
   "sources": [
+    {
+      "id": "open_meteo_era5",
+      "name": "Open-Meteo ERA5",
+      "institution": "ECMWF / Open-Meteo",
+      "url": "https://open-meteo.com/en/docs/historical-weather-api",
+      "role": "temperature",
+      "attribution": "ERA5 reanalysis via Open-Meteo (CC BY 4.0)"
+    },
+    {
+      "id": "open_meteo_historical_forecast",
+      "name": "Open-Meteo Historical Forecast",
+      "institution": "Open-Meteo",
+      "url": "https://open-meteo.com/en/docs/historical-forecast-api",
+      "role": "uv",
+      "attribution": "WHO-compatible UV Index via Open-Meteo (CC BY 4.0)"
+    },
     {
       "id": "nasa_power",
       "name": "NASA POWER",
       "institution": "NASA Langley Research Center",
       "url": "https://power.larc.nasa.gov/",
-      "role": "uv_and_temperature",
+      "role": "legacy_uv",
       "attribution": "NASA POWER Project"
     }
   ],
@@ -16,10 +32,17 @@
       "city_name": "Covina, CA",
       "lat": 34.0897,
       "lon": -117.8912,
-      "fetched_at": "2026-07-07T22:57:44.695047+00:00",
-      "nasa_monthly_points": 386,
+      "fetched_at": "2026-07-08T00:18:44.669219+00:00",
+      "temperature_points": 546,
+      "uv_points": 306,
+      "uv_sources": {
+        "nasa_power": 242,
+        "open_meteo_who": 64
+      },
       "sources": [
-        "nasa_power"
+        "open_meteo_era5",
+        "nasa_power",
+        "open_meteo_historical_forecast"
       ]
     },
     {
@@ -27,10 +50,17 @@
       "city_name": "Los Angeles, CA",
       "lat": 34.0522,
       "lon": -118.2437,
-      "fetched_at": "2026-07-07T22:57:45.411491+00:00",
-      "nasa_monthly_points": 386,
+      "fetched_at": "2026-07-08T00:18:50.874100+00:00",
+      "temperature_points": 546,
+      "uv_points": 306,
+      "uv_sources": {
+        "nasa_power": 242,
+        "open_meteo_who": 64
+      },
       "sources": [
-        "nasa_power"
+        "open_meteo_era5",
+        "nasa_power",
+        "open_meteo_historical_forecast"
       ]
     },
     {
@@ -38,10 +68,17 @@
       "city_name": "San Francisco, CA",
       "lat": 37.7749,
       "lon": -122.4194,
-      "fetched_at": "2026-07-07T22:57:45.892626+00:00",
-      "nasa_monthly_points": 386,
+      "fetched_at": "2026-07-08T00:18:57.161158+00:00",
+      "temperature_points": 546,
+      "uv_points": 306,
+      "uv_sources": {
+        "nasa_power": 242,
+        "open_meteo_who": 64
+      },
       "sources": [
-        "nasa_power"
+        "open_meteo_era5",
+        "nasa_power",
+        "open_meteo_historical_forecast"
       ]
     },
     {
@@ -49,10 +86,17 @@
       "city_name": "Seattle, WA",
       "lat": 47.6062,
       "lon": -122.3321,
-      "fetched_at": "2026-07-07T22:57:46.426782+00:00",
-      "nasa_monthly_points": 386,
+      "fetched_at": "2026-07-08T00:19:03.627065+00:00",
+      "temperature_points": 546,
+      "uv_points": 306,
+      "uv_sources": {
+        "nasa_power": 242,
+        "open_meteo_who": 64
+      },
       "sources": [
-        "nasa_power"
+        "open_meteo_era5",
+        "nasa_power",
+        "open_meteo_historical_forecast"
       ]
     },
     {
@@ -60,16 +104,23 @@
       "city_name": "New York, NY",
       "lat": 40.7128,
       "lon": -74.006,
-      "fetched_at": "2026-07-07T22:57:46.935503+00:00",
-      "nasa_monthly_points": 386,
+      "fetched_at": "2026-07-08T00:19:13.587910+00:00",
+      "temperature_points": 546,
+      "uv_points": 306,
+      "uv_sources": {
+        "nasa_power": 242,
+        "open_meteo_who": 64
+      },
       "sources": [
-        "nasa_power"
+        "open_meteo_era5",
+        "nasa_power",
+        "open_meteo_historical_forecast"
       ]
     }
   ],
   "file_hashes": {
-    "knowledge_graph.json": "a9ab433b0678f87c43bfcf9a2fca3cdd2d6bbbe91e2bfb3a676187f48ff3f69b",
-    "summary.json": "f655d0cda73dbc9979c9f3b343c1eb886e9ba303e4cfa28e5cb91d98c2966692",
-    "provenance.json": "cf02bf5c0180eece3a2be81f56213d533b08455612e0a9eb3a7fe74f4b3f440f"
+    "knowledge_graph.json": "e30aeaa6eaf7d12ed988b8af4248709767814f43f1d43ef8332610d83f8615a9",
+    "summary.json": "32c4051fa0b83f04c7539b1c8cff6bbdd5698bee3d695e7c82852ea6c8ff6bb0",
+    "provenance.json": "c59416c36084d0c83fef97403a68b89ef15e6213b90cd0e01de9f00c54853024"
   }
 }

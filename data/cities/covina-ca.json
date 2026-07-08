@@ -1,0 +1,5763 @@
+{
+  "id": "covina-ca",
+  "name": "Covina, CA",
+  "lat": 34.0897,
+  "lon": -117.8912,
+  "data_version": 4,
+  "series": {
+    "uv": [
+      {
+        "date": "2001-01",
+        "value": 0.51,
+        "yoy_pct": null,
+        "value_raw": 0.51,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2001-02",
+        "value": 0.73,
+        "yoy_pct": null,
+        "value_raw": 0.73,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2001-03",
+        "value": 7.6694,
+        "yoy_pct": null,
+        "value_raw": 1.28,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2001-04",
+        "value": 8.3976,
+        "yoy_pct": null,
+        "value_raw": 1.72,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2001-05",
+        "value": 7.9469,
+        "yoy_pct": null,
+        "value_raw": 2.24,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2001-06",
+        "value": 9.2558,
+        "yoy_pct": null,
+        "value_raw": 2.75,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2001-07",
+        "value": 7.6947,
+        "yoy_pct": null,
+        "value_raw": 2.55,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2001-08",
+        "value": 8.4,
+        "yoy_pct": null,
+        "value_raw": 2.42,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2001-09",
+        "value": 8.5506,
+        "yoy_pct": null,
+        "value_raw": 1.91,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2001-10",
+        "value": 6.5551,
+        "yoy_pct": null,
+        "value_raw": 1.19,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2001-11",
+        "value": 5.2899,
+        "yoy_pct": null,
+        "value_raw": 0.73,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2001-12",
+        "value": 4.1256,
+        "yoy_pct": null,
+        "value_raw": 0.47,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-01",
+        "value": 0.58,
+        "yoy_pct": 13.7255,
+        "yoy_delta": 0.07,
+        "value_raw": 0.58,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-02",
+        "value": 1.07,
+        "yoy_pct": 46.5753,
+        "yoy_delta": 0.34,
+        "value_raw": 1.07,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-03",
+        "value": 8.5682,
+        "yoy_pct": 11.7193,
+        "yoy_delta": 0.8988,
+        "value_raw": 1.43,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-04",
+        "value": 9.1788,
+        "yoy_pct": 9.3027,
+        "yoy_delta": 0.7812,
+        "value_raw": 1.88,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-05",
+        "value": 7.8405,
+        "yoy_pct": -1.3389,
+        "yoy_delta": -0.1064,
+        "value_raw": 2.21,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-06",
+        "value": 9.1212,
+        "yoy_pct": -1.4542,
+        "yoy_delta": -0.1346,
+        "value_raw": 2.71,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-07",
+        "value": 7.8758,
+        "yoy_pct": 2.3536,
+        "yoy_delta": 0.1811,
+        "value_raw": 2.61,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-08",
+        "value": 7.9835,
+        "yoy_pct": -4.9583,
+        "yoy_delta": -0.4165,
+        "value_raw": 2.3,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-09",
+        "value": 7.8791,
+        "yoy_pct": -7.8533,
+        "yoy_delta": -0.6715,
+        "value_raw": 1.76,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-10",
+        "value": 5.8941,
+        "yoy_pct": -10.0838,
+        "yoy_delta": -0.661,
+        "value_raw": 1.07,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-11",
+        "value": 4.8551,
+        "yoy_pct": -8.2194,
+        "yoy_delta": -0.4348,
+        "value_raw": 0.67,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2002-12",
+        "value": 3.95,
+        "yoy_pct": -4.2564,
+        "yoy_delta": -0.1756,
+        "value_raw": 0.45,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-01",
+        "value": 0.61,
+        "yoy_pct": 5.1724,
+        "yoy_delta": 0.03,
+        "value_raw": 0.61,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-02",
+        "value": 0.74,
+        "yoy_pct": -30.8411,
+        "yoy_delta": -0.33,
+        "value_raw": 0.74,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-03",
+        "value": 7.7893,
+        "yoy_pct": -9.0906,
+        "yoy_delta": -0.7789,
+        "value_raw": 1.3,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-04",
+        "value": 8.3,
+        "yoy_pct": -9.5742,
+        "yoy_delta": -0.8788,
+        "value_raw": 1.7,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-05",
+        "value": 7.6631,
+        "yoy_pct": -2.2626,
+        "yoy_delta": -0.1774,
+        "value_raw": 2.16,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-06",
+        "value": 8.2798,
+        "yoy_pct": -9.2247,
+        "yoy_delta": -0.8414,
+        "value_raw": 2.46,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-07",
+        "value": 7.6947,
+        "yoy_pct": -2.2994,
+        "yoy_delta": -0.1811,
+        "value_raw": 2.55,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-08",
+        "value": 8.157,
+        "yoy_pct": 2.1732,
+        "yoy_delta": 0.1735,
+        "value_raw": 2.35,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-09",
+        "value": 8.3715,
+        "yoy_pct": 6.2494,
+        "yoy_delta": 0.4924,
+        "value_raw": 1.87,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-10",
+        "value": 6.9958,
+        "yoy_pct": 18.6916,
+        "yoy_delta": 1.1017,
+        "value_raw": 1.27,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-11",
+        "value": 4.7826,
+        "yoy_pct": -1.4933,
+        "yoy_delta": -0.0725,
+        "value_raw": 0.66,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2003-12",
+        "value": 4.1256,
+        "yoy_pct": 4.4456,
+        "yoy_delta": 0.1756,
+        "value_raw": 0.47,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-01",
+        "value": 0.61,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 0.61,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-02",
+        "value": 0.82,
+        "yoy_pct": 10.8108,
+        "yoy_delta": 0.08,
+        "value_raw": 0.82,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-03",
+        "value": 9.1074,
+        "yoy_pct": 16.9219,
+        "yoy_delta": 1.3181,
+        "value_raw": 1.52,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-04",
+        "value": 8.9835,
+        "yoy_pct": 8.2349,
+        "yoy_delta": 0.6835,
+        "value_raw": 1.84,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-05",
+        "value": 8.1598,
+        "yoy_pct": 6.4817,
+        "yoy_delta": 0.4967,
+        "value_raw": 2.3,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-06",
+        "value": 8.7846,
+        "yoy_pct": 6.0968,
+        "yoy_delta": 0.5048,
+        "value_raw": 2.61,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-07",
+        "value": 8.0568,
+        "yoy_pct": 4.7058,
+        "yoy_delta": 0.3621,
+        "value_raw": 2.67,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-08",
+        "value": 8.1917,
+        "yoy_pct": 0.4254,
+        "yoy_delta": 0.0347,
+        "value_raw": 2.36,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-09",
+        "value": 8.3715,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 1.87,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-10",
+        "value": 5.7288,
+        "yoy_pct": -18.1109,
+        "yoy_delta": -1.267,
+        "value_raw": 1.04,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-11",
+        "value": 5.0,
+        "yoy_pct": 4.5456,
+        "yoy_delta": 0.2174,
+        "value_raw": 0.69,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2004-12",
+        "value": 4.1256,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 0.47,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-01",
+        "value": 0.5,
+        "yoy_pct": -18.0328,
+        "yoy_delta": -0.11,
+        "value_raw": 0.5,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-02",
+        "value": 0.73,
+        "yoy_pct": -10.9756,
+        "yoy_delta": -0.09,
+        "value_raw": 0.73,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-03",
+        "value": 7.4298,
+        "yoy_pct": -18.4202,
+        "yoy_delta": -1.6776,
+        "value_raw": 1.24,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-04",
+        "value": 9.0812,
+        "yoy_pct": 1.0875,
+        "yoy_delta": 0.0977,
+        "value_raw": 1.86,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-05",
+        "value": 8.1952,
+        "yoy_pct": 0.4338,
+        "yoy_delta": 0.0354,
+        "value_raw": 2.31,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-06",
+        "value": 8.8519,
+        "yoy_pct": 0.7661,
+        "yoy_delta": 0.0673,
+        "value_raw": 2.63,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-07",
+        "value": 7.9965,
+        "yoy_pct": -0.7484,
+        "yoy_delta": -0.0603,
+        "value_raw": 2.65,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-08",
+        "value": 8.2959,
+        "yoy_pct": 1.272,
+        "yoy_delta": 0.1042,
+        "value_raw": 2.39,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-09",
+        "value": 8.1029,
+        "yoy_pct": -3.2085,
+        "yoy_delta": -0.2686,
+        "value_raw": 1.81,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-10",
+        "value": 6.7203,
+        "yoy_pct": 17.3073,
+        "yoy_delta": 0.9915,
+        "value_raw": 1.22,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-11",
+        "value": 5.5072,
+        "yoy_pct": 10.144,
+        "yoy_delta": 0.5072,
+        "value_raw": 0.76,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2005-12",
+        "value": 4.1256,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 0.47,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-01",
+        "value": 0.6,
+        "yoy_pct": 20.0,
+        "yoy_delta": 0.1,
+        "value_raw": 0.6,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-02",
+        "value": 1.03,
+        "yoy_pct": 41.0959,
+        "yoy_delta": 0.3,
+        "value_raw": 1.03,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-03",
+        "value": 7.25,
+        "yoy_pct": -2.42,
+        "yoy_delta": -0.1798,
+        "value_raw": 1.21,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-04",
+        "value": 8.6418,
+        "yoy_pct": -4.8386,
+        "yoy_delta": -0.4394,
+        "value_raw": 1.77,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-05",
+        "value": 7.9469,
+        "yoy_pct": -3.0298,
+        "yoy_delta": -0.2483,
+        "value_raw": 2.24,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-06",
+        "value": 8.4144,
+        "yoy_pct": -4.9424,
+        "yoy_delta": -0.4375,
+        "value_raw": 2.5,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-07",
+        "value": 7.6042,
+        "yoy_pct": -4.9059,
+        "yoy_delta": -0.3923,
+        "value_raw": 2.52,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-08",
+        "value": 8.5388,
+        "yoy_pct": 2.928,
+        "yoy_delta": 0.2429,
+        "value_raw": 2.46,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-09",
+        "value": 8.2372,
+        "yoy_pct": 1.6574,
+        "yoy_delta": 0.1343,
+        "value_raw": 1.84,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-10",
+        "value": 6.1695,
+        "yoy_pct": -8.1961,
+        "yoy_delta": -0.5508,
+        "value_raw": 1.12,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-11",
+        "value": 5.2174,
+        "yoy_pct": -5.2622,
+        "yoy_delta": -0.2898,
+        "value_raw": 0.72,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2006-12",
+        "value": 4.3011,
+        "yoy_pct": 4.2539,
+        "yoy_delta": 0.1755,
+        "value_raw": 0.49,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-01",
+        "value": 0.55,
+        "yoy_pct": -8.3333,
+        "yoy_delta": -0.05,
+        "value_raw": 0.55,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-02",
+        "value": 0.87,
+        "yoy_pct": -15.534,
+        "yoy_delta": -0.16,
+        "value_raw": 0.87,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-03",
+        "value": 8.2087,
+        "yoy_pct": 13.2234,
+        "yoy_delta": 0.9587,
+        "value_raw": 1.37,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-04",
+        "value": 8.4953,
+        "yoy_pct": -1.6952,
+        "yoy_delta": -0.1465,
+        "value_raw": 1.74,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-05",
+        "value": 7.6631,
+        "yoy_pct": -3.5712,
+        "yoy_delta": -0.2838,
+        "value_raw": 2.16,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-06",
+        "value": 8.8519,
+        "yoy_pct": 5.1994,
+        "yoy_delta": 0.4375,
+        "value_raw": 2.63,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-07",
+        "value": 7.9663,
+        "yoy_pct": 4.7618,
+        "yoy_delta": 0.3621,
+        "value_raw": 2.64,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-08",
+        "value": 8.2264,
+        "yoy_pct": -3.6586,
+        "yoy_delta": -0.3124,
+        "value_raw": 2.37,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-09",
+        "value": 8.2372,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 1.84,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-10",
+        "value": 6.8856,
+        "yoy_pct": 11.6071,
+        "yoy_delta": 0.7161,
+        "value_raw": 1.25,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-11",
+        "value": 5.5072,
+        "yoy_pct": 5.5545,
+        "yoy_delta": 0.2898,
+        "value_raw": 0.76,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2007-12",
+        "value": 4.1256,
+        "yoy_pct": -4.0804,
+        "yoy_delta": -0.1755,
+        "value_raw": 0.47,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-01",
+        "value": 0.5,
+        "yoy_pct": -9.0909,
+        "yoy_delta": -0.05,
+        "value_raw": 0.5,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-02",
+        "value": 0.92,
+        "yoy_pct": 5.7471,
+        "yoy_delta": 0.05,
+        "value_raw": 0.92,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-03",
+        "value": 9.3471,
+        "yoy_pct": 13.8682,
+        "yoy_delta": 1.1384,
+        "value_raw": 1.56,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-04",
+        "value": 9.8624,
+        "yoy_pct": 16.0924,
+        "yoy_delta": 1.3671,
+        "value_raw": 2.02,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-05",
+        "value": 7.734,
+        "yoy_pct": 0.9252,
+        "yoy_delta": 0.0709,
+        "value_raw": 2.18,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-06",
+        "value": 9.4578,
+        "yoy_pct": 6.8449,
+        "yoy_delta": 0.6059,
+        "value_raw": 2.81,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-07",
+        "value": 7.8154,
+        "yoy_pct": -1.8942,
+        "yoy_delta": -0.1509,
+        "value_raw": 2.59,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-08",
+        "value": 8.2959,
+        "yoy_pct": 0.8448,
+        "yoy_delta": 0.0695,
+        "value_raw": 2.39,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-09",
+        "value": 7.9238,
+        "yoy_pct": -3.8047,
+        "yoy_delta": -0.3134,
+        "value_raw": 1.77,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-10",
+        "value": 6.6653,
+        "yoy_pct": -3.1994,
+        "yoy_delta": -0.2203,
+        "value_raw": 1.21,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-11",
+        "value": 5.2899,
+        "yoy_pct": -3.9457,
+        "yoy_delta": -0.2173,
+        "value_raw": 0.73,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2008-12",
+        "value": 3.7744,
+        "yoy_pct": -8.5127,
+        "yoy_delta": -0.3512,
+        "value_raw": 0.43,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-01",
+        "value": 0.61,
+        "yoy_pct": 22.0,
+        "yoy_delta": 0.11,
+        "value_raw": 0.61,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-02",
+        "value": 0.84,
+        "yoy_pct": -8.6957,
+        "yoy_delta": -0.08,
+        "value_raw": 0.84,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-03",
+        "value": 8.6281,
+        "yoy_pct": -7.6922,
+        "yoy_delta": -0.719,
+        "value_raw": 1.44,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-04",
+        "value": 8.9835,
+        "yoy_pct": -8.9116,
+        "yoy_delta": -0.8789,
+        "value_raw": 1.84,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-05",
+        "value": 8.3017,
+        "yoy_pct": 7.3403,
+        "yoy_delta": 0.5677,
+        "value_raw": 2.34,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-06",
+        "value": 7.6739,
+        "yoy_pct": -18.8617,
+        "yoy_delta": -1.7839,
+        "value_raw": 2.28,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-07",
+        "value": 8.2681,
+        "yoy_pct": 5.7924,
+        "yoy_delta": 0.4527,
+        "value_raw": 2.74,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-08",
+        "value": 8.157,
+        "yoy_pct": -1.6743,
+        "yoy_delta": -0.1389,
+        "value_raw": 2.35,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-09",
+        "value": 8.0134,
+        "yoy_pct": 1.1308,
+        "yoy_delta": 0.0896,
+        "value_raw": 1.79,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-10",
+        "value": 6.3347,
+        "yoy_pct": -4.96,
+        "yoy_delta": -0.3306,
+        "value_raw": 1.15,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-11",
+        "value": 5.2899,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 0.73,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2009-12",
+        "value": 3.95,
+        "yoy_pct": 4.6524,
+        "yoy_delta": 0.1756,
+        "value_raw": 0.45,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-01",
+        "value": 0.48,
+        "yoy_pct": -21.3115,
+        "yoy_delta": -0.13,
+        "value_raw": 0.48,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-02",
+        "value": 0.74,
+        "yoy_pct": -11.9048,
+        "yoy_delta": -0.1,
+        "value_raw": 0.74,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-03",
+        "value": 7.8492,
+        "yoy_pct": -9.0275,
+        "yoy_delta": -0.7789,
+        "value_raw": 1.31,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-04",
+        "value": 8.3488,
+        "yoy_pct": -7.0652,
+        "yoy_delta": -0.6347,
+        "value_raw": 1.71,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-05",
+        "value": 7.4147,
+        "yoy_pct": -10.6846,
+        "yoy_delta": -0.887,
+        "value_raw": 2.09,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-06",
+        "value": 8.549,
+        "yoy_pct": 11.4036,
+        "yoy_delta": 0.8751,
+        "value_raw": 2.54,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-07",
+        "value": 8.0568,
+        "yoy_pct": -2.5556,
+        "yoy_delta": -0.2113,
+        "value_raw": 2.67,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-08",
+        "value": 8.1917,
+        "yoy_pct": 0.4254,
+        "yoy_delta": 0.0347,
+        "value_raw": 2.36,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-09",
+        "value": 8.1924,
+        "yoy_pct": 2.2338,
+        "yoy_delta": 0.179,
+        "value_raw": 1.83,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-10",
+        "value": 6.1695,
+        "yoy_pct": -2.6079,
+        "yoy_delta": -0.1652,
+        "value_raw": 1.12,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-11",
+        "value": 5.3623,
+        "yoy_pct": 1.3686,
+        "yoy_delta": 0.0724,
+        "value_raw": 0.74,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2010-12",
+        "value": 4.1256,
+        "yoy_pct": 4.4456,
+        "yoy_delta": 0.1756,
+        "value_raw": 0.47,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-01",
+        "value": 0.59,
+        "yoy_pct": null,
+        "yoy_delta": 0.11,
+        "value_raw": 0.59,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-02",
+        "value": 0.92,
+        "yoy_pct": 24.3243,
+        "yoy_delta": 0.18,
+        "value_raw": 0.92,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-03",
+        "value": 8.0888,
+        "yoy_pct": 3.0525,
+        "yoy_delta": 0.2396,
+        "value_raw": 1.35,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-04",
+        "value": 9.7647,
+        "yoy_pct": 16.9593,
+        "yoy_delta": 1.4159,
+        "value_raw": 2.0,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-05",
+        "value": 8.479,
+        "yoy_pct": 14.3539,
+        "yoy_delta": 1.0643,
+        "value_raw": 2.39,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-06",
+        "value": 9.1885,
+        "yoy_pct": 7.4804,
+        "yoy_delta": 0.6395,
+        "value_raw": 2.73,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-07",
+        "value": 8.1172,
+        "yoy_pct": 0.7497,
+        "yoy_delta": 0.0604,
+        "value_raw": 2.69,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-08",
+        "value": 8.5041,
+        "yoy_pct": 3.8136,
+        "yoy_delta": 0.3124,
+        "value_raw": 2.45,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-09",
+        "value": 7.8791,
+        "yoy_pct": -3.8243,
+        "yoy_delta": -0.3133,
+        "value_raw": 1.76,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-10",
+        "value": 6.6653,
+        "yoy_pct": 8.0363,
+        "yoy_delta": 0.4958,
+        "value_raw": 1.21,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-11",
+        "value": 5.0,
+        "yoy_pct": -6.7564,
+        "yoy_delta": -0.3623,
+        "value_raw": 0.69,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2011-12",
+        "value": 3.95,
+        "yoy_pct": -4.2564,
+        "yoy_delta": -0.1756,
+        "value_raw": 0.45,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-01",
+        "value": 0.57,
+        "yoy_pct": -3.3898,
+        "yoy_delta": -0.02,
+        "value_raw": 0.57,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-02",
+        "value": 0.8,
+        "yoy_pct": -13.0435,
+        "yoy_delta": -0.12,
+        "value_raw": 0.8,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-03",
+        "value": 8.3884,
+        "yoy_pct": 3.7039,
+        "yoy_delta": 0.2996,
+        "value_raw": 1.4,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-04",
+        "value": 9.4718,
+        "yoy_pct": -2.9996,
+        "yoy_delta": -0.2929,
+        "value_raw": 1.94,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-05",
+        "value": 8.4081,
+        "yoy_pct": -0.8362,
+        "yoy_delta": -0.0709,
+        "value_raw": 2.37,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-06",
+        "value": 9.2558,
+        "yoy_pct": 0.7324,
+        "yoy_delta": 0.0673,
+        "value_raw": 2.75,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-07",
+        "value": 7.8154,
+        "yoy_pct": -3.718,
+        "yoy_delta": -0.3018,
+        "value_raw": 2.59,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-08",
+        "value": 8.0182,
+        "yoy_pct": -5.7137,
+        "yoy_delta": -0.4859,
+        "value_raw": 2.31,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-09",
+        "value": 8.1029,
+        "yoy_pct": 2.8404,
+        "yoy_delta": 0.2238,
+        "value_raw": 1.81,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-10",
+        "value": 6.5551,
+        "yoy_pct": -1.6533,
+        "yoy_delta": -0.1102,
+        "value_raw": 1.19,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-11",
+        "value": 5.0,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 0.69,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2012-12",
+        "value": 3.7744,
+        "yoy_pct": -4.4456,
+        "yoy_delta": -0.1756,
+        "value_raw": 0.43,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-01",
+        "value": 0.56,
+        "yoy_pct": -1.7544,
+        "yoy_delta": -0.01,
+        "value_raw": 0.56,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-02",
+        "value": 0.9,
+        "yoy_pct": 12.5,
+        "yoy_delta": 0.1,
+        "value_raw": 0.9,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-03",
+        "value": 8.688,
+        "yoy_pct": 3.5716,
+        "yoy_delta": 0.2996,
+        "value_raw": 1.45,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-04",
+        "value": 9.6671,
+        "yoy_pct": 2.0619,
+        "yoy_delta": 0.1953,
+        "value_raw": 1.98,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-05",
+        "value": 7.9114,
+        "yoy_pct": -5.9074,
+        "yoy_delta": -0.4967,
+        "value_raw": 2.23,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-06",
+        "value": 8.7173,
+        "yoy_pct": -5.818,
+        "yoy_delta": -0.5385,
+        "value_raw": 2.59,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-07",
+        "value": 6.9404,
+        "yoy_pct": -11.1958,
+        "yoy_delta": -0.875,
+        "value_raw": 2.3,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-08",
+        "value": 7.8793,
+        "yoy_pct": -1.7323,
+        "yoy_delta": -0.1389,
+        "value_raw": 2.27,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-09",
+        "value": 8.1029,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 1.81,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-10",
+        "value": 6.1144,
+        "yoy_pct": -6.723,
+        "yoy_delta": -0.4407,
+        "value_raw": 1.11,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-11",
+        "value": 4.7826,
+        "yoy_pct": -4.348,
+        "yoy_delta": -0.2174,
+        "value_raw": 0.66,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2013-12",
+        "value": 4.1256,
+        "yoy_pct": 9.3048,
+        "yoy_delta": 0.3512,
+        "value_raw": 0.47,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-01",
+        "value": 0.58,
+        "yoy_pct": 3.5714,
+        "yoy_delta": 0.02,
+        "value_raw": 0.58,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-02",
+        "value": 0.9,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 0.9,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-03",
+        "value": 8.688,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 1.45,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-04",
+        "value": 9.1788,
+        "yoy_pct": -5.0512,
+        "yoy_delta": -0.4883,
+        "value_raw": 1.88,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-05",
+        "value": 7.8759,
+        "yoy_pct": -0.4487,
+        "yoy_delta": -0.0355,
+        "value_raw": 2.22,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-06",
+        "value": 9.4241,
+        "yoy_pct": 8.108,
+        "yoy_delta": 0.7068,
+        "value_raw": 2.8,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-07",
+        "value": 7.8154,
+        "yoy_pct": 12.6073,
+        "yoy_delta": 0.875,
+        "value_raw": 2.59,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-08",
+        "value": 8.1917,
+        "yoy_pct": 3.9648,
+        "yoy_delta": 0.3124,
+        "value_raw": 2.36,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-09",
+        "value": 8.4163,
+        "yoy_pct": 3.8678,
+        "yoy_delta": 0.3134,
+        "value_raw": 1.88,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-10",
+        "value": 7.0508,
+        "yoy_pct": 15.3147,
+        "yoy_delta": 0.9364,
+        "value_raw": 1.28,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-11",
+        "value": 5.4348,
+        "yoy_pct": 13.6369,
+        "yoy_delta": 0.6522,
+        "value_raw": 0.75,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2014-12",
+        "value": 3.95,
+        "yoy_pct": -4.2564,
+        "yoy_delta": -0.1756,
+        "value_raw": 0.45,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-01",
+        "value": 0.56,
+        "yoy_pct": -3.4483,
+        "yoy_delta": -0.02,
+        "value_raw": 0.56,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-02",
+        "value": 0.93,
+        "yoy_pct": 3.3333,
+        "yoy_delta": 0.03,
+        "value_raw": 0.93,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-03",
+        "value": 8.5682,
+        "yoy_pct": -1.3789,
+        "yoy_delta": -0.1198,
+        "value_raw": 1.43,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-04",
+        "value": 8.7394,
+        "yoy_pct": -4.7871,
+        "yoy_delta": -0.4394,
+        "value_raw": 1.79,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-05",
+        "value": 6.8471,
+        "yoy_pct": -13.0626,
+        "yoy_delta": -1.0288,
+        "value_raw": 1.93,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-06",
+        "value": 8.65,
+        "yoy_pct": -8.214,
+        "yoy_delta": -0.7741,
+        "value_raw": 2.57,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-07",
+        "value": 7.4835,
+        "yoy_pct": -4.2467,
+        "yoy_delta": -0.3319,
+        "value_raw": 2.48,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-08",
+        "value": 8.3306,
+        "yoy_pct": 1.6956,
+        "yoy_delta": 0.1389,
+        "value_raw": 2.4,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-09",
+        "value": 8.282,
+        "yoy_pct": -1.5957,
+        "yoy_delta": -0.1343,
+        "value_raw": 1.85,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-10",
+        "value": 6.4449,
+        "yoy_pct": -8.5934,
+        "yoy_delta": -0.6059,
+        "value_raw": 1.17,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-11",
+        "value": 5.0725,
+        "yoy_pct": -6.6663,
+        "yoy_delta": -0.3623,
+        "value_raw": 0.7,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2015-12",
+        "value": 4.1256,
+        "yoy_pct": 4.4456,
+        "yoy_delta": 0.1756,
+        "value_raw": 0.47,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-01",
+        "value": 0.5,
+        "yoy_pct": -10.7143,
+        "yoy_delta": -0.06,
+        "value_raw": 0.5,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-02",
+        "value": 0.95,
+        "yoy_pct": 2.1505,
+        "yoy_delta": 0.02,
+        "value_raw": 0.95,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-03",
+        "value": 8.2686,
+        "yoy_pct": -3.4967,
+        "yoy_delta": -0.2996,
+        "value_raw": 1.38,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-04",
+        "value": 8.5441,
+        "yoy_pct": -2.2347,
+        "yoy_delta": -0.1953,
+        "value_raw": 1.75,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-05",
+        "value": 7.3083,
+        "yoy_pct": 6.7357,
+        "yoy_delta": 0.4612,
+        "value_raw": 2.06,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-06",
+        "value": 8.9529,
+        "yoy_pct": 3.5017,
+        "yoy_delta": 0.3029,
+        "value_raw": 2.66,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-07",
+        "value": 8.8112,
+        "yoy_pct": 17.7417,
+        "yoy_delta": 1.3277,
+        "value_raw": 2.92,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-08",
+        "value": 8.2264,
+        "yoy_pct": -1.2508,
+        "yoy_delta": -0.1042,
+        "value_raw": 2.37,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-09",
+        "value": 8.3715,
+        "yoy_pct": 1.0807,
+        "yoy_delta": 0.0895,
+        "value_raw": 1.87,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-10",
+        "value": 6.7203,
+        "yoy_pct": 4.2731,
+        "yoy_delta": 0.2754,
+        "value_raw": 1.22,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-11",
+        "value": 5.7971,
+        "yoy_pct": 14.2849,
+        "yoy_delta": 0.7246,
+        "value_raw": 0.8,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2016-12",
+        "value": 4.4767,
+        "yoy_pct": 8.5103,
+        "yoy_delta": 0.3511,
+        "value_raw": 0.51,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-01",
+        "value": 0.53,
+        "yoy_pct": 6.0,
+        "yoy_delta": 0.03,
+        "value_raw": 0.53,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-02",
+        "value": 0.9,
+        "yoy_pct": -5.2632,
+        "yoy_delta": -0.05,
+        "value_raw": 0.9,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-03",
+        "value": 9.1674,
+        "yoy_pct": 10.87,
+        "yoy_delta": 0.8988,
+        "value_raw": 1.53,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-04",
+        "value": 9.96,
+        "yoy_pct": 16.5717,
+        "yoy_delta": 1.4159,
+        "value_raw": 2.04,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-05",
+        "value": 7.7695,
+        "yoy_pct": 6.3106,
+        "yoy_delta": 0.4612,
+        "value_raw": 2.19,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-06",
+        "value": 9.4241,
+        "yoy_pct": 5.2631,
+        "yoy_delta": 0.4712,
+        "value_raw": 2.8,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-07",
+        "value": 8.2077,
+        "yoy_pct": -6.8492,
+        "yoy_delta": -0.6035,
+        "value_raw": 2.72,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-08",
+        "value": 8.157,
+        "yoy_pct": -0.8436,
+        "yoy_delta": -0.0694,
+        "value_raw": 2.35,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-09",
+        "value": 7.8343,
+        "yoy_pct": -6.417,
+        "yoy_delta": -0.5372,
+        "value_raw": 1.75,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-10",
+        "value": 6.9407,
+        "yoy_pct": 3.2796,
+        "yoy_delta": 0.2204,
+        "value_raw": 1.26,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-11",
+        "value": 5.7246,
+        "yoy_pct": -1.2506,
+        "yoy_delta": -0.0725,
+        "value_raw": 0.79,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2017-12",
+        "value": 4.3889,
+        "yoy_pct": -1.9613,
+        "yoy_delta": -0.0878,
+        "value_raw": 0.5,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-01",
+        "value": 0.55,
+        "yoy_pct": 3.7736,
+        "yoy_delta": 0.02,
+        "value_raw": 0.55,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-02",
+        "value": 0.84,
+        "yoy_pct": -6.6667,
+        "yoy_delta": -0.06,
+        "value_raw": 0.84,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-03",
+        "value": 7.7893,
+        "yoy_pct": -15.0326,
+        "yoy_delta": -1.3781,
+        "value_raw": 1.3,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-04",
+        "value": 9.3741,
+        "yoy_pct": -5.8825,
+        "yoy_delta": -0.5859,
+        "value_raw": 1.92,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-05",
+        "value": 7.5212,
+        "yoy_pct": -3.1958,
+        "yoy_delta": -0.2483,
+        "value_raw": 2.12,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-06",
+        "value": 9.0875,
+        "yoy_pct": -3.5717,
+        "yoy_delta": -0.3366,
+        "value_raw": 2.7,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-07",
+        "value": 7.6646,
+        "yoy_pct": -6.617,
+        "yoy_delta": -0.5431,
+        "value_raw": 2.54,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-08",
+        "value": 8.2959,
+        "yoy_pct": 1.7028,
+        "yoy_delta": 0.1389,
+        "value_raw": 2.39,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-09",
+        "value": 8.7744,
+        "yoy_pct": 11.9998,
+        "yoy_delta": 0.9401,
+        "value_raw": 1.96,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-10",
+        "value": 6.5551,
+        "yoy_pct": -5.5556,
+        "yoy_delta": -0.3856,
+        "value_raw": 1.19,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-11",
+        "value": 5.2174,
+        "yoy_pct": -8.86,
+        "yoy_delta": -0.5072,
+        "value_raw": 0.72,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2018-12",
+        "value": 4.1256,
+        "yoy_pct": -5.9992,
+        "yoy_delta": -0.2633,
+        "value_raw": 0.47,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-01",
+        "value": 0.58,
+        "yoy_pct": 5.4545,
+        "yoy_delta": 0.03,
+        "value_raw": 0.58,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-02",
+        "value": 0.89,
+        "yoy_pct": 5.9524,
+        "yoy_delta": 0.05,
+        "value_raw": 0.89,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-03",
+        "value": 8.6281,
+        "yoy_pct": 10.7686,
+        "yoy_delta": 0.8388,
+        "value_raw": 1.44,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-04",
+        "value": 9.3741,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 1.92,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-05",
+        "value": 6.7052,
+        "yoy_pct": -10.8493,
+        "yoy_delta": -0.816,
+        "value_raw": 1.89,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-06",
+        "value": 8.4144,
+        "yoy_pct": -7.4069,
+        "yoy_delta": -0.6731,
+        "value_raw": 2.5,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-07",
+        "value": 8.2077,
+        "yoy_pct": 7.0858,
+        "yoy_delta": 0.5431,
+        "value_raw": 2.72,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-08",
+        "value": 8.5388,
+        "yoy_pct": 2.928,
+        "yoy_delta": 0.2429,
+        "value_raw": 2.46,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-09",
+        "value": 8.1924,
+        "yoy_pct": -6.6329,
+        "yoy_delta": -0.582,
+        "value_raw": 1.83,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-10",
+        "value": 6.8305,
+        "yoy_pct": 4.2013,
+        "yoy_delta": 0.2754,
+        "value_raw": 1.24,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-11",
+        "value": 4.7101,
+        "yoy_pct": -9.7232,
+        "yoy_delta": -0.5073,
+        "value_raw": 0.65,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2019-12",
+        "value": 3.3356,
+        "yoy_pct": -19.1487,
+        "yoy_delta": -0.79,
+        "value_raw": 0.38,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-01",
+        "value": 0.5,
+        "yoy_pct": -13.7931,
+        "yoy_delta": -0.08,
+        "value_raw": 0.5,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-02",
+        "value": 0.86,
+        "yoy_pct": -3.3708,
+        "yoy_delta": -0.03,
+        "value_raw": 0.86,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-03",
+        "value": 7.25,
+        "yoy_pct": -15.9722,
+        "yoy_delta": -1.3781,
+        "value_raw": 1.21,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-04",
+        "value": 8.3,
+        "yoy_pct": -11.4582,
+        "yoy_delta": -1.0741,
+        "value_raw": 1.7,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-05",
+        "value": 8.55,
+        "yoy_pct": 27.513,
+        "yoy_delta": 1.8448,
+        "value_raw": 2.41,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-06",
+        "value": 8.65,
+        "yoy_pct": 2.8,
+        "yoy_delta": 0.2356,
+        "value_raw": 2.57,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-07",
+        "value": 8.6,
+        "yoy_pct": 4.7797,
+        "yoy_delta": 0.3923,
+        "value_raw": 2.85,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-08",
+        "value": 8.4,
+        "yoy_pct": -1.6255,
+        "yoy_delta": -0.1388,
+        "value_raw": 2.42,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-09",
+        "value": 7.7,
+        "yoy_pct": -6.0104,
+        "yoy_delta": -0.4924,
+        "value_raw": 1.72,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-10",
+        "value": 6.5,
+        "yoy_pct": -4.8386,
+        "yoy_delta": -0.3305,
+        "value_raw": 1.18,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-11",
+        "value": 5.0,
+        "yoy_pct": 6.1549,
+        "yoy_delta": 0.2899,
+        "value_raw": 0.69,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2020-12",
+        "value": 3.95,
+        "yoy_pct": 18.4195,
+        "yoy_delta": 0.6144,
+        "value_raw": 0.45,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2021-01",
+        "value": 0.5,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 0.5,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2021-02",
+        "value": 0.94,
+        "yoy_pct": 9.3023,
+        "yoy_delta": 0.08,
+        "value_raw": 0.94,
+        "source": "nasa_power"
+      },
+      {
+        "date": "2021-03",
+        "value": 7.25,
+        "yoy_pct": null,
+        "yoy_delta": 0.0,
+        "value_raw": 7.25,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2021-04",
+        "value": 8.3,
+        "yoy_pct": null,
+        "yoy_delta": 0.0,
+        "value_raw": 8.3,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2021-05",
+        "value": 8.55,
+        "yoy_pct": null,
+        "yoy_delta": 0.0,
+        "value_raw": 8.55,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2021-06",
+        "value": 8.65,
+        "yoy_pct": null,
+        "yoy_delta": 0.0,
+        "value_raw": 8.65,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2021-07",
+        "value": 8.6,
+        "yoy_pct": null,
+        "yoy_delta": 0.0,
+        "value_raw": 8.6,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2021-08",
+        "value": 8.4,
+        "yoy_pct": null,
+        "yoy_delta": 0.0,
+        "value_raw": 8.4,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2021-09",
+        "value": 7.7,
+        "yoy_pct": null,
+        "yoy_delta": 0.0,
+        "value_raw": 7.7,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2021-10",
+        "value": 6.5,
+        "yoy_pct": null,
+        "yoy_delta": 0.0,
+        "value_raw": 6.5,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2021-11",
+        "value": 5.0,
+        "yoy_pct": null,
+        "yoy_delta": 0.0,
+        "value_raw": 5.0,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2021-12",
+        "value": 3.95,
+        "yoy_pct": null,
+        "yoy_delta": 0.0,
+        "value_raw": 3.95,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-01",
+        "value": 4.5,
+        "yoy_pct": null,
+        "yoy_delta": 4.0,
+        "value_raw": 4.5,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-02",
+        "value": 5.9,
+        "yoy_pct": null,
+        "yoy_delta": 4.96,
+        "value_raw": 5.9,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-03",
+        "value": 7.2,
+        "yoy_pct": -0.6897,
+        "yoy_delta": -0.05,
+        "value_raw": 7.2,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-04",
+        "value": 8.15,
+        "yoy_pct": -1.8072,
+        "yoy_delta": -0.15,
+        "value_raw": 8.15,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-05",
+        "value": 8.55,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 8.55,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-06",
+        "value": 8.65,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 8.65,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-07",
+        "value": 8.6,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 8.6,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-08",
+        "value": 8.3,
+        "yoy_pct": -1.1905,
+        "yoy_delta": -0.1,
+        "value_raw": 8.3,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-09",
+        "value": 7.75,
+        "yoy_pct": 0.6494,
+        "yoy_delta": 0.05,
+        "value_raw": 7.75,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-10",
+        "value": 6.5,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 6.5,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-11",
+        "value": 4.95,
+        "yoy_pct": -1.0,
+        "yoy_delta": -0.05,
+        "value_raw": 4.95,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2022-12",
+        "value": 3.8,
+        "yoy_pct": -3.7975,
+        "yoy_delta": -0.15,
+        "value_raw": 3.8,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-01",
+        "value": 4.45,
+        "yoy_pct": -1.1111,
+        "yoy_delta": -0.05,
+        "value_raw": 4.45,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-02",
+        "value": 5.75,
+        "yoy_pct": -2.5424,
+        "yoy_delta": -0.15,
+        "value_raw": 5.75,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-03",
+        "value": 7.2,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 7.2,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-04",
+        "value": 8.1,
+        "yoy_pct": -0.6135,
+        "yoy_delta": -0.05,
+        "value_raw": 8.1,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-05",
+        "value": 8.55,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 8.55,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-06",
+        "value": 8.6,
+        "yoy_pct": -0.578,
+        "yoy_delta": -0.05,
+        "value_raw": 8.6,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-07",
+        "value": 8.7,
+        "yoy_pct": 1.1628,
+        "yoy_delta": 0.1,
+        "value_raw": 8.7,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-08",
+        "value": 8.4,
+        "yoy_pct": 1.2048,
+        "yoy_delta": 0.1,
+        "value_raw": 8.4,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-09",
+        "value": 7.65,
+        "yoy_pct": -1.2903,
+        "yoy_delta": -0.1,
+        "value_raw": 7.65,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-10",
+        "value": 6.4,
+        "yoy_pct": -1.5385,
+        "yoy_delta": -0.1,
+        "value_raw": 6.4,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-11",
+        "value": 5.1,
+        "yoy_pct": 3.0303,
+        "yoy_delta": 0.15,
+        "value_raw": 5.1,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2023-12",
+        "value": 3.85,
+        "yoy_pct": 1.3158,
+        "yoy_delta": 0.05,
+        "value_raw": 3.85,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-01",
+        "value": 4.5,
+        "yoy_pct": 1.1236,
+        "yoy_delta": 0.05,
+        "value_raw": 4.5,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-02",
+        "value": 5.75,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 5.75,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-03",
+        "value": 7.1,
+        "yoy_pct": -1.3889,
+        "yoy_delta": -0.1,
+        "value_raw": 7.1,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-04",
+        "value": 8.15,
+        "yoy_pct": 0.6173,
+        "yoy_delta": 0.05,
+        "value_raw": 8.15,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-05",
+        "value": 8.45,
+        "yoy_pct": -1.1696,
+        "yoy_delta": -0.1,
+        "value_raw": 8.45,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-06",
+        "value": 8.65,
+        "yoy_pct": 0.5814,
+        "yoy_delta": 0.05,
+        "value_raw": 8.65,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-07",
+        "value": 8.6,
+        "yoy_pct": -1.1494,
+        "yoy_delta": -0.1,
+        "value_raw": 8.6,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-08",
+        "value": 8.3,
+        "yoy_pct": -1.1905,
+        "yoy_delta": -0.1,
+        "value_raw": 8.3,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-09",
+        "value": 7.75,
+        "yoy_pct": 1.3072,
+        "yoy_delta": 0.1,
+        "value_raw": 7.75,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-10",
+        "value": 6.5,
+        "yoy_pct": 1.5625,
+        "yoy_delta": 0.1,
+        "value_raw": 6.5,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-11",
+        "value": 4.95,
+        "yoy_pct": -2.9412,
+        "yoy_delta": -0.15,
+        "value_raw": 4.95,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2024-12",
+        "value": 3.9,
+        "yoy_pct": 1.2987,
+        "yoy_delta": 0.05,
+        "value_raw": 3.9,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-01",
+        "value": 4.35,
+        "yoy_pct": -3.3333,
+        "yoy_delta": -0.15,
+        "value_raw": 4.35,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-02",
+        "value": 5.85,
+        "yoy_pct": 1.7391,
+        "yoy_delta": 0.1,
+        "value_raw": 5.85,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-03",
+        "value": 7.15,
+        "yoy_pct": 0.7042,
+        "yoy_delta": 0.05,
+        "value_raw": 7.15,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-04",
+        "value": 8.1,
+        "yoy_pct": -0.6135,
+        "yoy_delta": -0.05,
+        "value_raw": 8.1,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-05",
+        "value": 8.45,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 8.45,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-06",
+        "value": 8.7,
+        "yoy_pct": 0.578,
+        "yoy_delta": 0.05,
+        "value_raw": 8.7,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-07",
+        "value": 8.6,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 8.6,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-08",
+        "value": 8.4,
+        "yoy_pct": 1.2048,
+        "yoy_delta": 0.1,
+        "value_raw": 8.4,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-09",
+        "value": 7.7,
+        "yoy_pct": -0.6452,
+        "yoy_delta": -0.05,
+        "value_raw": 7.7,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-10",
+        "value": 6.55,
+        "yoy_pct": 0.7692,
+        "yoy_delta": 0.05,
+        "value_raw": 6.55,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-11",
+        "value": 5.1,
+        "yoy_pct": 3.0303,
+        "yoy_delta": 0.15,
+        "value_raw": 5.1,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2025-12",
+        "value": 3.85,
+        "yoy_pct": -1.2821,
+        "yoy_delta": -0.05,
+        "value_raw": 3.85,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2026-01",
+        "value": 4.65,
+        "yoy_pct": 6.8966,
+        "yoy_delta": 0.3,
+        "value_raw": 4.65,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2026-02",
+        "value": 6.1,
+        "yoy_pct": 4.2735,
+        "yoy_delta": 0.25,
+        "value_raw": 6.1,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2026-03",
+        "value": 7.3,
+        "yoy_pct": 2.0979,
+        "yoy_delta": 0.15,
+        "value_raw": 7.3,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2026-04",
+        "value": 8.05,
+        "yoy_pct": -0.6173,
+        "yoy_delta": -0.05,
+        "value_raw": 8.05,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2026-05",
+        "value": 8.55,
+        "yoy_pct": 1.1834,
+        "yoy_delta": 0.1,
+        "value_raw": 8.55,
+        "source": "open_meteo_who"
+      },
+      {
+        "date": "2026-06",
+        "value": 8.6,
+        "yoy_pct": -1.1494,
+        "yoy_delta": -0.1,
+        "value_raw": 8.6,
+        "source": "open_meteo_who"
+      }
+    ],
+    "temperature": [
+      {
+        "date": "1981-01",
+        "value": 14.1968,
+        "yoy_pct": null
+      },
+      {
+        "date": "1981-02",
+        "value": 14.3679,
+        "yoy_pct": null
+      },
+      {
+        "date": "1981-03",
+        "value": 14.1484,
+        "yoy_pct": null
+      },
+      {
+        "date": "1981-04",
+        "value": 16.7633,
+        "yoy_pct": null
+      },
+      {
+        "date": "1981-05",
+        "value": 19.1516,
+        "yoy_pct": null
+      },
+      {
+        "date": "1981-06",
+        "value": 24.73,
+        "yoy_pct": null
+      },
+      {
+        "date": "1981-07",
+        "value": 24.6516,
+        "yoy_pct": null
+      },
+      {
+        "date": "1981-08",
+        "value": 25.2774,
+        "yoy_pct": null
+      },
+      {
+        "date": "1981-09",
+        "value": 22.9467,
+        "yoy_pct": null
+      },
+      {
+        "date": "1981-10",
+        "value": 18.1581,
+        "yoy_pct": null
+      },
+      {
+        "date": "1981-11",
+        "value": 16.0133,
+        "yoy_pct": null
+      },
+      {
+        "date": "1981-12",
+        "value": 13.6968,
+        "yoy_pct": null
+      },
+      {
+        "date": "1982-01",
+        "value": 10.7903,
+        "yoy_pct": -23.9948,
+        "yoy_delta": -3.4065
+      },
+      {
+        "date": "1982-02",
+        "value": 14.0786,
+        "yoy_pct": -2.0135,
+        "yoy_delta": -0.2893
+      },
+      {
+        "date": "1982-03",
+        "value": 13.5355,
+        "yoy_pct": -4.3319,
+        "yoy_delta": -0.6129
+      },
+      {
+        "date": "1982-04",
+        "value": 15.97,
+        "yoy_pct": -4.7324,
+        "yoy_delta": -0.7933
+      },
+      {
+        "date": "1982-05",
+        "value": 17.5839,
+        "yoy_pct": -8.1857,
+        "yoy_delta": -1.5677
+      },
+      {
+        "date": "1982-06",
+        "value": 18.6933,
+        "yoy_pct": -24.4104,
+        "yoy_delta": -6.0367
+      },
+      {
+        "date": "1982-07",
+        "value": 23.8161,
+        "yoy_pct": -3.3892,
+        "yoy_delta": -0.8355
+      },
+      {
+        "date": "1982-08",
+        "value": 24.7613,
+        "yoy_pct": -2.0417,
+        "yoy_delta": -0.5161
+      },
+      {
+        "date": "1982-09",
+        "value": 23.1167,
+        "yoy_pct": 0.7408,
+        "yoy_delta": 0.17
+      },
+      {
+        "date": "1982-10",
+        "value": 19.7258,
+        "yoy_pct": 8.6336,
+        "yoy_delta": 1.5677
+      },
+      {
+        "date": "1982-11",
+        "value": 14.2867,
+        "yoy_pct": -10.7823,
+        "yoy_delta": -1.7266
+      },
+      {
+        "date": "1982-12",
+        "value": 11.5226,
+        "yoy_pct": -15.8738,
+        "yoy_delta": -2.1742
+      },
+      {
+        "date": "1983-01",
+        "value": 13.0806,
+        "yoy_pct": 21.2255,
+        "yoy_delta": 2.2903
+      },
+      {
+        "date": "1983-02",
+        "value": 13.7,
+        "yoy_pct": -2.6892,
+        "yoy_delta": -0.3786
+      },
+      {
+        "date": "1983-03",
+        "value": 14.2548,
+        "yoy_pct": 5.3142,
+        "yoy_delta": 0.7193
+      },
+      {
+        "date": "1983-04",
+        "value": 14.5533,
+        "yoy_pct": -8.871,
+        "yoy_delta": -1.4167
+      },
+      {
+        "date": "1983-05",
+        "value": 18.2839,
+        "yoy_pct": 3.9809,
+        "yoy_delta": 0.7
+      },
+      {
+        "date": "1983-06",
+        "value": 19.9933,
+        "yoy_pct": 6.9544,
+        "yoy_delta": 1.3
+      },
+      {
+        "date": "1983-07",
+        "value": 23.6935,
+        "yoy_pct": -0.5148,
+        "yoy_delta": -0.1226
+      },
+      {
+        "date": "1983-08",
+        "value": 25.9065,
+        "yoy_pct": 4.625,
+        "yoy_delta": 1.1452
+      },
+      {
+        "date": "1983-09",
+        "value": 24.84,
+        "yoy_pct": 7.4548,
+        "yoy_delta": 1.7233
+      },
+      {
+        "date": "1983-10",
+        "value": 20.4323,
+        "yoy_pct": 3.5816,
+        "yoy_delta": 0.7065
+      },
+      {
+        "date": "1983-11",
+        "value": 15.1733,
+        "yoy_pct": 6.2058,
+        "yoy_delta": 0.8866
+      },
+      {
+        "date": "1983-12",
+        "value": 12.9065,
+        "yoy_pct": 12.0103,
+        "yoy_delta": 1.3839
+      },
+      {
+        "date": "1984-01",
+        "value": 13.1387,
+        "yoy_pct": 0.4442,
+        "yoy_delta": 0.0581
+      },
+      {
+        "date": "1984-02",
+        "value": 13.8483,
+        "yoy_pct": 1.0825,
+        "yoy_delta": 0.1483
+      },
+      {
+        "date": "1984-03",
+        "value": 16.1097,
+        "yoy_pct": 13.0125,
+        "yoy_delta": 1.8549
+      },
+      {
+        "date": "1984-04",
+        "value": 16.93,
+        "yoy_pct": 16.331,
+        "yoy_delta": 2.3767
+      },
+      {
+        "date": "1984-05",
+        "value": 21.2839,
+        "yoy_pct": 16.4079,
+        "yoy_delta": 3.0
+      },
+      {
+        "date": "1984-06",
+        "value": 21.2067,
+        "yoy_pct": 6.069,
+        "yoy_delta": 1.2134
+      },
+      {
+        "date": "1984-07",
+        "value": 26.0839,
+        "yoy_pct": 10.0888,
+        "yoy_delta": 2.3904
+      },
+      {
+        "date": "1984-08",
+        "value": 25.8323,
+        "yoy_pct": -0.2864,
+        "yoy_delta": -0.0742
+      },
+      {
+        "date": "1984-09",
+        "value": 26.6867,
+        "yoy_pct": 7.4344,
+        "yoy_delta": 1.8467
+      },
+      {
+        "date": "1984-10",
+        "value": 18.8742,
+        "yoy_pct": -7.6257,
+        "yoy_delta": -1.5581
+      },
+      {
+        "date": "1984-11",
+        "value": 14.0133,
+        "yoy_pct": -7.645,
+        "yoy_delta": -1.16
+      },
+      {
+        "date": "1984-12",
+        "value": 11.3903,
+        "yoy_pct": -11.7476,
+        "yoy_delta": -1.5162
+      },
+      {
+        "date": "1985-01",
+        "value": 11.3839,
+        "yoy_pct": -13.356,
+        "yoy_delta": -1.7548
+      },
+      {
+        "date": "1985-02",
+        "value": 12.4036,
+        "yoy_pct": -10.4323,
+        "yoy_delta": -1.4447
+      },
+      {
+        "date": "1985-03",
+        "value": 13.0903,
+        "yoy_pct": -18.7427,
+        "yoy_delta": -3.0194
+      },
+      {
+        "date": "1985-04",
+        "value": 17.64,
+        "yoy_pct": 4.1937,
+        "yoy_delta": 0.71
+      },
+      {
+        "date": "1985-05",
+        "value": 17.6581,
+        "yoy_pct": -17.0354,
+        "yoy_delta": -3.6258
+      },
+      {
+        "date": "1985-06",
+        "value": 22.1733,
+        "yoy_pct": 4.558,
+        "yoy_delta": 0.9666
+      },
+      {
+        "date": "1985-07",
+        "value": 25.629,
+        "yoy_pct": -1.744,
+        "yoy_delta": -0.4549
+      },
+      {
+        "date": "1985-08",
+        "value": 23.829,
+        "yoy_pct": -7.755,
+        "yoy_delta": -2.0033
+      },
+      {
+        "date": "1985-09",
+        "value": 20.79,
+        "yoy_pct": -22.096,
+        "yoy_delta": -5.8967
+      },
+      {
+        "date": "1985-10",
+        "value": 19.3645,
+        "yoy_pct": 2.5977,
+        "yoy_delta": 0.4903
+      },
+      {
+        "date": "1985-11",
+        "value": 13.84,
+        "yoy_pct": -1.2367,
+        "yoy_delta": -0.1733
+      },
+      {
+        "date": "1985-12",
+        "value": 12.5839,
+        "yoy_pct": 10.4791,
+        "yoy_delta": 1.1936
+      },
+      {
+        "date": "1986-01",
+        "value": 14.6097,
+        "yoy_pct": 28.3365,
+        "yoy_delta": 3.2258
+      },
+      {
+        "date": "1986-02",
+        "value": 14.0857,
+        "yoy_pct": 13.5614,
+        "yoy_delta": 1.6821
+      },
+      {
+        "date": "1986-03",
+        "value": 15.4226,
+        "yoy_pct": 17.817,
+        "yoy_delta": 2.3323
+      },
+      {
+        "date": "1986-04",
+        "value": 16.4833,
+        "yoy_pct": -6.5573,
+        "yoy_delta": -1.1567
+      },
+      {
+        "date": "1986-05",
+        "value": 18.8935,
+        "yoy_pct": 6.9962,
+        "yoy_delta": 1.2354
+      },
+      {
+        "date": "1986-06",
+        "value": 21.4867,
+        "yoy_pct": -3.0965,
+        "yoy_delta": -0.6866
+      },
+      {
+        "date": "1986-07",
+        "value": 22.7452,
+        "yoy_pct": -11.2521,
+        "yoy_delta": -2.8838
+      },
+      {
+        "date": "1986-08",
+        "value": 24.5484,
+        "yoy_pct": 3.019,
+        "yoy_delta": 0.7194
+      },
+      {
+        "date": "1986-09",
+        "value": 19.3767,
+        "yoy_pct": -6.798,
+        "yoy_delta": -1.4133
+      },
+      {
+        "date": "1986-10",
+        "value": 18.4323,
+        "yoy_pct": -4.814,
+        "yoy_delta": -0.9322
+      },
+      {
+        "date": "1986-11",
+        "value": 16.5167,
+        "yoy_pct": 19.3403,
+        "yoy_delta": 2.6767
+      },
+      {
+        "date": "1986-12",
+        "value": 12.8258,
+        "yoy_pct": 1.9223,
+        "yoy_delta": 0.2419
+      },
+      {
+        "date": "1987-01",
+        "value": 11.1548,
+        "yoy_pct": -23.648,
+        "yoy_delta": -3.4549
+      },
+      {
+        "date": "1987-02",
+        "value": 13.0286,
+        "yoy_pct": -7.5048,
+        "yoy_delta": -1.0571
+      },
+      {
+        "date": "1987-03",
+        "value": 14.0226,
+        "yoy_pct": -9.0776,
+        "yoy_delta": -1.4
+      },
+      {
+        "date": "1987-04",
+        "value": 18.6933,
+        "yoy_pct": 13.4075,
+        "yoy_delta": 2.21
+      },
+      {
+        "date": "1987-05",
+        "value": 19.671,
+        "yoy_pct": 4.1152,
+        "yoy_delta": 0.7775
+      },
+      {
+        "date": "1987-06",
+        "value": 21.27,
+        "yoy_pct": -1.0085,
+        "yoy_delta": -0.2167
+      },
+      {
+        "date": "1987-07",
+        "value": 21.3355,
+        "yoy_pct": -6.1978,
+        "yoy_delta": -1.4097
+      },
+      {
+        "date": "1987-08",
+        "value": 23.3,
+        "yoy_pct": -5.0855,
+        "yoy_delta": -1.2484
+      },
+      {
+        "date": "1987-09",
+        "value": 23.0667,
+        "yoy_pct": 19.0435,
+        "yoy_delta": 3.69
+      },
+      {
+        "date": "1987-10",
+        "value": 21.0806,
+        "yoy_pct": 14.3677,
+        "yoy_delta": 2.6483
+      },
+      {
+        "date": "1987-11",
+        "value": 15.23,
+        "yoy_pct": -7.7903,
+        "yoy_delta": -1.2867
+      },
+      {
+        "date": "1987-12",
+        "value": 10.4613,
+        "yoy_pct": -18.4355,
+        "yoy_delta": -2.3645
+      },
+      {
+        "date": "1988-01",
+        "value": 11.6258,
+        "yoy_pct": 4.2224,
+        "yoy_delta": 0.471
+      },
+      {
+        "date": "1988-02",
+        "value": 14.7759,
+        "yoy_pct": 13.4113,
+        "yoy_delta": 1.7473
+      },
+      {
+        "date": "1988-03",
+        "value": 16.2581,
+        "yoy_pct": 15.9421,
+        "yoy_delta": 2.2355
+      },
+      {
+        "date": "1988-04",
+        "value": 16.9167,
+        "yoy_pct": -9.5039,
+        "yoy_delta": -1.7766
+      },
+      {
+        "date": "1988-05",
+        "value": 19.2226,
+        "yoy_pct": -2.2795,
+        "yoy_delta": -0.4484
+      },
+      {
+        "date": "1988-06",
+        "value": 20.4967,
+        "yoy_pct": -3.6356,
+        "yoy_delta": -0.7733
+      },
+      {
+        "date": "1988-07",
+        "value": 24.3258,
+        "yoy_pct": 14.0156,
+        "yoy_delta": 2.9903
+      },
+      {
+        "date": "1988-08",
+        "value": 23.4355,
+        "yoy_pct": 0.5815,
+        "yoy_delta": 0.1355
+      },
+      {
+        "date": "1988-09",
+        "value": 22.34,
+        "yoy_pct": -3.1504,
+        "yoy_delta": -0.7267
+      },
+      {
+        "date": "1988-10",
+        "value": 20.3613,
+        "yoy_pct": -3.4121,
+        "yoy_delta": -0.7193
+      },
+      {
+        "date": "1988-11",
+        "value": 15.0967,
+        "yoy_pct": -0.8752,
+        "yoy_delta": -0.1333
+      },
+      {
+        "date": "1988-12",
+        "value": 11.9839,
+        "yoy_pct": 14.5546,
+        "yoy_delta": 1.5226
+      },
+      {
+        "date": "1989-01",
+        "value": 10.4935,
+        "yoy_pct": -9.7395,
+        "yoy_delta": -1.1323
+      },
+      {
+        "date": "1989-02",
+        "value": 11.5071,
+        "yoy_pct": -22.1225,
+        "yoy_delta": -3.2688
+      },
+      {
+        "date": "1989-03",
+        "value": 15.429,
+        "yoy_pct": -5.0996,
+        "yoy_delta": -0.8291
+      },
+      {
+        "date": "1989-04",
+        "value": 18.9067,
+        "yoy_pct": 11.7635,
+        "yoy_delta": 1.99
+      },
+      {
+        "date": "1989-05",
+        "value": 18.4323,
+        "yoy_pct": -4.1113,
+        "yoy_delta": -0.7903
+      },
+      {
+        "date": "1989-06",
+        "value": 20.92,
+        "yoy_pct": 2.0652,
+        "yoy_delta": 0.4233
+      },
+      {
+        "date": "1989-07",
+        "value": 24.3806,
+        "yoy_pct": 0.2253,
+        "yoy_delta": 0.0548
+      },
+      {
+        "date": "1989-08",
+        "value": 22.7,
+        "yoy_pct": -3.1384,
+        "yoy_delta": -0.7355
+      },
+      {
+        "date": "1989-09",
+        "value": 22.6833,
+        "yoy_pct": 1.5367,
+        "yoy_delta": 0.3433
+      },
+      {
+        "date": "1989-10",
+        "value": 19.0065,
+        "yoy_pct": -6.6538,
+        "yoy_delta": -1.3548
+      },
+      {
+        "date": "1989-11",
+        "value": 16.5467,
+        "yoy_pct": 9.6047,
+        "yoy_delta": 1.45
+      },
+      {
+        "date": "1989-12",
+        "value": 13.6258,
+        "yoy_pct": 13.7009,
+        "yoy_delta": 1.6419
+      },
+      {
+        "date": "1990-01",
+        "value": 12.0516,
+        "yoy_pct": 14.8482,
+        "yoy_delta": 1.5581
+      },
+      {
+        "date": "1990-02",
+        "value": 11.6429,
+        "yoy_pct": 1.1801,
+        "yoy_delta": 0.1358
+      },
+      {
+        "date": "1990-03",
+        "value": 14.5903,
+        "yoy_pct": -5.4359,
+        "yoy_delta": -0.8387
+      },
+      {
+        "date": "1990-04",
+        "value": 17.5767,
+        "yoy_pct": -7.0345,
+        "yoy_delta": -1.33
+      },
+      {
+        "date": "1990-05",
+        "value": 18.4871,
+        "yoy_pct": 0.2973,
+        "yoy_delta": 0.0548
+      },
+      {
+        "date": "1990-06",
+        "value": 22.9833,
+        "yoy_pct": 9.8628,
+        "yoy_delta": 2.0633
+      },
+      {
+        "date": "1990-07",
+        "value": 24.9548,
+        "yoy_pct": 2.3552,
+        "yoy_delta": 0.5742
+      },
+      {
+        "date": "1990-08",
+        "value": 23.3516,
+        "yoy_pct": 2.8705,
+        "yoy_delta": 0.6516
+      },
+      {
+        "date": "1990-09",
+        "value": 23.4967,
+        "yoy_pct": 3.5859,
+        "yoy_delta": 0.8134
+      },
+      {
+        "date": "1990-10",
+        "value": 20.7677,
+        "yoy_pct": 9.2663,
+        "yoy_delta": 1.7612
+      },
+      {
+        "date": "1990-11",
+        "value": 16.0433,
+        "yoy_pct": -3.0423,
+        "yoy_delta": -0.5034
+      },
+      {
+        "date": "1990-12",
+        "value": 11.0194,
+        "yoy_pct": -19.1284,
+        "yoy_delta": -2.6064
+      },
+      {
+        "date": "1991-01",
+        "value": 12.4323,
+        "yoy_pct": 3.1589,
+        "yoy_delta": 0.3807
+      },
+      {
+        "date": "1991-02",
+        "value": 15.325,
+        "yoy_pct": 31.6253,
+        "yoy_delta": 3.6821
+      },
+      {
+        "date": "1991-03",
+        "value": 12.5032,
+        "yoy_pct": -14.3047,
+        "yoy_delta": -2.0871
+      },
+      {
+        "date": "1991-04",
+        "value": 16.4,
+        "yoy_pct": -6.6947,
+        "yoy_delta": -1.1767
+      },
+      {
+        "date": "1991-05",
+        "value": 17.4613,
+        "yoy_pct": -5.5487,
+        "yoy_delta": -1.0258
+      },
+      {
+        "date": "1991-06",
+        "value": 19.25,
+        "yoy_pct": -16.2435,
+        "yoy_delta": -3.7333
+      },
+      {
+        "date": "1991-07",
+        "value": 21.9968,
+        "yoy_pct": -11.8534,
+        "yoy_delta": -2.958
+      },
+      {
+        "date": "1991-08",
+        "value": 22.9,
+        "yoy_pct": -1.9339,
+        "yoy_delta": -0.4516
+      },
+      {
+        "date": "1991-09",
+        "value": 22.8633,
+        "yoy_pct": -2.6957,
+        "yoy_delta": -0.6334
+      },
+      {
+        "date": "1991-10",
+        "value": 21.1968,
+        "yoy_pct": 2.0662,
+        "yoy_delta": 0.4291
+      },
+      {
+        "date": "1991-11",
+        "value": 16.46,
+        "yoy_pct": 2.5973,
+        "yoy_delta": 0.4167
+      },
+      {
+        "date": "1991-12",
+        "value": 12.8839,
+        "yoy_pct": 16.9202,
+        "yoy_delta": 1.8645
+      },
+      {
+        "date": "1992-01",
+        "value": 12.2,
+        "yoy_pct": -1.8685,
+        "yoy_delta": -0.2323
+      },
+      {
+        "date": "1992-02",
+        "value": 14.7966,
+        "yoy_pct": -3.448,
+        "yoy_delta": -0.5284
+      },
+      {
+        "date": "1992-03",
+        "value": 14.3871,
+        "yoy_pct": 15.0673,
+        "yoy_delta": 1.8839
+      },
+      {
+        "date": "1992-04",
+        "value": 18.8233,
+        "yoy_pct": 14.7762,
+        "yoy_delta": 2.4233
+      },
+      {
+        "date": "1992-05",
+        "value": 19.9806,
+        "yoy_pct": 14.4279,
+        "yoy_delta": 2.5193
+      },
+      {
+        "date": "1992-06",
+        "value": 21.11,
+        "yoy_pct": 9.6623,
+        "yoy_delta": 1.86
+      },
+      {
+        "date": "1992-07",
+        "value": 24.0484,
+        "yoy_pct": 9.3268,
+        "yoy_delta": 2.0516
+      },
+      {
+        "date": "1992-08",
+        "value": 25.7548,
+        "yoy_pct": 12.4664,
+        "yoy_delta": 2.8548
+      },
+      {
+        "date": "1992-09",
+        "value": 23.8167,
+        "yoy_pct": 4.17,
+        "yoy_delta": 0.9534
+      },
+      {
+        "date": "1992-10",
+        "value": 20.3903,
+        "yoy_pct": -3.8048,
+        "yoy_delta": -0.8065
+      },
+      {
+        "date": "1992-11",
+        "value": 16.0867,
+        "yoy_pct": -2.2679,
+        "yoy_delta": -0.3733
+      },
+      {
+        "date": "1992-12",
+        "value": 11.0968,
+        "yoy_pct": -13.8708,
+        "yoy_delta": -1.7871
+      },
+      {
+        "date": "1993-01",
+        "value": 11.9645,
+        "yoy_pct": -1.9303,
+        "yoy_delta": -0.2355
+      },
+      {
+        "date": "1993-02",
+        "value": 13.0214,
+        "yoy_pct": -11.9974,
+        "yoy_delta": -1.7752
+      },
+      {
+        "date": "1993-03",
+        "value": 15.7968,
+        "yoy_pct": 9.7984,
+        "yoy_delta": 1.4097
+      },
+      {
+        "date": "1993-04",
+        "value": 17.8167,
+        "yoy_pct": -5.3476,
+        "yoy_delta": -1.0066
+      },
+      {
+        "date": "1993-05",
+        "value": 19.9484,
+        "yoy_pct": -0.1612,
+        "yoy_delta": -0.0322
+      },
+      {
+        "date": "1993-06",
+        "value": 22.1867,
+        "yoy_pct": 5.1004,
+        "yoy_delta": 1.0767
+      },
+      {
+        "date": "1993-07",
+        "value": 21.9161,
+        "yoy_pct": -8.8667,
+        "yoy_delta": -2.1323
+      },
+      {
+        "date": "1993-08",
+        "value": 23.1677,
+        "yoy_pct": -10.0451,
+        "yoy_delta": -2.5871
+      },
+      {
+        "date": "1993-09",
+        "value": 22.49,
+        "yoy_pct": -5.5705,
+        "yoy_delta": -1.3267
+      },
+      {
+        "date": "1993-10",
+        "value": 20.129,
+        "yoy_pct": -1.2815,
+        "yoy_delta": -0.2613
+      },
+      {
+        "date": "1993-11",
+        "value": 15.83,
+        "yoy_pct": -1.5957,
+        "yoy_delta": -0.2567
+      },
+      {
+        "date": "1993-12",
+        "value": 12.4,
+        "yoy_pct": 11.7439,
+        "yoy_delta": 1.3032
+      },
+      {
+        "date": "1994-01",
+        "value": 13.6129,
+        "yoy_pct": 13.7774,
+        "yoy_delta": 1.6484
+      },
+      {
+        "date": "1994-02",
+        "value": 11.975,
+        "yoy_pct": -8.036,
+        "yoy_delta": -1.0464
+      },
+      {
+        "date": "1994-03",
+        "value": 15.3935,
+        "yoy_pct": -2.553,
+        "yoy_delta": -0.4033
+      },
+      {
+        "date": "1994-04",
+        "value": 16.1633,
+        "yoy_pct": -9.2801,
+        "yoy_delta": -1.6534
+      },
+      {
+        "date": "1994-05",
+        "value": 17.1839,
+        "yoy_pct": -13.8583,
+        "yoy_delta": -2.7645
+      },
+      {
+        "date": "1994-06",
+        "value": 22.6133,
+        "yoy_pct": 1.9228,
+        "yoy_delta": 0.4266
+      },
+      {
+        "date": "1994-07",
+        "value": 22.7226,
+        "yoy_pct": 3.6799,
+        "yoy_delta": 0.8065
+      },
+      {
+        "date": "1994-08",
+        "value": 25.6387,
+        "yoy_pct": 10.6657,
+        "yoy_delta": 2.471
+      },
+      {
+        "date": "1994-09",
+        "value": 23.0433,
+        "yoy_pct": 2.4602,
+        "yoy_delta": 0.5533
+      },
+      {
+        "date": "1994-10",
+        "value": 18.829,
+        "yoy_pct": -6.4583,
+        "yoy_delta": -1.3
+      },
+      {
+        "date": "1994-11",
+        "value": 12.4567,
+        "yoy_pct": -21.3095,
+        "yoy_delta": -3.3733
+      },
+      {
+        "date": "1994-12",
+        "value": 12.1323,
+        "yoy_pct": -2.1589,
+        "yoy_delta": -0.2677
+      },
+      {
+        "date": "1995-01",
+        "value": 12.3742,
+        "yoy_pct": -9.0995,
+        "yoy_delta": -1.2387
+      },
+      {
+        "date": "1995-02",
+        "value": 15.5143,
+        "yoy_pct": 29.5557,
+        "yoy_delta": 3.5393
+      },
+      {
+        "date": "1995-03",
+        "value": 14.7677,
+        "yoy_pct": -4.0654,
+        "yoy_delta": -0.6258
+      },
+      {
+        "date": "1995-04",
+        "value": 15.8467,
+        "yoy_pct": -1.9588,
+        "yoy_delta": -0.3166
+      },
+      {
+        "date": "1995-05",
+        "value": 16.3355,
+        "yoy_pct": -4.9372,
+        "yoy_delta": -0.8484
+      },
+      {
+        "date": "1995-06",
+        "value": 19.5867,
+        "yoy_pct": -13.3842,
+        "yoy_delta": -3.0266
+      },
+      {
+        "date": "1995-07",
+        "value": 23.5935,
+        "yoy_pct": 3.8327,
+        "yoy_delta": 0.8709
+      },
+      {
+        "date": "1995-08",
+        "value": 25.0355,
+        "yoy_pct": -2.3527,
+        "yoy_delta": -0.6032
+      },
+      {
+        "date": "1995-09",
+        "value": 23.9867,
+        "yoy_pct": 4.094,
+        "yoy_delta": 0.9434
+      },
+      {
+        "date": "1995-10",
+        "value": 20.4258,
+        "yoy_pct": 8.4805,
+        "yoy_delta": 1.5968
+      },
+      {
+        "date": "1995-11",
+        "value": 17.2333,
+        "yoy_pct": 38.3456,
+        "yoy_delta": 4.7766
+      },
+      {
+        "date": "1995-12",
+        "value": 13.2871,
+        "yoy_pct": 9.5184,
+        "yoy_delta": 1.1548
+      },
+      {
+        "date": "1996-01",
+        "value": 12.9806,
+        "yoy_pct": 4.9005,
+        "yoy_delta": 0.6064
+      },
+      {
+        "date": "1996-02",
+        "value": 13.9069,
+        "yoy_pct": -10.3608,
+        "yoy_delta": -1.6074
+      },
+      {
+        "date": "1996-03",
+        "value": 14.7419,
+        "yoy_pct": -0.1747,
+        "yoy_delta": -0.0258
+      },
+      {
+        "date": "1996-04",
+        "value": 18.3667,
+        "yoy_pct": 15.9024,
+        "yoy_delta": 2.52
+      },
+      {
+        "date": "1996-05",
+        "value": 19.7097,
+        "yoy_pct": 20.6556,
+        "yoy_delta": 3.3742
+      },
+      {
+        "date": "1996-06",
+        "value": 21.7033,
+        "yoy_pct": 10.8063,
+        "yoy_delta": 2.1166
+      },
+      {
+        "date": "1996-07",
+        "value": 24.6097,
+        "yoy_pct": 4.3071,
+        "yoy_delta": 1.0162
+      },
+      {
+        "date": "1996-08",
+        "value": 25.2226,
+        "yoy_pct": 0.7473,
+        "yoy_delta": 0.1871
+      },
+      {
+        "date": "1996-09",
+        "value": 22.2,
+        "yoy_pct": -7.4487,
+        "yoy_delta": -1.7867
+      },
+      {
+        "date": "1996-10",
+        "value": 18.7419,
+        "yoy_pct": -8.244,
+        "yoy_delta": -1.6839
+      },
+      {
+        "date": "1996-11",
+        "value": 15.2433,
+        "yoy_pct": -11.5474,
+        "yoy_delta": -1.99
+      },
+      {
+        "date": "1996-12",
+        "value": 12.529,
+        "yoy_pct": -5.7055,
+        "yoy_delta": -0.7581
+      },
+      {
+        "date": "1997-01",
+        "value": 12.3129,
+        "yoy_pct": -5.1438,
+        "yoy_delta": -0.6677
+      },
+      {
+        "date": "1997-02",
+        "value": 13.0464,
+        "yoy_pct": -6.1876,
+        "yoy_delta": -0.8605
+      },
+      {
+        "date": "1997-03",
+        "value": 16.0742,
+        "yoy_pct": 9.0375,
+        "yoy_delta": 1.3323
+      },
+      {
+        "date": "1997-04",
+        "value": 17.0467,
+        "yoy_pct": -7.1869,
+        "yoy_delta": -1.32
+      },
+      {
+        "date": "1997-05",
+        "value": 21.5032,
+        "yoy_pct": 9.0996,
+        "yoy_delta": 1.7935
+      },
+      {
+        "date": "1997-06",
+        "value": 20.9067,
+        "yoy_pct": -3.6704,
+        "yoy_delta": -0.7966
+      },
+      {
+        "date": "1997-07",
+        "value": 22.7,
+        "yoy_pct": -7.7599,
+        "yoy_delta": -1.9097
+      },
+      {
+        "date": "1997-08",
+        "value": 24.8032,
+        "yoy_pct": -1.6628,
+        "yoy_delta": -0.4194
+      },
+      {
+        "date": "1997-09",
+        "value": 25.3667,
+        "yoy_pct": 14.2644,
+        "yoy_delta": 3.1667
+      },
+      {
+        "date": "1997-10",
+        "value": 20.0935,
+        "yoy_pct": 7.2116,
+        "yoy_delta": 1.3516
+      },
+      {
+        "date": "1997-11",
+        "value": 16.6333,
+        "yoy_pct": 9.1188,
+        "yoy_delta": 1.39
+      },
+      {
+        "date": "1997-12",
+        "value": 11.4194,
+        "yoy_pct": -8.8563,
+        "yoy_delta": -1.1096
+      },
+      {
+        "date": "1998-01",
+        "value": 12.4226,
+        "yoy_pct": 0.8909,
+        "yoy_delta": 0.1097
+      },
+      {
+        "date": "1998-02",
+        "value": 11.9679,
+        "yoy_pct": -8.2666,
+        "yoy_delta": -1.0785
+      },
+      {
+        "date": "1998-03",
+        "value": 14.2484,
+        "yoy_pct": -11.3586,
+        "yoy_delta": -1.8258
+      },
+      {
+        "date": "1998-04",
+        "value": 14.6933,
+        "yoy_pct": -13.8056,
+        "yoy_delta": -2.3534
+      },
+      {
+        "date": "1998-05",
+        "value": 15.8355,
+        "yoy_pct": -26.3575,
+        "yoy_delta": -5.6677
+      },
+      {
+        "date": "1998-06",
+        "value": 19.0367,
+        "yoy_pct": -8.9445,
+        "yoy_delta": -1.87
+      },
+      {
+        "date": "1998-07",
+        "value": 23.9452,
+        "yoy_pct": 5.4855,
+        "yoy_delta": 1.2452
+      },
+      {
+        "date": "1998-08",
+        "value": 26.2226,
+        "yoy_pct": 5.7226,
+        "yoy_delta": 1.4194
+      },
+      {
+        "date": "1998-09",
+        "value": 22.4,
+        "yoy_pct": -11.6953,
+        "yoy_delta": -2.9667
+      },
+      {
+        "date": "1998-10",
+        "value": 18.6774,
+        "yoy_pct": -7.0476,
+        "yoy_delta": -1.4161
+      },
+      {
+        "date": "1998-11",
+        "value": 14.5267,
+        "yoy_pct": -12.665,
+        "yoy_delta": -2.1066
+      },
+      {
+        "date": "1998-12",
+        "value": 11.2387,
+        "yoy_pct": -1.5824,
+        "yoy_delta": -0.1807
+      },
+      {
+        "date": "1999-01",
+        "value": 12.5129,
+        "yoy_pct": 0.7269,
+        "yoy_delta": 0.0903
+      },
+      {
+        "date": "1999-02",
+        "value": 12.5071,
+        "yoy_pct": 4.5054,
+        "yoy_delta": 0.5392
+      },
+      {
+        "date": "1999-03",
+        "value": 12.7226,
+        "yoy_pct": -10.7086,
+        "yoy_delta": -1.5258
+      },
+      {
+        "date": "1999-04",
+        "value": 14.0367,
+        "yoy_pct": -4.4687,
+        "yoy_delta": -0.6566
+      },
+      {
+        "date": "1999-05",
+        "value": 16.8968,
+        "yoy_pct": 6.702,
+        "yoy_delta": 1.0613
+      },
+      {
+        "date": "1999-06",
+        "value": 19.15,
+        "yoy_pct": 0.5952,
+        "yoy_delta": 0.1133
+      },
+      {
+        "date": "1999-07",
+        "value": 22.8613,
+        "yoy_pct": -4.5266,
+        "yoy_delta": -1.0839
+      },
+      {
+        "date": "1999-08",
+        "value": 22.9387,
+        "yoy_pct": -12.5232,
+        "yoy_delta": -3.2839
+      },
+      {
+        "date": "1999-09",
+        "value": 21.3967,
+        "yoy_pct": -4.479,
+        "yoy_delta": -1.0033
+      },
+      {
+        "date": "1999-10",
+        "value": 21.3194,
+        "yoy_pct": 14.1454,
+        "yoy_delta": 2.642
+      },
+      {
+        "date": "1999-11",
+        "value": 16.1533,
+        "yoy_pct": 11.1973,
+        "yoy_delta": 1.6266
+      },
+      {
+        "date": "1999-12",
+        "value": 13.2871,
+        "yoy_pct": 18.2263,
+        "yoy_delta": 2.0484
+      },
+      {
+        "date": "2000-01",
+        "value": 13.329,
+        "yoy_pct": 6.5221,
+        "yoy_delta": 0.8161
+      },
+      {
+        "date": "2000-02",
+        "value": 12.8103,
+        "yoy_pct": 2.4242,
+        "yoy_delta": 0.3032
+      },
+      {
+        "date": "2000-03",
+        "value": 13.7419,
+        "yoy_pct": 8.0117,
+        "yoy_delta": 1.0193
+      },
+      {
+        "date": "2000-04",
+        "value": 16.91,
+        "yoy_pct": 20.4699,
+        "yoy_delta": 2.8733
+      },
+      {
+        "date": "2000-05",
+        "value": 19.5806,
+        "yoy_pct": 15.8835,
+        "yoy_delta": 2.6838
+      },
+      {
+        "date": "2000-06",
+        "value": 21.8067,
+        "yoy_pct": 13.8731,
+        "yoy_delta": 2.6567
+      },
+      {
+        "date": "2000-07",
+        "value": 22.9806,
+        "yoy_pct": 0.5218,
+        "yoy_delta": 0.1193
+      },
+      {
+        "date": "2000-08",
+        "value": 24.5419,
+        "yoy_pct": 6.9891,
+        "yoy_delta": 1.6032
+      },
+      {
+        "date": "2000-09",
+        "value": 22.4133,
+        "yoy_pct": 4.7512,
+        "yoy_delta": 1.0166
+      },
+      {
+        "date": "2000-10",
+        "value": 17.829,
+        "yoy_pct": -16.3719,
+        "yoy_delta": -3.4904
+      },
+      {
+        "date": "2000-11",
+        "value": 13.27,
+        "yoy_pct": -17.8496,
+        "yoy_delta": -2.8833
+      },
+      {
+        "date": "2000-12",
+        "value": 13.6,
+        "yoy_pct": 2.3549,
+        "yoy_delta": 0.3129
+      },
+      {
+        "date": "2001-01",
+        "value": 10.971,
+        "yoy_pct": -17.6907,
+        "yoy_delta": -2.358
+      },
+      {
+        "date": "2001-02",
+        "value": 11.0607,
+        "yoy_pct": -13.6578,
+        "yoy_delta": -1.7496
+      },
+      {
+        "date": "2001-03",
+        "value": 14.4968,
+        "yoy_pct": 5.4934,
+        "yoy_delta": 0.7549
+      },
+      {
+        "date": "2001-04",
+        "value": 14.1533,
+        "yoy_pct": -16.3022,
+        "yoy_delta": -2.7567
+      },
+      {
+        "date": "2001-05",
+        "value": 19.629,
+        "yoy_pct": 0.2472,
+        "yoy_delta": 0.0484
+      },
+      {
+        "date": "2001-06",
+        "value": 21.46,
+        "yoy_pct": -1.5899,
+        "yoy_delta": -0.3467
+      },
+      {
+        "date": "2001-07",
+        "value": 22.3484,
+        "yoy_pct": -2.751,
+        "yoy_delta": -0.6322
+      },
+      {
+        "date": "2001-08",
+        "value": 23.6323,
+        "yoy_pct": -3.7063,
+        "yoy_delta": -0.9096
+      },
+      {
+        "date": "2001-09",
+        "value": 22.17,
+        "yoy_pct": -1.0855,
+        "yoy_delta": -0.2433
+      },
+      {
+        "date": "2001-10",
+        "value": 19.7226,
+        "yoy_pct": 10.6209,
+        "yoy_delta": 1.8936
+      },
+      {
+        "date": "2001-11",
+        "value": 15.5467,
+        "yoy_pct": 17.1567,
+        "yoy_delta": 2.2767
+      },
+      {
+        "date": "2001-12",
+        "value": 11.1806,
+        "yoy_pct": -17.7897,
+        "yoy_delta": -2.4194
+      },
+      {
+        "date": "2002-01",
+        "value": 11.5839,
+        "yoy_pct": 5.5865,
+        "yoy_delta": 0.6129
+      },
+      {
+        "date": "2002-02",
+        "value": 13.7679,
+        "yoy_pct": 24.4758,
+        "yoy_delta": 2.7072
+      },
+      {
+        "date": "2002-03",
+        "value": 13.7839,
+        "yoy_pct": -4.9176,
+        "yoy_delta": -0.7129
+      },
+      {
+        "date": "2002-04",
+        "value": 15.2333,
+        "yoy_pct": 7.6307,
+        "yoy_delta": 1.08
+      },
+      {
+        "date": "2002-05",
+        "value": 17.1226,
+        "yoy_pct": -12.7689,
+        "yoy_delta": -2.5064
+      },
+      {
+        "date": "2002-06",
+        "value": 20.24,
+        "yoy_pct": -5.685,
+        "yoy_delta": -1.22
+      },
+      {
+        "date": "2002-07",
+        "value": 22.6,
+        "yoy_pct": 1.1258,
+        "yoy_delta": 0.2516
+      },
+      {
+        "date": "2002-08",
+        "value": 22.2742,
+        "yoy_pct": -5.7468,
+        "yoy_delta": -1.3581
+      },
+      {
+        "date": "2002-09",
+        "value": 23.0467,
+        "yoy_pct": 3.9544,
+        "yoy_delta": 0.8767
+      },
+      {
+        "date": "2002-10",
+        "value": 17.4387,
+        "yoy_pct": -11.5801,
+        "yoy_delta": -2.2839
+      },
+      {
+        "date": "2002-11",
+        "value": 16.0567,
+        "yoy_pct": 3.2804,
+        "yoy_delta": 0.51
+      },
+      {
+        "date": "2002-12",
+        "value": 11.9774,
+        "yoy_pct": 7.1266,
+        "yoy_delta": 0.7968
+      },
+      {
+        "date": "2003-01",
+        "value": 15.2871,
+        "yoy_pct": 31.9685,
+        "yoy_delta": 3.7032
+      },
+      {
+        "date": "2003-02",
+        "value": 13.2036,
+        "yoy_pct": -4.0987,
+        "yoy_delta": -0.5643
+      },
+      {
+        "date": "2003-03",
+        "value": 14.6742,
+        "yoy_pct": 6.459,
+        "yoy_delta": 0.8903
+      },
+      {
+        "date": "2003-04",
+        "value": 14.13,
+        "yoy_pct": -7.2427,
+        "yoy_delta": -1.1033
+      },
+      {
+        "date": "2003-05",
+        "value": 17.3387,
+        "yoy_pct": 1.2621,
+        "yoy_delta": 0.2161
+      },
+      {
+        "date": "2003-06",
+        "value": 19.4467,
+        "yoy_pct": -3.9195,
+        "yoy_delta": -0.7933
+      },
+      {
+        "date": "2003-07",
+        "value": 24.3903,
+        "yoy_pct": 7.9217,
+        "yoy_delta": 1.7903
+      },
+      {
+        "date": "2003-08",
+        "value": 24.7516,
+        "yoy_pct": 11.1223,
+        "yoy_delta": 2.4774
+      },
+      {
+        "date": "2003-09",
+        "value": 22.9567,
+        "yoy_pct": -0.3905,
+        "yoy_delta": -0.09
+      },
+      {
+        "date": "2003-10",
+        "value": 21.0903,
+        "yoy_pct": 20.9396,
+        "yoy_delta": 3.6516
+      },
+      {
+        "date": "2003-11",
+        "value": 14.06,
+        "yoy_pct": -12.4353,
+        "yoy_delta": -1.9967
+      },
+      {
+        "date": "2003-12",
+        "value": 12.0677,
+        "yoy_pct": 0.7539,
+        "yoy_delta": 0.0903
+      },
+      {
+        "date": "2004-01",
+        "value": 12.0516,
+        "yoy_pct": -21.1649,
+        "yoy_delta": -3.2355
+      },
+      {
+        "date": "2004-02",
+        "value": 11.7276,
+        "yoy_pct": -11.1788,
+        "yoy_delta": -1.476
+      },
+      {
+        "date": "2004-03",
+        "value": 17.1742,
+        "yoy_pct": 17.0367,
+        "yoy_delta": 2.5
+      },
+      {
+        "date": "2004-04",
+        "value": 17.3467,
+        "yoy_pct": 22.765,
+        "yoy_delta": 3.2167
+      },
+      {
+        "date": "2004-05",
+        "value": 20.0839,
+        "yoy_pct": 15.8328,
+        "yoy_delta": 2.7452
+      },
+      {
+        "date": "2004-06",
+        "value": 20.4667,
+        "yoy_pct": 5.2451,
+        "yoy_delta": 1.02
+      },
+      {
+        "date": "2004-07",
+        "value": 23.2516,
+        "yoy_pct": -4.6687,
+        "yoy_delta": -1.1387
+      },
+      {
+        "date": "2004-08",
+        "value": 22.6355,
+        "yoy_pct": -8.5493,
+        "yoy_delta": -2.1161
+      },
+      {
+        "date": "2004-09",
+        "value": 23.41,
+        "yoy_pct": 1.9746,
+        "yoy_delta": 0.4533
+      },
+      {
+        "date": "2004-10",
+        "value": 17.9742,
+        "yoy_pct": -14.775,
+        "yoy_delta": -3.1161
+      },
+      {
+        "date": "2004-11",
+        "value": 13.6867,
+        "yoy_pct": -2.655,
+        "yoy_delta": -0.3733
+      },
+      {
+        "date": "2004-12",
+        "value": 12.4,
+        "yoy_pct": 2.7536,
+        "yoy_delta": 0.3323
+      },
+      {
+        "date": "2005-01",
+        "value": 12.7677,
+        "yoy_pct": 5.9419,
+        "yoy_delta": 0.7161
+      },
+      {
+        "date": "2005-02",
+        "value": 13.2714,
+        "yoy_pct": 13.1638,
+        "yoy_delta": 1.5438
+      },
+      {
+        "date": "2005-03",
+        "value": 14.6,
+        "yoy_pct": -14.9888,
+        "yoy_delta": -2.5742
+      },
+      {
+        "date": "2005-04",
+        "value": 15.9367,
+        "yoy_pct": -8.1283,
+        "yoy_delta": -1.41
+      },
+      {
+        "date": "2005-05",
+        "value": 18.8226,
+        "yoy_pct": -6.2802,
+        "yoy_delta": -1.2613
+      },
+      {
+        "date": "2005-06",
+        "value": 19.5067,
+        "yoy_pct": -4.6905,
+        "yoy_delta": -0.96
+      },
+      {
+        "date": "2005-07",
+        "value": 23.471,
+        "yoy_pct": 0.9436,
+        "yoy_delta": 0.2194
+      },
+      {
+        "date": "2005-08",
+        "value": 23.5065,
+        "yoy_pct": 3.8479,
+        "yoy_delta": 0.871
+      },
+      {
+        "date": "2005-09",
+        "value": 20.9033,
+        "yoy_pct": -10.7078,
+        "yoy_delta": -2.5067
+      },
+      {
+        "date": "2005-10",
+        "value": 18.8323,
+        "yoy_pct": 4.7741,
+        "yoy_delta": 0.8581
+      },
+      {
+        "date": "2005-11",
+        "value": 16.95,
+        "yoy_pct": 23.8429,
+        "yoy_delta": 3.2633
+      },
+      {
+        "date": "2005-12",
+        "value": 13.7677,
+        "yoy_pct": 11.0298,
+        "yoy_delta": 1.3677
+      },
+      {
+        "date": "2006-01",
+        "value": 12.8774,
+        "yoy_pct": 0.8592,
+        "yoy_delta": 0.1097
+      },
+      {
+        "date": "2006-02",
+        "value": 14.1393,
+        "yoy_pct": 6.5396,
+        "yoy_delta": 0.8679
+      },
+      {
+        "date": "2006-03",
+        "value": 11.9065,
+        "yoy_pct": -18.4486,
+        "yoy_delta": -2.6935
+      },
+      {
+        "date": "2006-04",
+        "value": 14.77,
+        "yoy_pct": -7.3208,
+        "yoy_delta": -1.1667
+      },
+      {
+        "date": "2006-05",
+        "value": 18.8968,
+        "yoy_pct": 0.3942,
+        "yoy_delta": 0.0742
+      },
+      {
+        "date": "2006-06",
+        "value": 23.0867,
+        "yoy_pct": 18.3527,
+        "yoy_delta": 3.58
+      },
+      {
+        "date": "2006-07",
+        "value": 26.371,
+        "yoy_pct": 12.3557,
+        "yoy_delta": 2.9
+      },
+      {
+        "date": "2006-08",
+        "value": 23.5484,
+        "yoy_pct": 0.1782,
+        "yoy_delta": 0.0419
+      },
+      {
+        "date": "2006-09",
+        "value": 22.6567,
+        "yoy_pct": 8.3881,
+        "yoy_delta": 1.7534
+      },
+      {
+        "date": "2006-10",
+        "value": 18.6032,
+        "yoy_pct": -1.2165,
+        "yoy_delta": -0.2291
+      },
+      {
+        "date": "2006-11",
+        "value": 17.1733,
+        "yoy_pct": 1.3174,
+        "yoy_delta": 0.2233
+      },
+      {
+        "date": "2006-12",
+        "value": 12.671,
+        "yoy_pct": -7.9657,
+        "yoy_delta": -1.0967
+      },
+      {
+        "date": "2007-01",
+        "value": 11.2452,
+        "yoy_pct": -12.6749,
+        "yoy_delta": -1.6322
+      },
+      {
+        "date": "2007-02",
+        "value": 13.5786,
+        "yoy_pct": -3.9655,
+        "yoy_delta": -0.5607
+      },
+      {
+        "date": "2007-03",
+        "value": 16.2161,
+        "yoy_pct": 36.1954,
+        "yoy_delta": 4.3096
+      },
+      {
+        "date": "2007-04",
+        "value": 16.2267,
+        "yoy_pct": 9.8626,
+        "yoy_delta": 1.4567
+      },
+      {
+        "date": "2007-05",
+        "value": 18.2839,
+        "yoy_pct": -3.2434,
+        "yoy_delta": -0.6129
+      },
+      {
+        "date": "2007-06",
+        "value": 20.4467,
+        "yoy_pct": -11.4352,
+        "yoy_delta": -2.64
+      },
+      {
+        "date": "2007-07",
+        "value": 23.6548,
+        "yoy_pct": -10.3,
+        "yoy_delta": -2.7162
+      },
+      {
+        "date": "2007-08",
+        "value": 24.7484,
+        "yoy_pct": 5.0959,
+        "yoy_delta": 1.2
+      },
+      {
+        "date": "2007-09",
+        "value": 21.8733,
+        "yoy_pct": -3.4577,
+        "yoy_delta": -0.7834
+      },
+      {
+        "date": "2007-10",
+        "value": 19.4548,
+        "yoy_pct": 4.5777,
+        "yoy_delta": 0.8516
+      },
+      {
+        "date": "2007-11",
+        "value": 16.62,
+        "yoy_pct": -3.2219,
+        "yoy_delta": -0.5533
+      },
+      {
+        "date": "2007-12",
+        "value": 11.6161,
+        "yoy_pct": -8.3253,
+        "yoy_delta": -1.0549
+      },
+      {
+        "date": "2008-01",
+        "value": 11.571,
+        "yoy_pct": 2.8972,
+        "yoy_delta": 0.3258
+      },
+      {
+        "date": "2008-02",
+        "value": 12.569,
+        "yoy_pct": -7.4352,
+        "yoy_delta": -1.0096
+      },
+      {
+        "date": "2008-03",
+        "value": 15.2387,
+        "yoy_pct": -6.0273,
+        "yoy_delta": -0.9774
+      },
+      {
+        "date": "2008-04",
+        "value": 17.1933,
+        "yoy_pct": 5.9568,
+        "yoy_delta": 0.9666
+      },
+      {
+        "date": "2008-05",
+        "value": 18.1613,
+        "yoy_pct": -0.6705,
+        "yoy_delta": -0.1226
+      },
+      {
+        "date": "2008-06",
+        "value": 22.08,
+        "yoy_pct": 7.9881,
+        "yoy_delta": 1.6333
+      },
+      {
+        "date": "2008-07",
+        "value": 23.2677,
+        "yoy_pct": -1.6365,
+        "yoy_delta": -0.3871
+      },
+      {
+        "date": "2008-08",
+        "value": 23.9161,
+        "yoy_pct": -3.363,
+        "yoy_delta": -0.8323
+      },
+      {
+        "date": "2008-09",
+        "value": 23.0833,
+        "yoy_pct": 5.5319,
+        "yoy_delta": 1.21
+      },
+      {
+        "date": "2008-10",
+        "value": 21.0839,
+        "yoy_pct": 8.3738,
+        "yoy_delta": 1.6291
+      },
+      {
+        "date": "2008-11",
+        "value": 17.68,
+        "yoy_pct": 6.3779,
+        "yoy_delta": 1.06
+      },
+      {
+        "date": "2008-12",
+        "value": 11.4677,
+        "yoy_pct": -1.2775,
+        "yoy_delta": -0.1484
+      },
+      {
+        "date": "2009-01",
+        "value": 14.1258,
+        "yoy_pct": 22.0793,
+        "yoy_delta": 2.5548
+      },
+      {
+        "date": "2009-02",
+        "value": 12.6464,
+        "yoy_pct": 0.6158,
+        "yoy_delta": 0.0774
+      },
+      {
+        "date": "2009-03",
+        "value": 14.2548,
+        "yoy_pct": -6.4566,
+        "yoy_delta": -0.9839
+      },
+      {
+        "date": "2009-04",
+        "value": 16.21,
+        "yoy_pct": -5.7191,
+        "yoy_delta": -0.9833
+      },
+      {
+        "date": "2009-05",
+        "value": 19.3839,
+        "yoy_pct": 6.7319,
+        "yoy_delta": 1.2226
+      },
+      {
+        "date": "2009-06",
+        "value": 19.34,
+        "yoy_pct": -12.4094,
+        "yoy_delta": -2.74
+      },
+      {
+        "date": "2009-07",
+        "value": 23.7484,
+        "yoy_pct": 2.066,
+        "yoy_delta": 0.4807
+      },
+      {
+        "date": "2009-08",
+        "value": 23.6355,
+        "yoy_pct": -1.1733,
+        "yoy_delta": -0.2806
+      },
+      {
+        "date": "2009-09",
+        "value": 24.07,
+        "yoy_pct": 4.2745,
+        "yoy_delta": 0.9867
+      },
+      {
+        "date": "2009-10",
+        "value": 18.5387,
+        "yoy_pct": -12.0718,
+        "yoy_delta": -2.5452
+      },
+      {
+        "date": "2009-11",
+        "value": 16.09,
+        "yoy_pct": -8.9932,
+        "yoy_delta": -1.59
+      },
+      {
+        "date": "2009-12",
+        "value": 11.7548,
+        "yoy_pct": 2.5036,
+        "yoy_delta": 0.2871
+      },
+      {
+        "date": "2010-01",
+        "value": 12.9742,
+        "yoy_pct": -8.1525,
+        "yoy_delta": -1.1516
+      },
+      {
+        "date": "2010-02",
+        "value": 13.2071,
+        "yoy_pct": 4.4337,
+        "yoy_delta": 0.5607
+      },
+      {
+        "date": "2010-03",
+        "value": 14.7419,
+        "yoy_pct": 3.4171,
+        "yoy_delta": 0.4871
+      },
+      {
+        "date": "2010-04",
+        "value": 14.68,
+        "yoy_pct": -9.4386,
+        "yoy_delta": -1.53
+      },
+      {
+        "date": "2010-05",
+        "value": 17.1968,
+        "yoy_pct": -11.2831,
+        "yoy_delta": -2.1871
+      },
+      {
+        "date": "2010-06",
+        "value": 19.52,
+        "yoy_pct": 0.9307,
+        "yoy_delta": 0.18
+      },
+      {
+        "date": "2010-07",
+        "value": 21.6258,
+        "yoy_pct": -8.9379,
+        "yoy_delta": -2.1226
+      },
+      {
+        "date": "2010-08",
+        "value": 22.4,
+        "yoy_pct": -5.2273,
+        "yoy_delta": -1.2355
+      },
+      {
+        "date": "2010-09",
+        "value": 22.2033,
+        "yoy_pct": -7.7553,
+        "yoy_delta": -1.8667
+      },
+      {
+        "date": "2010-10",
+        "value": 18.9839,
+        "yoy_pct": 2.4015,
+        "yoy_delta": 0.4452
+      },
+      {
+        "date": "2010-11",
+        "value": 15.1633,
+        "yoy_pct": -5.7595,
+        "yoy_delta": -0.9267
+      },
+      {
+        "date": "2010-12",
+        "value": 13.0839,
+        "yoy_pct": 11.3069,
+        "yoy_delta": 1.3291
+      },
+      {
+        "date": "2011-01",
+        "value": 13.2323,
+        "yoy_pct": 1.9893,
+        "yoy_delta": 0.2581
+      },
+      {
+        "date": "2011-02",
+        "value": 11.9143,
+        "yoy_pct": -9.7887,
+        "yoy_delta": -1.2928
+      },
+      {
+        "date": "2011-03",
+        "value": 14.1516,
+        "yoy_pct": -4.0042,
+        "yoy_delta": -0.5903
+      },
+      {
+        "date": "2011-04",
+        "value": 16.5467,
+        "yoy_pct": 12.7159,
+        "yoy_delta": 1.8667
+      },
+      {
+        "date": "2011-05",
+        "value": 17.4677,
+        "yoy_pct": 1.5753,
+        "yoy_delta": 0.2709
+      },
+      {
+        "date": "2011-06",
+        "value": 19.2333,
+        "yoy_pct": -1.4687,
+        "yoy_delta": -0.2867
+      },
+      {
+        "date": "2011-07",
+        "value": 22.6677,
+        "yoy_pct": 4.8179,
+        "yoy_delta": 1.0419
+      },
+      {
+        "date": "2011-08",
+        "value": 23.0774,
+        "yoy_pct": 3.0241,
+        "yoy_delta": 0.6774
+      },
+      {
+        "date": "2011-09",
+        "value": 21.9833,
+        "yoy_pct": -0.9908,
+        "yoy_delta": -0.22
+      },
+      {
+        "date": "2011-10",
+        "value": 19.1161,
+        "yoy_pct": 0.6964,
+        "yoy_delta": 0.1322
+      },
+      {
+        "date": "2011-11",
+        "value": 14.1467,
+        "yoy_pct": -6.7043,
+        "yoy_delta": -1.0166
+      },
+      {
+        "date": "2011-12",
+        "value": 11.4903,
+        "yoy_pct": -12.1799,
+        "yoy_delta": -1.5936
+      },
+      {
+        "date": "2012-01",
+        "value": 14.0065,
+        "yoy_pct": 5.8508,
+        "yoy_delta": 0.7742
+      },
+      {
+        "date": "2012-02",
+        "value": 13.5138,
+        "yoy_pct": 13.425,
+        "yoy_delta": 1.5995
+      },
+      {
+        "date": "2012-03",
+        "value": 13.7935,
+        "yoy_pct": -2.5305,
+        "yoy_delta": -0.3581
+      },
+      {
+        "date": "2012-04",
+        "value": 16.2867,
+        "yoy_pct": -1.5713,
+        "yoy_delta": -0.26
+      },
+      {
+        "date": "2012-05",
+        "value": 18.7387,
+        "yoy_pct": 7.2763,
+        "yoy_delta": 1.271
+      },
+      {
+        "date": "2012-06",
+        "value": 20.4033,
+        "yoy_pct": 6.0832,
+        "yoy_delta": 1.17
+      },
+      {
+        "date": "2012-07",
+        "value": 22.3065,
+        "yoy_pct": -1.5935,
+        "yoy_delta": -0.3612
+      },
+      {
+        "date": "2012-08",
+        "value": 25.5677,
+        "yoy_pct": 10.7911,
+        "yoy_delta": 2.4903
+      },
+      {
+        "date": "2012-09",
+        "value": 24.9167,
+        "yoy_pct": 13.3438,
+        "yoy_delta": 2.9334
+      },
+      {
+        "date": "2012-10",
+        "value": 20.9806,
+        "yoy_pct": 9.7536,
+        "yoy_delta": 1.8645
+      },
+      {
+        "date": "2012-11",
+        "value": 16.4967,
+        "yoy_pct": 16.6116,
+        "yoy_delta": 2.35
+      },
+      {
+        "date": "2012-12",
+        "value": 12.4258,
+        "yoy_pct": 8.1416,
+        "yoy_delta": 0.9355
+      },
+      {
+        "date": "2013-01",
+        "value": 11.9129,
+        "yoy_pct": -14.9473,
+        "yoy_delta": -2.0936
+      },
+      {
+        "date": "2013-02",
+        "value": 12.8393,
+        "yoy_pct": -4.9912,
+        "yoy_delta": -0.6745
+      },
+      {
+        "date": "2013-03",
+        "value": 16.129,
+        "yoy_pct": 16.9319,
+        "yoy_delta": 2.3355
+      },
+      {
+        "date": "2013-04",
+        "value": 17.55,
+        "yoy_pct": 7.7566,
+        "yoy_delta": 1.2633
+      },
+      {
+        "date": "2013-05",
+        "value": 20.329,
+        "yoy_pct": 8.4867,
+        "yoy_delta": 1.5903
+      },
+      {
+        "date": "2013-06",
+        "value": 22.0633,
+        "yoy_pct": 8.1359,
+        "yoy_delta": 1.66
+      },
+      {
+        "date": "2013-07",
+        "value": 23.9548,
+        "yoy_pct": 7.3893,
+        "yoy_delta": 1.6483
+      },
+      {
+        "date": "2013-08",
+        "value": 23.8968,
+        "yoy_pct": -6.5352,
+        "yoy_delta": -1.6709
+      },
+      {
+        "date": "2013-09",
+        "value": 23.8,
+        "yoy_pct": -4.4817,
+        "yoy_delta": -1.1167
+      },
+      {
+        "date": "2013-10",
+        "value": 18.7903,
+        "yoy_pct": -10.4396,
+        "yoy_delta": -2.1903
+      },
+      {
+        "date": "2013-11",
+        "value": 16.6,
+        "yoy_pct": 0.6262,
+        "yoy_delta": 0.1033
+      },
+      {
+        "date": "2013-12",
+        "value": 13.4581,
+        "yoy_pct": 8.3077,
+        "yoy_delta": 1.0323
+      },
+      {
+        "date": "2014-01",
+        "value": 15.7484,
+        "yoy_pct": 32.1962,
+        "yoy_delta": 3.8355
+      },
+      {
+        "date": "2014-02",
+        "value": 15.1929,
+        "yoy_pct": 18.3312,
+        "yoy_delta": 2.3536
+      },
+      {
+        "date": "2014-03",
+        "value": 16.8355,
+        "yoy_pct": 4.3803,
+        "yoy_delta": 0.7065
+      },
+      {
+        "date": "2014-04",
+        "value": 18.1167,
+        "yoy_pct": 3.2291,
+        "yoy_delta": 0.5667
+      },
+      {
+        "date": "2014-05",
+        "value": 21.2484,
+        "yoy_pct": 4.5226,
+        "yoy_delta": 0.9194
+      },
+      {
+        "date": "2014-06",
+        "value": 21.6367,
+        "yoy_pct": -1.9335,
+        "yoy_delta": -0.4266
+      },
+      {
+        "date": "2014-07",
+        "value": 24.829,
+        "yoy_pct": 3.6494,
+        "yoy_delta": 0.8742
+      },
+      {
+        "date": "2014-08",
+        "value": 24.6419,
+        "yoy_pct": 3.118,
+        "yoy_delta": 0.7451
+      },
+      {
+        "date": "2014-09",
+        "value": 25.2167,
+        "yoy_pct": 5.9525,
+        "yoy_delta": 1.4167
+      },
+      {
+        "date": "2014-10",
+        "value": 22.0774,
+        "yoy_pct": 17.4936,
+        "yoy_delta": 3.2871
+      },
+      {
+        "date": "2014-11",
+        "value": 17.7633,
+        "yoy_pct": 7.0078,
+        "yoy_delta": 1.1633
+      },
+      {
+        "date": "2014-12",
+        "value": 14.0968,
+        "yoy_pct": 4.7458,
+        "yoy_delta": 0.6387
+      },
+      {
+        "date": "2015-01",
+        "value": 14.7355,
+        "yoy_pct": -6.4318,
+        "yoy_delta": -1.0129
+      },
+      {
+        "date": "2015-02",
+        "value": 16.5714,
+        "yoy_pct": 9.0733,
+        "yoy_delta": 1.3785
+      },
+      {
+        "date": "2015-03",
+        "value": 19.0677,
+        "yoy_pct": 13.2589,
+        "yoy_delta": 2.2322
+      },
+      {
+        "date": "2015-04",
+        "value": 18.1567,
+        "yoy_pct": 0.2208,
+        "yoy_delta": 0.04
+      },
+      {
+        "date": "2015-05",
+        "value": 17.771,
+        "yoy_pct": -16.3655,
+        "yoy_delta": -3.4774
+      },
+      {
+        "date": "2015-06",
+        "value": 22.5633,
+        "yoy_pct": 4.2825,
+        "yoy_delta": 0.9266
+      },
+      {
+        "date": "2015-07",
+        "value": 23.6387,
+        "yoy_pct": -4.794,
+        "yoy_delta": -1.1903
+      },
+      {
+        "date": "2015-08",
+        "value": 25.5806,
+        "yoy_pct": 3.8094,
+        "yoy_delta": 0.9387
+      },
+      {
+        "date": "2015-09",
+        "value": 25.5433,
+        "yoy_pct": 1.2952,
+        "yoy_delta": 0.3266
+      },
+      {
+        "date": "2015-10",
+        "value": 23.3355,
+        "yoy_pct": 5.6986,
+        "yoy_delta": 1.2581
+      },
+      {
+        "date": "2015-11",
+        "value": 16.0933,
+        "yoy_pct": -9.4014,
+        "yoy_delta": -1.67
+      },
+      {
+        "date": "2015-12",
+        "value": 12.5129,
+        "yoy_pct": -11.2359,
+        "yoy_delta": -1.5839
+      },
+      {
+        "date": "2016-01",
+        "value": 13.0613,
+        "yoy_pct": -11.3617,
+        "yoy_delta": -1.6742
+      },
+      {
+        "date": "2016-02",
+        "value": 17.1034,
+        "yoy_pct": 3.2104,
+        "yoy_delta": 0.532
+      },
+      {
+        "date": "2016-03",
+        "value": 16.2645,
+        "yoy_pct": -14.7013,
+        "yoy_delta": -2.8032
+      },
+      {
+        "date": "2016-04",
+        "value": 18.4233,
+        "yoy_pct": 1.4683,
+        "yoy_delta": 0.2666
+      },
+      {
+        "date": "2016-05",
+        "value": 18.0645,
+        "yoy_pct": 1.6516,
+        "yoy_delta": 0.2935
+      },
+      {
+        "date": "2016-06",
+        "value": 22.9133,
+        "yoy_pct": 1.5512,
+        "yoy_delta": 0.35
+      },
+      {
+        "date": "2016-07",
+        "value": 24.7419,
+        "yoy_pct": 4.6669,
+        "yoy_delta": 1.1032
+      },
+      {
+        "date": "2016-08",
+        "value": 24.3581,
+        "yoy_pct": -4.779,
+        "yoy_delta": -1.2225
+      },
+      {
+        "date": "2016-09",
+        "value": 23.21,
+        "yoy_pct": -9.1347,
+        "yoy_delta": -2.3333
+      },
+      {
+        "date": "2016-10",
+        "value": 20.7839,
+        "yoy_pct": -10.9344,
+        "yoy_delta": -2.5516
+      },
+      {
+        "date": "2016-11",
+        "value": 17.7467,
+        "yoy_pct": 10.2738,
+        "yoy_delta": 1.6534
+      },
+      {
+        "date": "2016-12",
+        "value": 13.3,
+        "yoy_pct": 6.2903,
+        "yoy_delta": 0.7871
+      },
+      {
+        "date": "2017-01",
+        "value": 12.3032,
+        "yoy_pct": -5.8042,
+        "yoy_delta": -0.7581
+      },
+      {
+        "date": "2017-02",
+        "value": 13.8821,
+        "yoy_pct": -18.8343,
+        "yoy_delta": -3.2213
+      },
+      {
+        "date": "2017-03",
+        "value": 16.9871,
+        "yoy_pct": 4.4428,
+        "yoy_delta": 0.7226
+      },
+      {
+        "date": "2017-04",
+        "value": 18.8567,
+        "yoy_pct": 2.3525,
+        "yoy_delta": 0.4334
+      },
+      {
+        "date": "2017-05",
+        "value": 18.9516,
+        "yoy_pct": 4.9107,
+        "yoy_delta": 0.8871
+      },
+      {
+        "date": "2017-06",
+        "value": 22.27,
+        "yoy_pct": -2.8075,
+        "yoy_delta": -0.6433
+      },
+      {
+        "date": "2017-07",
+        "value": 25.0355,
+        "yoy_pct": 1.1867,
+        "yoy_delta": 0.2936
+      },
+      {
+        "date": "2017-08",
+        "value": 24.7323,
+        "yoy_pct": 1.5362,
+        "yoy_delta": 0.3742
+      },
+      {
+        "date": "2017-09",
+        "value": 23.4833,
+        "yoy_pct": 1.1775,
+        "yoy_delta": 0.2733
+      },
+      {
+        "date": "2017-10",
+        "value": 22.1581,
+        "yoy_pct": 6.6118,
+        "yoy_delta": 1.3742
+      },
+      {
+        "date": "2017-11",
+        "value": 18.1633,
+        "yoy_pct": 2.3475,
+        "yoy_delta": 0.4166
+      },
+      {
+        "date": "2017-12",
+        "value": 15.1903,
+        "yoy_pct": 14.2128,
+        "yoy_delta": 1.8903
+      },
+      {
+        "date": "2018-01",
+        "value": 15.5613,
+        "yoy_pct": 26.4817,
+        "yoy_delta": 3.2581
+      },
+      {
+        "date": "2018-02",
+        "value": 14.1321,
+        "yoy_pct": 1.8009,
+        "yoy_delta": 0.25
+      },
+      {
+        "date": "2018-03",
+        "value": 14.7065,
+        "yoy_pct": -13.4255,
+        "yoy_delta": -2.2806
+      },
+      {
+        "date": "2018-04",
+        "value": 17.77,
+        "yoy_pct": -5.7629,
+        "yoy_delta": -1.0867
+      },
+      {
+        "date": "2018-05",
+        "value": 18.0742,
+        "yoy_pct": -4.6297,
+        "yoy_delta": -0.8774
+      },
+      {
+        "date": "2018-06",
+        "value": 21.38,
+        "yoy_pct": -3.9964,
+        "yoy_delta": -0.89
+      },
+      {
+        "date": "2018-07",
+        "value": 26.6097,
+        "yoy_pct": 6.2879,
+        "yoy_delta": 1.5742
+      },
+      {
+        "date": "2018-08",
+        "value": 25.9774,
+        "yoy_pct": 5.0343,
+        "yoy_delta": 1.2451
+      },
+      {
+        "date": "2018-09",
+        "value": 23.29,
+        "yoy_pct": -0.8231,
+        "yoy_delta": -0.1933
+      },
+      {
+        "date": "2018-10",
+        "value": 20.6161,
+        "yoy_pct": -6.9591,
+        "yoy_delta": -1.542
+      },
+      {
+        "date": "2018-11",
+        "value": 17.6633,
+        "yoy_pct": -2.7528,
+        "yoy_delta": -0.5
+      },
+      {
+        "date": "2018-12",
+        "value": 13.7839,
+        "yoy_pct": -9.2585,
+        "yoy_delta": -1.4064
+      },
+      {
+        "date": "2019-01",
+        "value": 13.3968,
+        "yoy_pct": -13.9095,
+        "yoy_delta": -2.1645
+      },
+      {
+        "date": "2019-02",
+        "value": 10.9393,
+        "yoy_pct": -22.5925,
+        "yoy_delta": -3.1928
+      },
+      {
+        "date": "2019-03",
+        "value": 14.8355,
+        "yoy_pct": 0.8772,
+        "yoy_delta": 0.129
+      },
+      {
+        "date": "2019-04",
+        "value": 17.87,
+        "yoy_pct": 0.5627,
+        "yoy_delta": 0.1
+      },
+      {
+        "date": "2019-05",
+        "value": 17.0355,
+        "yoy_pct": -5.7469,
+        "yoy_delta": -1.0387
+      },
+      {
+        "date": "2019-06",
+        "value": 20.97,
+        "yoy_pct": -1.9177,
+        "yoy_delta": -0.41
+      },
+      {
+        "date": "2019-07",
+        "value": 23.9,
+        "yoy_pct": -10.1831,
+        "yoy_delta": -2.7097
+      },
+      {
+        "date": "2019-08",
+        "value": 24.4968,
+        "yoy_pct": -5.6996,
+        "yoy_delta": -1.4806
+      },
+      {
+        "date": "2019-09",
+        "value": 23.8967,
+        "yoy_pct": 2.605,
+        "yoy_delta": 0.6067
+      },
+      {
+        "date": "2019-10",
+        "value": 20.6129,
+        "yoy_pct": -0.0155,
+        "yoy_delta": -0.0032
+      },
+      {
+        "date": "2019-11",
+        "value": 16.6567,
+        "yoy_pct": -5.6988,
+        "yoy_delta": -1.0066
+      },
+      {
+        "date": "2019-12",
+        "value": 12.8903,
+        "yoy_pct": -6.4829,
+        "yoy_delta": -0.8936
+      },
+      {
+        "date": "2020-01",
+        "value": 13.5323,
+        "yoy_pct": 1.0114,
+        "yoy_delta": 0.1355
+      },
+      {
+        "date": "2020-02",
+        "value": 14.8517,
+        "yoy_pct": 35.7646,
+        "yoy_delta": 3.9124
+      },
+      {
+        "date": "2020-03",
+        "value": 14.2677,
+        "yoy_pct": -3.8273,
+        "yoy_delta": -0.5678
+      },
+      {
+        "date": "2020-04",
+        "value": 17.2067,
+        "yoy_pct": -3.7118,
+        "yoy_delta": -0.6633
+      },
+      {
+        "date": "2020-05",
+        "value": 20.9065,
+        "yoy_pct": 22.7231,
+        "yoy_delta": 3.871
+      },
+      {
+        "date": "2020-06",
+        "value": 21.93,
+        "yoy_pct": 4.578,
+        "yoy_delta": 0.96
+      },
+      {
+        "date": "2020-07",
+        "value": 23.8161,
+        "yoy_pct": -0.351,
+        "yoy_delta": -0.0839
+      },
+      {
+        "date": "2020-08",
+        "value": 26.0129,
+        "yoy_pct": 6.189,
+        "yoy_delta": 1.5161
+      },
+      {
+        "date": "2020-09",
+        "value": 25.0367,
+        "yoy_pct": 4.7705,
+        "yoy_delta": 1.14
+      },
+      {
+        "date": "2020-10",
+        "value": 22.4548,
+        "yoy_pct": 8.9357,
+        "yoy_delta": 1.8419
+      },
+      {
+        "date": "2020-11",
+        "value": 16.39,
+        "yoy_pct": -1.6012,
+        "yoy_delta": -0.2667
+      },
+      {
+        "date": "2020-12",
+        "value": 14.0871,
+        "yoy_pct": 9.2845,
+        "yoy_delta": 1.1968
+      },
+      {
+        "date": "2021-01",
+        "value": 13.7032,
+        "yoy_pct": 1.2629,
+        "yoy_delta": 0.1709
+      },
+      {
+        "date": "2021-02",
+        "value": 14.6429,
+        "yoy_pct": -1.4059,
+        "yoy_delta": -0.2088
+      },
+      {
+        "date": "2021-03",
+        "value": 14.0,
+        "yoy_pct": -1.8763,
+        "yoy_delta": -0.2677
+      },
+      {
+        "date": "2021-04",
+        "value": 17.5767,
+        "yoy_pct": 2.1503,
+        "yoy_delta": 0.37
+      },
+      {
+        "date": "2021-05",
+        "value": 18.7581,
+        "yoy_pct": -10.2762,
+        "yoy_delta": -2.1484
+      },
+      {
+        "date": "2021-06",
+        "value": 22.4467,
+        "yoy_pct": 2.3561,
+        "yoy_delta": 0.5167
+      },
+      {
+        "date": "2021-07",
+        "value": 24.9194,
+        "yoy_pct": 4.6326,
+        "yoy_delta": 1.1033
+      },
+      {
+        "date": "2021-08",
+        "value": 24.7355,
+        "yoy_pct": -4.9106,
+        "yoy_delta": -1.2774
+      },
+      {
+        "date": "2021-09",
+        "value": 23.27,
+        "yoy_pct": -7.0564,
+        "yoy_delta": -1.7667
+      },
+      {
+        "date": "2021-10",
+        "value": 19.2806,
+        "yoy_pct": -14.136,
+        "yoy_delta": -3.1742
+      },
+      {
+        "date": "2021-11",
+        "value": 17.93,
+        "yoy_pct": 9.396,
+        "yoy_delta": 1.54
+      },
+      {
+        "date": "2021-12",
+        "value": 12.2387,
+        "yoy_pct": -13.1212,
+        "yoy_delta": -1.8484
+      },
+      {
+        "date": "2022-01",
+        "value": 13.8032,
+        "yoy_pct": 0.7298,
+        "yoy_delta": 0.1
+      },
+      {
+        "date": "2022-02",
+        "value": 14.6107,
+        "yoy_pct": -0.2199,
+        "yoy_delta": -0.0322
+      },
+      {
+        "date": "2022-03",
+        "value": 16.5323,
+        "yoy_pct": 18.0879,
+        "yoy_delta": 2.5323
+      },
+      {
+        "date": "2022-04",
+        "value": 18.09,
+        "yoy_pct": 2.9203,
+        "yoy_delta": 0.5133
+      },
+      {
+        "date": "2022-05",
+        "value": 18.8968,
+        "yoy_pct": 0.7394,
+        "yoy_delta": 0.1387
+      },
+      {
+        "date": "2022-06",
+        "value": 22.84,
+        "yoy_pct": 1.7522,
+        "yoy_delta": 0.3933
+      },
+      {
+        "date": "2022-07",
+        "value": 23.8645,
+        "yoy_pct": -4.2332,
+        "yoy_delta": -1.0549
+      },
+      {
+        "date": "2022-08",
+        "value": 25.9258,
+        "yoy_pct": 4.8121,
+        "yoy_delta": 1.1903
+      },
+      {
+        "date": "2022-09",
+        "value": 26.1867,
+        "yoy_pct": 12.5342,
+        "yoy_delta": 2.9167
+      },
+      {
+        "date": "2022-10",
+        "value": 20.971,
+        "yoy_pct": 8.7674,
+        "yoy_delta": 1.6904
+      },
+      {
+        "date": "2022-11",
+        "value": 14.66,
+        "yoy_pct": -18.2376,
+        "yoy_delta": -3.27
+      },
+      {
+        "date": "2022-12",
+        "value": 12.7226,
+        "yoy_pct": 3.9539,
+        "yoy_delta": 0.4839
+      },
+      {
+        "date": "2023-01",
+        "value": 11.9774,
+        "yoy_pct": -13.2274,
+        "yoy_delta": -1.8258
+      },
+      {
+        "date": "2023-02",
+        "value": 11.6571,
+        "yoy_pct": -20.2153,
+        "yoy_delta": -2.9536
+      },
+      {
+        "date": "2023-03",
+        "value": 12.6677,
+        "yoy_pct": -23.3761,
+        "yoy_delta": -3.8646
+      },
+      {
+        "date": "2023-04",
+        "value": 16.09,
+        "yoy_pct": -11.0558,
+        "yoy_delta": -2.0
+      },
+      {
+        "date": "2023-05",
+        "value": 17.2226,
+        "yoy_pct": -8.8597,
+        "yoy_delta": -1.6742
+      },
+      {
+        "date": "2023-06",
+        "value": 19.03,
+        "yoy_pct": -16.6813,
+        "yoy_delta": -3.81
+      },
+      {
+        "date": "2023-07",
+        "value": 24.8806,
+        "yoy_pct": 4.2578,
+        "yoy_delta": 1.0161
+      },
+      {
+        "date": "2023-08",
+        "value": 24.8355,
+        "yoy_pct": -4.2055,
+        "yoy_delta": -1.0903
+      },
+      {
+        "date": "2023-09",
+        "value": 21.9933,
+        "yoy_pct": -16.0135,
+        "yoy_delta": -4.1934
+      },
+      {
+        "date": "2023-10",
+        "value": 20.7871,
+        "yoy_pct": -0.8769,
+        "yoy_delta": -0.1839
+      },
+      {
+        "date": "2023-11",
+        "value": 16.89,
+        "yoy_pct": 15.2115,
+        "yoy_delta": 2.23
+      },
+      {
+        "date": "2023-12",
+        "value": 14.9903,
+        "yoy_pct": 17.8242,
+        "yoy_delta": 2.2677
+      },
+      {
+        "date": "2024-01",
+        "value": 13.0484,
+        "yoy_pct": 8.9418,
+        "yoy_delta": 1.071
+      },
+      {
+        "date": "2024-02",
+        "value": 12.9483,
+        "yoy_pct": 11.0765,
+        "yoy_delta": 1.2912
+      },
+      {
+        "date": "2024-03",
+        "value": 13.5742,
+        "yoy_pct": 7.156,
+        "yoy_delta": 0.9065
+      },
+      {
+        "date": "2024-04",
+        "value": 15.37,
+        "yoy_pct": -4.4748,
+        "yoy_delta": -0.72
+      },
+      {
+        "date": "2024-05",
+        "value": 17.3839,
+        "yoy_pct": 0.9366,
+        "yoy_delta": 0.1613
+      },
+      {
+        "date": "2024-06",
+        "value": 21.5167,
+        "yoy_pct": 13.0673,
+        "yoy_delta": 2.4867
+      },
+      {
+        "date": "2024-07",
+        "value": 24.8548,
+        "yoy_pct": -0.1037,
+        "yoy_delta": -0.0258
+      },
+      {
+        "date": "2024-08",
+        "value": 24.6839,
+        "yoy_pct": -0.6104,
+        "yoy_delta": -0.1516
+      },
+      {
+        "date": "2024-09",
+        "value": 23.18,
+        "yoy_pct": 5.3957,
+        "yoy_delta": 1.1867
+      },
+      {
+        "date": "2024-10",
+        "value": 20.3516,
+        "yoy_pct": -2.095,
+        "yoy_delta": -0.4355
+      },
+      {
+        "date": "2024-11",
+        "value": 14.9733,
+        "yoy_pct": -11.3481,
+        "yoy_delta": -1.9167
+      },
+      {
+        "date": "2024-12",
+        "value": 13.8806,
+        "yoy_pct": -7.4028,
+        "yoy_delta": -1.1097
+      },
+      {
+        "date": "2025-01",
+        "value": 12.9742,
+        "yoy_pct": -0.5687,
+        "yoy_delta": -0.0742
+      },
+      {
+        "date": "2025-02",
+        "value": 14.7179,
+        "yoy_pct": 13.6667,
+        "yoy_delta": 1.7696
+      },
+      {
+        "date": "2025-03",
+        "value": 14.0645,
+        "yoy_pct": 3.612,
+        "yoy_delta": 0.4903
+      },
+      {
+        "date": "2025-04",
+        "value": 16.0233,
+        "yoy_pct": 4.2505,
+        "yoy_delta": 0.6533
+      },
+      {
+        "date": "2025-05",
+        "value": 19.1677,
+        "yoy_pct": 10.2612,
+        "yoy_delta": 1.7838
+      },
+      {
+        "date": "2025-06",
+        "value": 21.43,
+        "yoy_pct": -0.4029,
+        "yoy_delta": -0.0867
+      },
+      {
+        "date": "2025-07",
+        "value": 22.429,
+        "yoy_pct": -9.7599,
+        "yoy_delta": -2.4258
+      },
+      {
+        "date": "2025-08",
+        "value": 24.6581,
+        "yoy_pct": -0.1045,
+        "yoy_delta": -0.0258
+      },
+      {
+        "date": "2025-09",
+        "value": 23.8,
+        "yoy_pct": 2.6747,
+        "yoy_delta": 0.62
+      },
+      {
+        "date": "2025-10",
+        "value": 19.6323,
+        "yoy_pct": -3.5344,
+        "yoy_delta": -0.7193
+      },
+      {
+        "date": "2025-11",
+        "value": 16.67,
+        "yoy_pct": 11.3315,
+        "yoy_delta": 1.6967
+      },
+      {
+        "date": "2025-12",
+        "value": 15.3387,
+        "yoy_pct": 10.5046,
+        "yoy_delta": 1.4581
+      },
+      {
+        "date": "2026-01",
+        "value": 14.7387,
+        "yoy_pct": 13.6001,
+        "yoy_delta": 1.7645
+      },
+      {
+        "date": "2026-02",
+        "value": 15.7607,
+        "yoy_pct": 7.0852,
+        "yoy_delta": 1.0428
+      },
+      {
+        "date": "2026-03",
+        "value": 19.9742,
+        "yoy_pct": 42.0186,
+        "yoy_delta": 5.9097
+      },
+      {
+        "date": "2026-04",
+        "value": 17.7967,
+        "yoy_pct": 11.0676,
+        "yoy_delta": 1.7734
+      },
+      {
+        "date": "2026-05",
+        "value": 18.8613,
+        "yoy_pct": -1.5985,
+        "yoy_delta": -0.3064
+      },
+      {
+        "date": "2026-06",
+        "value": 21.3033,
+        "yoy_pct": -0.5912,
+        "yoy_delta": -0.1267
+      }
+    ]
+  },
+  "summary": {
+    "uv": {
+      "avg_yoy_pct": 0.3256,
+      "change_1993_to_2026_pct": -7.0853,
+      "min": 0.48,
+      "max": 9.96,
+      "start_value": 0.51,
+      "end_value": 8.6,
+      "seasonal_baseline": {
+        "1": 1.3085,
+        "2": 1.8335,
+        "3": 8.022,
+        "4": 8.8268,
+        "5": 7.9747,
+        "6": 8.8021,
+        "7": 8.0717,
+        "8": 8.2712,
+        "9": 8.0834,
+        "10": 6.5178,
+        "11": 5.1576,
+        "12": 4.0113
+      }
+    },
+    "temperature": {
+      "avg_yoy_pct": 0.6291,
+      "change_1993_to_2026_pct": -13.8564,
+      "min": 10.4613,
+      "max": 26.6867,
+      "start_value": 14.1968,
+      "end_value": 21.3033,
+      "seasonal_baseline": {
+        "1": 12.8665,
+        "2": 13.5382,
+        "3": 14.9169,
+        "4": 16.7423,
+        "5": 18.6283,
+        "6": 21.1049,
+        "7": 23.7815,
+        "8": 24.3866,
+        "9": 23.2111,
+        "10": 19.9446,
+        "11": 15.8783,
+        "12": 12.673
+      }
+    }
+  },
+  "period": {
+    "start": "1981-01",
+    "end": "2026-06"
+  }
+}

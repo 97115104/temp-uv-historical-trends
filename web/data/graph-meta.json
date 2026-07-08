@@ -1,0 +1,232 @@
+{
+  "metadata": {
+    "data_version": 4,
+    "default_city": "covina-ca",
+    "period": {
+      "start": "1981-01",
+      "default_start": "1993-11",
+      "end": "2026-06",
+      "latest_nasa": "2026-06",
+      "earliest_temperature": "1981-01",
+      "earliest_uv": "2001-01",
+      "earliest_uv_who": "2021-01",
+      "uv_who_start": "2021-01",
+      "calendar_month": "2026-06"
+    },
+    "generated_at": "2026-07-08T00:19:15.102874+00:00",
+    "sources": [
+      {
+        "id": "open_meteo_era5",
+        "name": "Open-Meteo ERA5",
+        "institution": "ECMWF / Open-Meteo",
+        "url": "https://open-meteo.com/en/docs/historical-weather-api",
+        "role": "temperature",
+        "attribution": "ERA5 reanalysis via Open-Meteo (CC BY 4.0)"
+      },
+      {
+        "id": "open_meteo_historical_forecast",
+        "name": "Open-Meteo Historical Forecast",
+        "institution": "Open-Meteo",
+        "url": "https://open-meteo.com/en/docs/historical-forecast-api",
+        "role": "uv",
+        "attribution": "WHO-compatible UV Index via Open-Meteo (CC BY 4.0)"
+      },
+      {
+        "id": "nasa_power",
+        "name": "NASA POWER",
+        "institution": "NASA Langley Research Center",
+        "url": "https://power.larc.nasa.gov/",
+        "role": "legacy_uv",
+        "attribution": "NASA POWER Project"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "metric:uv",
+      "type": "Metric",
+      "unit": "WHO UV Index",
+      "source": "nasa_power+open_meteo_who"
+    },
+    {
+      "id": "metric:temperature",
+      "type": "Metric",
+      "unit": "degC",
+      "source": "open_meteo_era5"
+    },
+    {
+      "id": "loc:covina-ca",
+      "type": "Place",
+      "label": "Covina, CA"
+    },
+    {
+      "id": "loc:los-angeles-ca",
+      "type": "Place",
+      "label": "Los Angeles, CA"
+    },
+    {
+      "id": "loc:san-francisco-ca",
+      "type": "Place",
+      "label": "San Francisco, CA"
+    },
+    {
+      "id": "loc:seattle-wa",
+      "type": "Place",
+      "label": "Seattle, WA"
+    },
+    {
+      "id": "loc:new-york-ny",
+      "type": "Place",
+      "label": "New York, NY"
+    }
+  ],
+  "edges": [
+    {
+      "from": "loc:covina-ca",
+      "to": "loc:los-angeles-ca",
+      "type": "comparedWith",
+      "metric": "uv",
+      "delta_pct_1993_2026": 0.8849
+    },
+    {
+      "from": "loc:covina-ca",
+      "to": "loc:san-francisco-ca",
+      "type": "comparedWith",
+      "metric": "uv",
+      "delta_pct_1993_2026": 0.1667
+    },
+    {
+      "from": "loc:covina-ca",
+      "to": "loc:seattle-wa",
+      "type": "comparedWith",
+      "metric": "uv",
+      "delta_pct_1993_2026": -12.4369
+    },
+    {
+      "from": "loc:covina-ca",
+      "to": "loc:new-york-ny",
+      "type": "comparedWith",
+      "metric": "uv",
+      "delta_pct_1993_2026": -13.6794
+    },
+    {
+      "from": "loc:los-angeles-ca",
+      "to": "loc:san-francisco-ca",
+      "type": "comparedWith",
+      "metric": "uv",
+      "delta_pct_1993_2026": -0.7182
+    },
+    {
+      "from": "loc:los-angeles-ca",
+      "to": "loc:seattle-wa",
+      "type": "comparedWith",
+      "metric": "uv",
+      "delta_pct_1993_2026": -13.3218
+    },
+    {
+      "from": "loc:los-angeles-ca",
+      "to": "loc:new-york-ny",
+      "type": "comparedWith",
+      "metric": "uv",
+      "delta_pct_1993_2026": -14.5643
+    },
+    {
+      "from": "loc:san-francisco-ca",
+      "to": "loc:seattle-wa",
+      "type": "comparedWith",
+      "metric": "uv",
+      "delta_pct_1993_2026": -12.6036
+    },
+    {
+      "from": "loc:san-francisco-ca",
+      "to": "loc:new-york-ny",
+      "type": "comparedWith",
+      "metric": "uv",
+      "delta_pct_1993_2026": -13.8461
+    },
+    {
+      "from": "loc:seattle-wa",
+      "to": "loc:new-york-ny",
+      "type": "comparedWith",
+      "metric": "uv",
+      "delta_pct_1993_2026": -1.2425
+    },
+    {
+      "from": "loc:covina-ca",
+      "to": "loc:los-angeles-ca",
+      "type": "comparedWith",
+      "metric": "temperature",
+      "delta_pct_1993_2026": 1.3398
+    },
+    {
+      "from": "loc:covina-ca",
+      "to": "loc:san-francisco-ca",
+      "type": "comparedWith",
+      "metric": "temperature",
+      "delta_pct_1993_2026": -6.2244
+    },
+    {
+      "from": "loc:covina-ca",
+      "to": "loc:seattle-wa",
+      "type": "comparedWith",
+      "metric": "temperature",
+      "delta_pct_1993_2026": -32.9336
+    },
+    {
+      "from": "loc:covina-ca",
+      "to": "loc:new-york-ny",
+      "type": "comparedWith",
+      "metric": "temperature",
+      "delta_pct_1993_2026": -17.1872
+    },
+    {
+      "from": "loc:los-angeles-ca",
+      "to": "loc:san-francisco-ca",
+      "type": "comparedWith",
+      "metric": "temperature",
+      "delta_pct_1993_2026": -7.5642
+    },
+    {
+      "from": "loc:los-angeles-ca",
+      "to": "loc:seattle-wa",
+      "type": "comparedWith",
+      "metric": "temperature",
+      "delta_pct_1993_2026": -34.2734
+    },
+    {
+      "from": "loc:los-angeles-ca",
+      "to": "loc:new-york-ny",
+      "type": "comparedWith",
+      "metric": "temperature",
+      "delta_pct_1993_2026": -18.527
+    },
+    {
+      "from": "loc:san-francisco-ca",
+      "to": "loc:seattle-wa",
+      "type": "comparedWith",
+      "metric": "temperature",
+      "delta_pct_1993_2026": -26.7092
+    },
+    {
+      "from": "loc:san-francisco-ca",
+      "to": "loc:new-york-ny",
+      "type": "comparedWith",
+      "metric": "temperature",
+      "delta_pct_1993_2026": -10.9628
+    },
+    {
+      "from": "loc:seattle-wa",
+      "to": "loc:new-york-ny",
+      "type": "comparedWith",
+      "metric": "temperature",
+      "delta_pct_1993_2026": 15.7464
+    }
+  ],
+  "city_ids": [
+    "covina-ca",
+    "los-angeles-ca",
+    "san-francisco-ca",
+    "seattle-wa",
+    "new-york-ny"
+  ]
+}

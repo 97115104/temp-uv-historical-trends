@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-08T00:19:15.102874+00:00",
+  "generated_at": "2026-07-08T01:10:35.031958+00:00",
   "sources": [
     {
       "id": "open_meteo_era5",
@@ -32,7 +32,7 @@
       "city_name": "Covina, CA",
       "lat": 34.0897,
       "lon": -117.8912,
-      "fetched_at": "2026-07-08T00:18:44.669219+00:00",
+      "fetched_at": "2026-07-08T01:10:00.526358+00:00",
       "temperature_points": 546,
       "uv_points": 306,
       "uv_sources": {
@@ -50,7 +50,7 @@
       "city_name": "Los Angeles, CA",
       "lat": 34.0522,
       "lon": -118.2437,
-      "fetched_at": "2026-07-08T00:18:50.874100+00:00",
+      "fetched_at": "2026-07-08T01:10:07.200963+00:00",
       "temperature_points": 546,
       "uv_points": 306,
       "uv_sources": {
@@ -68,7 +68,7 @@
       "city_name": "San Francisco, CA",
       "lat": 37.7749,
       "lon": -122.4194,
-      "fetched_at": "2026-07-08T00:18:57.161158+00:00",
+      "fetched_at": "2026-07-08T01:10:15.804371+00:00",
       "temperature_points": 546,
       "uv_points": 306,
       "uv_sources": {
@@ -86,7 +86,7 @@
       "city_name": "Seattle, WA",
       "lat": 47.6062,
       "lon": -122.3321,
-      "fetched_at": "2026-07-08T00:19:03.627065+00:00",
+      "fetched_at": "2026-07-08T01:10:22.925685+00:00",
       "temperature_points": 546,
       "uv_points": 306,
       "uv_sources": {
@@ -104,7 +104,7 @@
       "city_name": "New York, NY",
       "lat": 40.7128,
       "lon": -74.006,
-      "fetched_at": "2026-07-08T00:19:13.587910+00:00",
+      "fetched_at": "2026-07-08T01:10:33.521877+00:00",
       "temperature_points": 546,
       "uv_points": 306,
       "uv_sources": {
@@ -119,8 +119,8 @@
     }
   ],
   "file_hashes": {
-    "knowledge_graph.json": "e30aeaa6eaf7d12ed988b8af4248709767814f43f1d43ef8332610d83f8615a9",
-    "summary.json": "32c4051fa0b83f04c7539b1c8cff6bbdd5698bee3d695e7c82852ea6c8ff6bb0",
-    "provenance.json": "c59416c36084d0c83fef97403a68b89ef15e6213b90cd0e01de9f00c54853024"
+    "knowledge_graph.json": "fed7ab7341aa0ef6c2100f26f98346e6e3f16489b7617201d2626df24bc6f5d1",
+    "summary.json": "4598dd8d9a1761a37c3b4d4bdb3d128d0dfe7a04131732a71b5e386749b1339b",
+    "provenance.json": "0fd4c3ff49d7885c2a906fd63bdda4ddfa84c27140f137603abb35c2d599a64e"
   }
 }

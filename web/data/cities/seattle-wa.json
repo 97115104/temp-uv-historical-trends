@@ -3,7 +3,7 @@
   "name": "Seattle, WA",
   "lat": 47.6062,
   "lon": -122.3321,
-  "data_version": 4,
+  "data_version": 5,
   "series": {
     "uv": [
       {
@@ -2507,211 +2507,211 @@
       {
         "date": "1982-01",
         "value": 4.0871,
-        "yoy_pct": -40.7941,
+        "yoy_pct": null,
         "yoy_delta": -2.8161
       },
       {
         "date": "1982-02",
         "value": 5.8536,
-        "yoy_pct": -9.8461,
+        "yoy_pct": null,
         "yoy_delta": -0.6393
       },
       {
         "date": "1982-03",
         "value": 6.9613,
-        "yoy_pct": -22.0939,
+        "yoy_pct": null,
         "yoy_delta": -1.9742
       },
       {
         "date": "1982-04",
         "value": 8.5533,
-        "yoy_pct": -11.9424,
+        "yoy_pct": null,
         "yoy_delta": -1.16
       },
       {
         "date": "1982-05",
         "value": 12.6097,
-        "yoy_pct": 0.3597,
+        "yoy_pct": null,
         "yoy_delta": 0.0452
       },
       {
         "date": "1982-06",
         "value": 17.3,
-        "yoy_pct": 20.306,
+        "yoy_pct": null,
         "yoy_delta": 2.92
       },
       {
         "date": "1982-07",
         "value": 17.5935,
-        "yoy_pct": 1.0186,
+        "yoy_pct": null,
         "yoy_delta": 0.1774
       },
       {
         "date": "1982-08",
         "value": 18.1323,
-        "yoy_pct": -8.9566,
+        "yoy_pct": null,
         "yoy_delta": -1.7838
       },
       {
         "date": "1982-09",
         "value": 15.78,
-        "yoy_pct": 0.7663,
+        "yoy_pct": null,
         "yoy_delta": 0.12
       },
       {
         "date": "1982-10",
         "value": 11.3355,
-        "yoy_pct": 7.8575,
+        "yoy_pct": null,
         "yoy_delta": 0.8258
       },
       {
         "date": "1982-11",
         "value": 5.95,
-        "yoy_pct": -30.3548,
+        "yoy_pct": null,
         "yoy_delta": -2.5933
       },
       {
         "date": "1982-12",
         "value": 4.8129,
-        "yoy_pct": -12.3381,
+        "yoy_pct": null,
         "yoy_delta": -0.6774
       },
       {
         "date": "1983-01",
         "value": 7.1194,
-        "yoy_pct": 74.192,
+        "yoy_pct": null,
         "yoy_delta": 3.0323
       },
       {
         "date": "1983-02",
         "value": 7.4571,
-        "yoy_pct": 27.3934,
+        "yoy_pct": null,
         "yoy_delta": 1.6035
       },
       {
         "date": "1983-03",
         "value": 9.1903,
-        "yoy_pct": 32.0199,
+        "yoy_pct": null,
         "yoy_delta": 2.229
       },
       {
         "date": "1983-04",
         "value": 10.2633,
-        "yoy_pct": 19.9923,
+        "yoy_pct": null,
         "yoy_delta": 1.71
       },
       {
         "date": "1983-05",
         "value": 14.1387,
-        "yoy_pct": 12.1256,
+        "yoy_pct": null,
         "yoy_delta": 1.529
       },
       {
         "date": "1983-06",
         "value": 15.3633,
-        "yoy_pct": -11.1948,
+        "yoy_pct": null,
         "yoy_delta": -1.9367
       },
       {
         "date": "1983-07",
         "value": 17.2226,
-        "yoy_pct": -2.1082,
+        "yoy_pct": null,
         "yoy_delta": -0.3709
       },
       {
         "date": "1983-08",
         "value": 18.5129,
-        "yoy_pct": 2.099,
+        "yoy_pct": null,
         "yoy_delta": 0.3806
       },
       {
         "date": "1983-09",
         "value": 14.3067,
-        "yoy_pct": -9.3365,
+        "yoy_pct": null,
         "yoy_delta": -1.4733
       },
       {
         "date": "1983-10",
         "value": 10.7452,
-        "yoy_pct": -5.2075,
+        "yoy_pct": null,
         "yoy_delta": -0.5903
       },
       {
         "date": "1983-11",
         "value": 8.8333,
-        "yoy_pct": 48.4588,
+        "yoy_pct": null,
         "yoy_delta": 2.8833
       },
       {
         "date": "1983-12",
         "value": 2.5839,
-        "yoy_pct": -46.313,
+        "yoy_pct": null,
         "yoy_delta": -2.229
       },
       {
         "date": "1984-01",
         "value": 6.0903,
-        "yoy_pct": -14.4549,
+        "yoy_pct": null,
         "yoy_delta": -1.0291
       },
       {
         "date": "1984-02",
         "value": 6.7517,
-        "yoy_pct": -9.4594,
+        "yoy_pct": null,
         "yoy_delta": -0.7054
       },
       {
         "date": "1984-03",
         "value": 8.6677,
-        "yoy_pct": -5.6864,
+        "yoy_pct": null,
         "yoy_delta": -0.5226
       },
       {
         "date": "1984-04",
         "value": 9.2067,
-        "yoy_pct": -10.2949,
+        "yoy_pct": null,
         "yoy_delta": -1.0566
       },
       {
         "date": "1984-05",
         "value": 11.5903,
-        "yoy_pct": -18.0243,
+        "yoy_pct": null,
         "yoy_delta": -2.5484
       },
       {
         "date": "1984-06",
         "value": 14.7833,
-        "yoy_pct": -3.7752,
+        "yoy_pct": null,
         "yoy_delta": -0.58
       },
       {
         "date": "1984-07",
         "value": 18.2839,
-        "yoy_pct": 6.1623,
+        "yoy_pct": null,
         "yoy_delta": 1.0613
       },
       {
         "date": "1984-08",
         "value": 18.471,
-        "yoy_pct": -0.2263,
+        "yoy_pct": null,
         "yoy_delta": -0.0419
       },
       {
         "date": "1984-09",
         "value": 14.9267,
-        "yoy_pct": 4.3336,
+        "yoy_pct": null,
         "yoy_delta": 0.62
       },
       {
         "date": "1984-10",
         "value": 10.0387,
-        "yoy_pct": -6.575,
+        "yoy_pct": null,
         "yoy_delta": -0.7065
       },
       {
         "date": "1984-11",
         "value": 7.11,
-        "yoy_pct": -19.5091,
+        "yoy_pct": null,
         "yoy_delta": -1.7233
       },
       {
@@ -2723,133 +2723,133 @@
       {
         "date": "1985-01",
         "value": 3.5774,
-        "yoy_pct": -41.2607,
+        "yoy_pct": null,
         "yoy_delta": -2.5129
       },
       {
         "date": "1985-02",
         "value": 4.1714,
-        "yoy_pct": -38.217,
+        "yoy_pct": null,
         "yoy_delta": -2.5803
       },
       {
         "date": "1985-03",
         "value": 6.3968,
-        "yoy_pct": -26.1996,
+        "yoy_pct": null,
         "yoy_delta": -2.2709
       },
       {
         "date": "1985-04",
         "value": 9.6767,
-        "yoy_pct": 5.105,
+        "yoy_pct": null,
         "yoy_delta": 0.47
       },
       {
         "date": "1985-05",
         "value": 12.7968,
-        "yoy_pct": 10.4096,
+        "yoy_pct": null,
         "yoy_delta": 1.2065
       },
       {
         "date": "1985-06",
         "value": 15.6067,
-        "yoy_pct": 5.5698,
+        "yoy_pct": null,
         "yoy_delta": 0.8234
       },
       {
         "date": "1985-07",
         "value": 20.5419,
-        "yoy_pct": 12.3497,
+        "yoy_pct": null,
         "yoy_delta": 2.258
       },
       {
         "date": "1985-08",
         "value": 18.6742,
-        "yoy_pct": 1.1001,
+        "yoy_pct": null,
         "yoy_delta": 0.2032
       },
       {
         "date": "1985-09",
         "value": 14.4133,
-        "yoy_pct": -3.4395,
+        "yoy_pct": null,
         "yoy_delta": -0.5134
       },
       {
         "date": "1985-10",
         "value": 10.9677,
-        "yoy_pct": 9.2542,
+        "yoy_pct": null,
         "yoy_delta": 0.929
       },
       {
         "date": "1985-11",
         "value": 2.4467,
-        "yoy_pct": -65.5879,
+        "yoy_pct": null,
         "yoy_delta": -4.6633
       },
       {
         "date": "1985-12",
         "value": 2.5806,
-        "yoy_pct": -19.3563,
+        "yoy_pct": null,
         "yoy_delta": -0.6194
       },
       {
         "date": "1986-01",
         "value": 6.7452,
-        "yoy_pct": 88.5503,
+        "yoy_pct": null,
         "yoy_delta": 3.1678
       },
       {
         "date": "1986-02",
         "value": 5.7179,
-        "yoy_pct": 37.0739,
+        "yoy_pct": null,
         "yoy_delta": 1.5465
       },
       {
         "date": "1986-03",
         "value": 9.3097,
-        "yoy_pct": 45.5368,
+        "yoy_pct": null,
         "yoy_delta": 2.9129
       },
       {
         "date": "1986-04",
         "value": 8.8967,
-        "yoy_pct": -8.0606,
+        "yoy_pct": null,
         "yoy_delta": -0.78
       },
       {
         "date": "1986-05",
         "value": 12.7419,
-        "yoy_pct": -0.429,
+        "yoy_pct": null,
         "yoy_delta": -0.0549
       },
       {
         "date": "1986-06",
         "value": 16.6867,
-        "yoy_pct": 6.9201,
+        "yoy_pct": null,
         "yoy_delta": 1.08
       },
       {
         "date": "1986-07",
         "value": 16.6226,
-        "yoy_pct": -19.0795,
+        "yoy_pct": null,
         "yoy_delta": -3.9193
       },
       {
         "date": "1986-08",
         "value": 20.2613,
-        "yoy_pct": 8.4989,
+        "yoy_pct": null,
         "yoy_delta": 1.5871
       },
       {
         "date": "1986-09",
         "value": 14.8,
-        "yoy_pct": 2.6829,
+        "yoy_pct": null,
         "yoy_delta": 0.3867
       },
       {
         "date": "1986-10",
         "value": 12.0581,
-        "yoy_pct": 9.9419,
+        "yoy_pct": null,
         "yoy_delta": 1.0904
       },
       {
@@ -2867,223 +2867,223 @@
       {
         "date": "1987-01",
         "value": 4.7032,
-        "yoy_pct": -30.2734,
+        "yoy_pct": null,
         "yoy_delta": -2.042
       },
       {
         "date": "1987-02",
         "value": 7.4536,
-        "yoy_pct": 30.3556,
+        "yoy_pct": null,
         "yoy_delta": 1.7357
       },
       {
         "date": "1987-03",
         "value": 8.7065,
-        "yoy_pct": -6.4793,
+        "yoy_pct": null,
         "yoy_delta": -0.6032
       },
       {
         "date": "1987-04",
         "value": 11.12,
-        "yoy_pct": 24.9902,
+        "yoy_pct": null,
         "yoy_delta": 2.2233
       },
       {
         "date": "1987-05",
         "value": 13.9645,
-        "yoy_pct": 9.5951,
+        "yoy_pct": null,
         "yoy_delta": 1.2226
       },
       {
         "date": "1987-06",
         "value": 16.8833,
-        "yoy_pct": 1.1782,
+        "yoy_pct": null,
         "yoy_delta": 0.1966
       },
       {
         "date": "1987-07",
         "value": 17.971,
-        "yoy_pct": 8.1118,
+        "yoy_pct": null,
         "yoy_delta": 1.3484
       },
       {
         "date": "1987-08",
         "value": 18.5484,
-        "yoy_pct": -8.454,
+        "yoy_pct": null,
         "yoy_delta": -1.7129
       },
       {
         "date": "1987-09",
         "value": 16.6267,
-        "yoy_pct": 12.3426,
+        "yoy_pct": null,
         "yoy_delta": 1.8267
       },
       {
         "date": "1987-10",
         "value": 12.5,
-        "yoy_pct": 3.6648,
+        "yoy_pct": null,
         "yoy_delta": 0.4419
       },
       {
         "date": "1987-11",
         "value": 9.2,
-        "yoy_pct": 17.4968,
+        "yoy_pct": null,
         "yoy_delta": 1.37
       },
       {
         "date": "1987-12",
         "value": 4.5065,
-        "yoy_pct": -15.023,
+        "yoy_pct": null,
         "yoy_delta": -0.7967
       },
       {
         "date": "1988-01",
         "value": 4.6484,
-        "yoy_pct": -1.1652,
+        "yoy_pct": null,
         "yoy_delta": -0.0548
       },
       {
         "date": "1988-02",
         "value": 6.5379,
-        "yoy_pct": -12.2853,
+        "yoy_pct": null,
         "yoy_delta": -0.9157
       },
       {
         "date": "1988-03",
         "value": 7.4774,
-        "yoy_pct": -14.117,
+        "yoy_pct": null,
         "yoy_delta": -1.2291
       },
       {
         "date": "1988-04",
         "value": 10.2167,
-        "yoy_pct": -8.1232,
+        "yoy_pct": null,
         "yoy_delta": -0.9033
       },
       {
         "date": "1988-05",
         "value": 12.5774,
-        "yoy_pct": -9.933,
+        "yoy_pct": null,
         "yoy_delta": -1.3871
       },
       {
         "date": "1988-06",
         "value": 15.1567,
-        "yoy_pct": -10.2267,
+        "yoy_pct": null,
         "yoy_delta": -1.7266
       },
       {
         "date": "1988-07",
         "value": 18.5323,
-        "yoy_pct": 3.1234,
+        "yoy_pct": null,
         "yoy_delta": 0.5613
       },
       {
         "date": "1988-08",
         "value": 18.2548,
-        "yoy_pct": -1.5829,
+        "yoy_pct": null,
         "yoy_delta": -0.2936
       },
       {
         "date": "1988-09",
         "value": 15.5267,
-        "yoy_pct": -6.6159,
+        "yoy_pct": null,
         "yoy_delta": -1.1
       },
       {
         "date": "1988-10",
         "value": 12.9129,
-        "yoy_pct": 3.3032,
+        "yoy_pct": null,
         "yoy_delta": 0.4129
       },
       {
         "date": "1988-11",
         "value": 8.13,
-        "yoy_pct": -11.6304,
+        "yoy_pct": null,
         "yoy_delta": -1.07
       },
       {
         "date": "1988-12",
         "value": 5.8516,
-        "yoy_pct": 29.848,
+        "yoy_pct": null,
         "yoy_delta": 1.3451
       },
       {
         "date": "1989-01",
         "value": 5.2774,
-        "yoy_pct": 13.5315,
+        "yoy_pct": null,
         "yoy_delta": 0.629
       },
       {
         "date": "1989-02",
         "value": 1.1964,
-        "yoy_pct": -81.7005,
+        "yoy_pct": null,
         "yoy_delta": -5.3415
       },
       {
         "date": "1989-03",
         "value": 6.1581,
-        "yoy_pct": -17.6438,
+        "yoy_pct": null,
         "yoy_delta": -1.3193
       },
       {
         "date": "1989-04",
         "value": 11.2367,
-        "yoy_pct": 9.9837,
+        "yoy_pct": null,
         "yoy_delta": 1.02
       },
       {
         "date": "1989-05",
         "value": 13.1871,
-        "yoy_pct": 4.8476,
+        "yoy_pct": null,
         "yoy_delta": 0.6097
       },
       {
         "date": "1989-06",
         "value": 17.1333,
-        "yoy_pct": 13.0411,
+        "yoy_pct": null,
         "yoy_delta": 1.9766
       },
       {
         "date": "1989-07",
         "value": 17.8581,
-        "yoy_pct": -3.638,
+        "yoy_pct": null,
         "yoy_delta": -0.6742
       },
       {
         "date": "1989-08",
         "value": 17.9903,
-        "yoy_pct": -1.4489,
+        "yoy_pct": null,
         "yoy_delta": -0.2645
       },
       {
         "date": "1989-09",
         "value": 16.65,
-        "yoy_pct": 7.2346,
+        "yoy_pct": null,
         "yoy_delta": 1.1233
       },
       {
         "date": "1989-10",
         "value": 11.5968,
-        "yoy_pct": -10.1921,
+        "yoy_pct": null,
         "yoy_delta": -1.3161
       },
       {
         "date": "1989-11",
         "value": 8.2867,
-        "yoy_pct": 1.9274,
+        "yoy_pct": null,
         "yoy_delta": 0.1567
       },
       {
         "date": "1989-12",
         "value": 5.9097,
-        "yoy_pct": 0.9929,
+        "yoy_pct": null,
         "yoy_delta": 0.0581
       },
       {
         "date": "1990-01",
         "value": 6.2452,
-        "yoy_pct": 18.3386,
+        "yoy_pct": null,
         "yoy_delta": 0.9678
       },
       {
@@ -3095,127 +3095,127 @@
       {
         "date": "1990-03",
         "value": 8.3452,
-        "yoy_pct": 35.5158,
+        "yoy_pct": null,
         "yoy_delta": 2.1871
       },
       {
         "date": "1990-04",
         "value": 11.15,
-        "yoy_pct": -0.7716,
+        "yoy_pct": null,
         "yoy_delta": -0.0867
       },
       {
         "date": "1990-05",
         "value": 12.6516,
-        "yoy_pct": -4.0608,
+        "yoy_pct": null,
         "yoy_delta": -0.5355
       },
       {
         "date": "1990-06",
         "value": 15.5367,
-        "yoy_pct": -9.3187,
+        "yoy_pct": null,
         "yoy_delta": -1.5966
       },
       {
         "date": "1990-07",
         "value": 20.0,
-        "yoy_pct": 11.994,
+        "yoy_pct": null,
         "yoy_delta": 2.1419
       },
       {
         "date": "1990-08",
         "value": 19.6742,
-        "yoy_pct": 9.36,
+        "yoy_pct": null,
         "yoy_delta": 1.6839
       },
       {
         "date": "1990-09",
         "value": 17.0967,
-        "yoy_pct": 2.6829,
+        "yoy_pct": null,
         "yoy_delta": 0.4467
       },
       {
         "date": "1990-10",
         "value": 10.6323,
-        "yoy_pct": -8.3169,
+        "yoy_pct": null,
         "yoy_delta": -0.9645
       },
       {
         "date": "1990-11",
         "value": 8.5767,
-        "yoy_pct": 3.4996,
+        "yoy_pct": null,
         "yoy_delta": 0.29
       },
       {
         "date": "1990-12",
         "value": 2.0839,
-        "yoy_pct": -64.7376,
+        "yoy_pct": null,
         "yoy_delta": -3.8258
       },
       {
         "date": "1991-01",
         "value": 4.0871,
-        "yoy_pct": -34.5561,
+        "yoy_pct": null,
         "yoy_delta": -2.1581
       },
       {
         "date": "1991-02",
         "value": 8.3464,
-        "yoy_pct": 82.8627,
+        "yoy_pct": null,
         "yoy_delta": 3.7821
       },
       {
         "date": "1991-03",
         "value": 6.7097,
-        "yoy_pct": -19.5981,
+        "yoy_pct": null,
         "yoy_delta": -1.6355
       },
       {
         "date": "1991-04",
         "value": 9.69,
-        "yoy_pct": -13.0942,
+        "yoy_pct": null,
         "yoy_delta": -1.46
       },
       {
         "date": "1991-05",
         "value": 12.3484,
-        "yoy_pct": -2.3965,
+        "yoy_pct": null,
         "yoy_delta": -0.3032
       },
       {
         "date": "1991-06",
         "value": 14.2967,
-        "yoy_pct": -7.9811,
+        "yoy_pct": null,
         "yoy_delta": -1.24
       },
       {
         "date": "1991-07",
         "value": 19.0387,
-        "yoy_pct": -4.8065,
+        "yoy_pct": null,
         "yoy_delta": -0.9613
       },
       {
         "date": "1991-08",
         "value": 19.4323,
-        "yoy_pct": -1.2295,
+        "yoy_pct": null,
         "yoy_delta": -0.2419
       },
       {
         "date": "1991-09",
         "value": 16.4167,
-        "yoy_pct": -3.9774,
+        "yoy_pct": null,
         "yoy_delta": -0.68
       },
       {
         "date": "1991-10",
         "value": 11.0742,
-        "yoy_pct": 4.1562,
+        "yoy_pct": null,
         "yoy_delta": 0.4419
       },
       {
         "date": "1991-11",
         "value": 8.37,
-        "yoy_pct": -2.41,
+        "yoy_pct": null,
         "yoy_delta": -0.2067
       },
       {
@@ -3227,2023 +3227,2023 @@
       {
         "date": "1992-01",
         "value": 6.9323,
-        "yoy_pct": 69.6142,
+        "yoy_pct": null,
         "yoy_delta": 2.8452
       },
       {
         "date": "1992-02",
         "value": 8.0172,
-        "yoy_pct": -3.9442,
+        "yoy_pct": null,
         "yoy_delta": -0.3292
       },
       {
         "date": "1992-03",
         "value": 9.8419,
-        "yoy_pct": 46.6817,
+        "yoy_pct": null,
         "yoy_delta": 3.1322
       },
       {
         "date": "1992-04",
         "value": 11.5367,
-        "yoy_pct": 19.0578,
+        "yoy_pct": null,
         "yoy_delta": 1.8467
       },
       {
         "date": "1992-05",
         "value": 14.8226,
-        "yoy_pct": 20.0366,
+        "yoy_pct": null,
         "yoy_delta": 2.4742
       },
       {
         "date": "1992-06",
         "value": 17.7133,
-        "yoy_pct": 23.8978,
+        "yoy_pct": null,
         "yoy_delta": 3.4166
       },
       {
         "date": "1992-07",
         "value": 18.8129,
-        "yoy_pct": -1.186,
+        "yoy_pct": null,
         "yoy_delta": -0.2258
       },
       {
         "date": "1992-08",
         "value": 19.0935,
-        "yoy_pct": -1.7435,
+        "yoy_pct": null,
         "yoy_delta": -0.3388
       },
       {
         "date": "1992-09",
         "value": 14.9733,
-        "yoy_pct": -8.7923,
+        "yoy_pct": null,
         "yoy_delta": -1.4434
       },
       {
         "date": "1992-10",
         "value": 12.1065,
-        "yoy_pct": 9.3217,
+        "yoy_pct": null,
         "yoy_delta": 1.0323
       },
       {
         "date": "1992-11",
         "value": 7.9733,
-        "yoy_pct": -4.7395,
+        "yoy_pct": null,
         "yoy_delta": -0.3967
       },
       {
         "date": "1992-12",
         "value": 4.2097,
-        "yoy_pct": -37.6489,
+        "yoy_pct": null,
         "yoy_delta": -2.5419
       },
       {
         "date": "1993-01",
         "value": 3.4323,
-        "yoy_pct": -50.4883,
+        "yoy_pct": null,
         "yoy_delta": -3.5
       },
       {
         "date": "1993-02",
         "value": 5.1786,
-        "yoy_pct": -35.4064,
+        "yoy_pct": null,
         "yoy_delta": -2.8386
       },
       {
         "date": "1993-03",
         "value": 8.4258,
-        "yoy_pct": -14.3885,
+        "yoy_pct": null,
         "yoy_delta": -1.4161
       },
       {
         "date": "1993-04",
         "value": 10.2067,
-        "yoy_pct": -11.5284,
+        "yoy_pct": null,
         "yoy_delta": -1.33
       },
       {
         "date": "1993-05",
         "value": 15.0774,
-        "yoy_pct": 1.719,
+        "yoy_pct": null,
         "yoy_delta": 0.2548
       },
       {
         "date": "1993-06",
         "value": 15.6467,
-        "yoy_pct": -11.6669,
+        "yoy_pct": null,
         "yoy_delta": -2.0666
       },
       {
         "date": "1993-07",
         "value": 16.2839,
-        "yoy_pct": -13.4429,
+        "yoy_pct": null,
         "yoy_delta": -2.529
       },
       {
         "date": "1993-08",
         "value": 18.071,
-        "yoy_pct": -5.3552,
+        "yoy_pct": null,
         "yoy_delta": -1.0225
       },
       {
         "date": "1993-09",
         "value": 16.0467,
-        "yoy_pct": 7.1688,
+        "yoy_pct": null,
         "yoy_delta": 1.0734
       },
       {
         "date": "1993-10",
         "value": 12.9452,
-        "yoy_pct": 6.9277,
+        "yoy_pct": null,
         "yoy_delta": 0.8387
       },
       {
         "date": "1993-11",
         "value": 5.59,
-        "yoy_pct": -29.891,
+        "yoy_pct": null,
         "yoy_delta": -2.3833
       },
       {
         "date": "1993-12",
         "value": 5.6129,
-        "yoy_pct": 33.3325,
+        "yoy_pct": null,
         "yoy_delta": 1.4032
       },
       {
         "date": "1994-01",
         "value": 7.2742,
-        "yoy_pct": 111.9337,
+        "yoy_pct": null,
         "yoy_delta": 3.8419
       },
       {
         "date": "1994-02",
         "value": 4.8786,
-        "yoy_pct": -5.7931,
+        "yoy_pct": null,
         "yoy_delta": -0.3
       },
       {
         "date": "1994-03",
         "value": 8.6323,
-        "yoy_pct": 2.4508,
+        "yoy_pct": null,
         "yoy_delta": 0.2065
       },
       {
         "date": "1994-04",
         "value": 11.24,
-        "yoy_pct": 10.1237,
+        "yoy_pct": null,
         "yoy_delta": 1.0333
       },
       {
         "date": "1994-05",
         "value": 14.1032,
-        "yoy_pct": -6.4613,
+        "yoy_pct": null,
         "yoy_delta": -0.9742
       },
       {
         "date": "1994-06",
         "value": 15.3867,
-        "yoy_pct": -1.6617,
+        "yoy_pct": null,
         "yoy_delta": -0.26
       },
       {
         "date": "1994-07",
         "value": 19.4065,
-        "yoy_pct": 19.176,
+        "yoy_pct": null,
         "yoy_delta": 3.1226
       },
       {
         "date": "1994-08",
         "value": 19.2774,
-        "yoy_pct": 6.6759,
+        "yoy_pct": null,
         "yoy_delta": 1.2064
       },
       {
         "date": "1994-09",
         "value": 17.1867,
-        "yoy_pct": 7.1043,
+        "yoy_pct": null,
         "yoy_delta": 1.14
       },
       {
         "date": "1994-10",
         "value": 11.6645,
-        "yoy_pct": -9.8932,
+        "yoy_pct": null,
         "yoy_delta": -1.2807
       },
       {
         "date": "1994-11",
         "value": 6.1267,
-        "yoy_pct": 9.6011,
+        "yoy_pct": null,
         "yoy_delta": 0.5367
       },
       {
         "date": "1994-12",
         "value": 5.4065,
-        "yoy_pct": -3.6772,
+        "yoy_pct": null,
         "yoy_delta": -0.2064
       },
       {
         "date": "1995-01",
         "value": 5.8,
-        "yoy_pct": -20.2661,
+        "yoy_pct": null,
         "yoy_delta": -1.4742
       },
       {
         "date": "1995-02",
         "value": 7.5857,
-        "yoy_pct": 55.4893,
+        "yoy_pct": null,
         "yoy_delta": 2.7071
       },
       {
         "date": "1995-03",
         "value": 8.0839,
-        "yoy_pct": -6.3529,
+        "yoy_pct": null,
         "yoy_delta": -0.5484
       },
       {
         "date": "1995-04",
         "value": 10.02,
-        "yoy_pct": -10.8541,
+        "yoy_pct": null,
         "yoy_delta": -1.22
       },
       {
         "date": "1995-05",
         "value": 14.6258,
-        "yoy_pct": 3.7055,
+        "yoy_pct": null,
         "yoy_delta": 0.5226
       },
       {
         "date": "1995-06",
         "value": 16.6033,
-        "yoy_pct": 7.9068,
+        "yoy_pct": null,
         "yoy_delta": 1.2166
       },
       {
         "date": "1995-07",
         "value": 19.3806,
-        "yoy_pct": -0.1335,
+        "yoy_pct": null,
         "yoy_delta": -0.0259
       },
       {
         "date": "1995-08",
         "value": 17.1161,
-        "yoy_pct": -11.2116,
+        "yoy_pct": null,
         "yoy_delta": -2.1613
       },
       {
         "date": "1995-09",
         "value": 17.5367,
-        "yoy_pct": 2.0365,
+        "yoy_pct": null,
         "yoy_delta": 0.35
       },
       {
         "date": "1995-10",
         "value": 11.5645,
-        "yoy_pct": -0.8573,
+        "yoy_pct": null,
         "yoy_delta": -0.1
       },
       {
         "date": "1995-11",
         "value": 9.6567,
-        "yoy_pct": 57.6167,
+        "yoy_pct": null,
         "yoy_delta": 3.53
       },
       {
         "date": "1995-12",
         "value": 5.629,
-        "yoy_pct": 4.1154,
+        "yoy_pct": null,
         "yoy_delta": 0.2225
       },
       {
         "date": "1996-01",
         "value": 4.8645,
-        "yoy_pct": -16.1293,
+        "yoy_pct": null,
         "yoy_delta": -0.9355
       },
       {
         "date": "1996-02",
         "value": 5.6207,
-        "yoy_pct": -25.904,
+        "yoy_pct": null,
         "yoy_delta": -1.965
       },
       {
         "date": "1996-03",
         "value": 8.2355,
-        "yoy_pct": 1.8753,
+        "yoy_pct": null,
         "yoy_delta": 0.1516
       },
       {
         "date": "1996-04",
         "value": 10.7833,
-        "yoy_pct": 7.6178,
+        "yoy_pct": null,
         "yoy_delta": 0.7633
       },
       {
         "date": "1996-05",
         "value": 11.4645,
-        "yoy_pct": -21.6145,
+        "yoy_pct": null,
         "yoy_delta": -3.1613
       },
       {
         "date": "1996-06",
         "value": 15.4167,
-        "yoy_pct": -7.1468,
+        "yoy_pct": null,
         "yoy_delta": -1.1866
       },
       {
         "date": "1996-07",
         "value": 19.3355,
-        "yoy_pct": -0.2327,
+        "yoy_pct": null,
         "yoy_delta": -0.0451
       },
       {
         "date": "1996-08",
         "value": 18.7258,
-        "yoy_pct": 9.4046,
+        "yoy_pct": null,
         "yoy_delta": 1.6097
       },
       {
         "date": "1996-09",
         "value": 14.49,
-        "yoy_pct": -17.3733,
+        "yoy_pct": null,
         "yoy_delta": -3.0467
       },
       {
         "date": "1996-10",
         "value": 10.8968,
-        "yoy_pct": -5.7737,
+        "yoy_pct": null,
         "yoy_delta": -0.6677
       },
       {
         "date": "1996-11",
         "value": 6.6967,
-        "yoy_pct": -30.6523,
+        "yoy_pct": null,
         "yoy_delta": -2.96
       },
       {
         "date": "1996-12",
         "value": 4.271,
-        "yoy_pct": -24.1251,
+        "yoy_pct": null,
         "yoy_delta": -1.358
       },
       {
         "date": "1997-01",
         "value": 5.3161,
-        "yoy_pct": 9.2836,
+        "yoy_pct": null,
         "yoy_delta": 0.4516
       },
       {
         "date": "1997-02",
         "value": 5.9857,
-        "yoy_pct": 6.4939,
+        "yoy_pct": null,
         "yoy_delta": 0.365
       },
       {
         "date": "1997-03",
         "value": 7.3774,
-        "yoy_pct": -10.4195,
+        "yoy_pct": null,
         "yoy_delta": -0.8581
       },
       {
         "date": "1997-04",
         "value": 9.6533,
-        "yoy_pct": -10.4792,
+        "yoy_pct": null,
         "yoy_delta": -1.13
       },
       {
         "date": "1997-05",
         "value": 14.6032,
-        "yoy_pct": 27.3776,
+        "yoy_pct": null,
         "yoy_delta": 3.1387
       },
       {
         "date": "1997-06",
         "value": 15.4333,
-        "yoy_pct": 0.1077,
+        "yoy_pct": null,
         "yoy_delta": 0.0166
       },
       {
         "date": "1997-07",
         "value": 18.0387,
-        "yoy_pct": -6.7068,
+        "yoy_pct": null,
         "yoy_delta": -1.2968
       },
       {
         "date": "1997-08",
         "value": 19.8839,
-        "yoy_pct": 6.1845,
+        "yoy_pct": null,
         "yoy_delta": 1.1581
       },
       {
         "date": "1997-09",
         "value": 17.0367,
-        "yoy_pct": 17.5756,
+        "yoy_pct": null,
         "yoy_delta": 2.5467
       },
       {
         "date": "1997-10",
         "value": 11.3323,
-        "yoy_pct": 3.9966,
+        "yoy_pct": null,
         "yoy_delta": 0.4355
       },
       {
         "date": "1997-11",
         "value": 8.96,
-        "yoy_pct": 33.7972,
+        "yoy_pct": null,
         "yoy_delta": 2.2633
       },
       {
         "date": "1997-12",
         "value": 5.5065,
-        "yoy_pct": 28.9277,
+        "yoy_pct": null,
         "yoy_delta": 1.2355
       },
       {
         "date": "1998-01",
         "value": 5.6323,
-        "yoy_pct": 5.948,
+        "yoy_pct": null,
         "yoy_delta": 0.3162
       },
       {
         "date": "1998-02",
         "value": 7.4393,
-        "yoy_pct": 24.2845,
+        "yoy_pct": null,
         "yoy_delta": 1.4536
       },
       {
         "date": "1998-03",
         "value": 8.2903,
-        "yoy_pct": 12.3743,
+        "yoy_pct": null,
         "yoy_delta": 0.9129
       },
       {
         "date": "1998-04",
         "value": 9.8567,
-        "yoy_pct": 2.1071,
+        "yoy_pct": null,
         "yoy_delta": 0.2034
       },
       {
         "date": "1998-05",
         "value": 12.9194,
-        "yoy_pct": -11.5303,
+        "yoy_pct": null,
         "yoy_delta": -1.6838
       },
       {
         "date": "1998-06",
         "value": 15.8833,
-        "yoy_pct": 2.9158,
+        "yoy_pct": null,
         "yoy_delta": 0.45
       },
       {
         "date": "1998-07",
         "value": 19.7548,
-        "yoy_pct": 9.5134,
+        "yoy_pct": null,
         "yoy_delta": 1.7161
       },
       {
         "date": "1998-08",
         "value": 19.4452,
-        "yoy_pct": -2.2063,
+        "yoy_pct": null,
         "yoy_delta": -0.4387
       },
       {
         "date": "1998-09",
         "value": 17.1633,
-        "yoy_pct": 0.7431,
+        "yoy_pct": null,
         "yoy_delta": 0.1266
       },
       {
         "date": "1998-10",
         "value": 11.5548,
-        "yoy_pct": 1.9634,
+        "yoy_pct": null,
         "yoy_delta": 0.2225
       },
       {
         "date": "1998-11",
         "value": 8.53,
-        "yoy_pct": -4.7991,
+        "yoy_pct": null,
         "yoy_delta": -0.43
       },
       {
         "date": "1998-12",
         "value": 4.9581,
-        "yoy_pct": -9.9591,
+        "yoy_pct": null,
         "yoy_delta": -0.5484
       },
       {
         "date": "1999-01",
         "value": 5.7387,
-        "yoy_pct": 1.8891,
+        "yoy_pct": null,
         "yoy_delta": 0.1064
       },
       {
         "date": "1999-02",
         "value": 6.25,
-        "yoy_pct": -15.9867,
+        "yoy_pct": null,
         "yoy_delta": -1.1893
       },
       {
         "date": "1999-03",
         "value": 6.9935,
-        "yoy_pct": -15.6424,
+        "yoy_pct": null,
         "yoy_delta": -1.2968
       },
       {
         "date": "1999-04",
         "value": 9.0567,
-        "yoy_pct": -8.1163,
+        "yoy_pct": null,
         "yoy_delta": -0.8
       },
       {
         "date": "1999-05",
         "value": 10.8935,
-        "yoy_pct": -15.6811,
+        "yoy_pct": null,
         "yoy_delta": -2.0259
       },
       {
         "date": "1999-06",
         "value": 14.3433,
-        "yoy_pct": -9.6957,
+        "yoy_pct": null,
         "yoy_delta": -1.54
       },
       {
         "date": "1999-07",
         "value": 16.9484,
-        "yoy_pct": -14.2062,
+        "yoy_pct": null,
         "yoy_delta": -2.8064
       },
       {
         "date": "1999-08",
         "value": 18.4484,
-        "yoy_pct": -5.1262,
+        "yoy_pct": null,
         "yoy_delta": -0.9968
       },
       {
         "date": "1999-09",
         "value": 15.59,
-        "yoy_pct": -9.1667,
+        "yoy_pct": null,
         "yoy_delta": -1.5733
       },
       {
         "date": "1999-10",
         "value": 10.9097,
-        "yoy_pct": -5.583,
+        "yoy_pct": null,
         "yoy_delta": -0.6451
       },
       {
         "date": "1999-11",
         "value": 8.7467,
-        "yoy_pct": 2.5404,
+        "yoy_pct": null,
         "yoy_delta": 0.2167
       },
       {
         "date": "1999-12",
         "value": 5.9871,
-        "yoy_pct": 20.7539,
+        "yoy_pct": null,
         "yoy_delta": 1.029
       },
       {
         "date": "2000-01",
         "value": 4.5935,
-        "yoy_pct": -19.9557,
+        "yoy_pct": null,
         "yoy_delta": -1.1452
       },
       {
         "date": "2000-02",
         "value": 6.3345,
-        "yoy_pct": 1.352,
+        "yoy_pct": null,
         "yoy_delta": 0.0845
       },
       {
         "date": "2000-03",
         "value": 7.3484,
-        "yoy_pct": 5.0747,
+        "yoy_pct": null,
         "yoy_delta": 0.3549
       },
       {
         "date": "2000-04",
         "value": 10.6233,
-        "yoy_pct": 17.2977,
+        "yoy_pct": null,
         "yoy_delta": 1.5666
       },
       {
         "date": "2000-05",
         "value": 12.3581,
-        "yoy_pct": 13.4447,
+        "yoy_pct": null,
         "yoy_delta": 1.4646
       },
       {
         "date": "2000-06",
         "value": 15.83,
-        "yoy_pct": 10.3651,
+        "yoy_pct": null,
         "yoy_delta": 1.4867
       },
       {
         "date": "2000-07",
         "value": 17.5129,
-        "yoy_pct": 3.3307,
+        "yoy_pct": null,
         "yoy_delta": 0.5645
       },
       {
         "date": "2000-08",
         "value": 17.7226,
-        "yoy_pct": -3.9342,
+        "yoy_pct": null,
         "yoy_delta": -0.7258
       },
       {
         "date": "2000-09",
         "value": 15.5433,
-        "yoy_pct": -0.2996,
+        "yoy_pct": null,
         "yoy_delta": -0.0467
       },
       {
         "date": "2000-10",
         "value": 11.5355,
-        "yoy_pct": 5.7362,
+        "yoy_pct": null,
         "yoy_delta": 0.6258
       },
       {
         "date": "2000-11",
         "value": 6.0233,
-        "yoy_pct": -31.1363,
+        "yoy_pct": null,
         "yoy_delta": -2.7234
       },
       {
         "date": "2000-12",
         "value": 4.9065,
-        "yoy_pct": -18.0488,
+        "yoy_pct": null,
         "yoy_delta": -1.0806
       },
       {
         "date": "2001-01",
         "value": 6.0097,
-        "yoy_pct": 30.8305,
+        "yoy_pct": null,
         "yoy_delta": 1.4162
       },
       {
         "date": "2001-02",
         "value": 5.2036,
-        "yoy_pct": -17.853,
+        "yoy_pct": null,
         "yoy_delta": -1.1309
       },
       {
         "date": "2001-03",
         "value": 7.7355,
-        "yoy_pct": 5.2678,
+        "yoy_pct": null,
         "yoy_delta": 0.3871
       },
       {
         "date": "2001-04",
         "value": 8.9867,
-        "yoy_pct": -15.4058,
+        "yoy_pct": null,
         "yoy_delta": -1.6366
       },
       {
         "date": "2001-05",
         "value": 12.6129,
-        "yoy_pct": 2.0618,
+        "yoy_pct": null,
         "yoy_delta": 0.2548
       },
       {
         "date": "2001-06",
         "value": 14.38,
-        "yoy_pct": -9.1598,
+        "yoy_pct": null,
         "yoy_delta": -1.45
       },
       {
         "date": "2001-07",
         "value": 17.3774,
-        "yoy_pct": -0.7737,
+        "yoy_pct": null,
         "yoy_delta": -0.1355
       },
       {
         "date": "2001-08",
         "value": 18.3774,
-        "yoy_pct": 3.6947,
+        "yoy_pct": null,
         "yoy_delta": 0.6548
       },
       {
         "date": "2001-09",
         "value": 15.7467,
-        "yoy_pct": 1.3086,
+        "yoy_pct": null,
         "yoy_delta": 0.2034
       },
       {
         "date": "2001-10",
         "value": 10.7097,
-        "yoy_pct": -7.1588,
+        "yoy_pct": null,
         "yoy_delta": -0.8258
       },
       {
         "date": "2001-11",
         "value": 8.5667,
-        "yoy_pct": 42.226,
+        "yoy_pct": null,
         "yoy_delta": 2.5434
       },
       {
         "date": "2001-12",
         "value": 5.5484,
-        "yoy_pct": 13.0826,
+        "yoy_pct": null,
         "yoy_delta": 0.6419
       },
       {
         "date": "2002-01",
         "value": 5.6355,
-        "yoy_pct": -6.2266,
+        "yoy_pct": null,
         "yoy_delta": -0.3742
       },
       {
         "date": "2002-02",
         "value": 5.9286,
-        "yoy_pct": 13.9327,
+        "yoy_pct": null,
         "yoy_delta": 0.725
       },
       {
         "date": "2002-03",
         "value": 5.6903,
-        "yoy_pct": -26.4391,
+        "yoy_pct": null,
         "yoy_delta": -2.0452
       },
       {
         "date": "2002-04",
         "value": 9.27,
-        "yoy_pct": 3.1524,
+        "yoy_pct": null,
         "yoy_delta": 0.2833
       },
       {
         "date": "2002-05",
         "value": 11.5968,
-        "yoy_pct": -8.056,
+        "yoy_pct": null,
         "yoy_delta": -1.0161
       },
       {
         "date": "2002-06",
         "value": 16.2167,
-        "yoy_pct": 12.7726,
+        "yoy_pct": null,
         "yoy_delta": 1.8367
       },
       {
         "date": "2002-07",
         "value": 18.1871,
-        "yoy_pct": 4.6595,
+        "yoy_pct": null,
         "yoy_delta": 0.8097
       },
       {
         "date": "2002-08",
         "value": 18.0452,
-        "yoy_pct": -1.8077,
+        "yoy_pct": null,
         "yoy_delta": -0.3322
       },
       {
         "date": "2002-09",
         "value": 15.6033,
-        "yoy_pct": -0.9107,
+        "yoy_pct": null,
         "yoy_delta": -0.1434
       },
       {
         "date": "2002-10",
         "value": 10.7161,
-        "yoy_pct": 0.0598,
+        "yoy_pct": null,
         "yoy_delta": 0.0064
       },
       {
         "date": "2002-11",
         "value": 8.6,
-        "yoy_pct": 0.3887,
+        "yoy_pct": null,
         "yoy_delta": 0.0333
       },
       {
         "date": "2002-12",
         "value": 6.7548,
-        "yoy_pct": 21.7432,
+        "yoy_pct": null,
         "yoy_delta": 1.2064
       },
       {
         "date": "2003-01",
         "value": 7.7742,
-        "yoy_pct": 37.9505,
+        "yoy_pct": null,
         "yoy_delta": 2.1387
       },
       {
         "date": "2003-02",
         "value": 6.0357,
-        "yoy_pct": 1.8065,
+        "yoy_pct": null,
         "yoy_delta": 0.1071
       },
       {
         "date": "2003-03",
         "value": 8.529,
-        "yoy_pct": 49.8866,
+        "yoy_pct": null,
         "yoy_delta": 2.8387
       },
       {
         "date": "2003-04",
         "value": 9.5533,
-        "yoy_pct": 3.0561,
+        "yoy_pct": null,
         "yoy_delta": 0.2833
       },
       {
         "date": "2003-05",
         "value": 12.4677,
-        "yoy_pct": 7.5098,
+        "yoy_pct": null,
         "yoy_delta": 0.8709
       },
       {
         "date": "2003-06",
         "value": 16.8933,
-        "yoy_pct": 4.1722,
+        "yoy_pct": null,
         "yoy_delta": 0.6766
       },
       {
         "date": "2003-07",
         "value": 19.5613,
-        "yoy_pct": 7.5559,
+        "yoy_pct": null,
         "yoy_delta": 1.3742
       },
       {
         "date": "2003-08",
         "value": 19.0032,
-        "yoy_pct": 5.3089,
+        "yoy_pct": null,
         "yoy_delta": 0.958
       },
       {
         "date": "2003-09",
         "value": 16.6,
-        "yoy_pct": 6.3878,
+        "yoy_pct": null,
         "yoy_delta": 0.9967
       },
       {
         "date": "2003-10",
         "value": 12.9065,
-        "yoy_pct": 20.4403,
+        "yoy_pct": null,
         "yoy_delta": 2.1904
       },
       {
         "date": "2003-11",
         "value": 6.17,
-        "yoy_pct": -28.2558,
+        "yoy_pct": null,
         "yoy_delta": -2.43
       },
       {
         "date": "2003-12",
         "value": 6.0323,
-        "yoy_pct": -10.6961,
+        "yoy_pct": null,
         "yoy_delta": -0.7225
       },
       {
         "date": "2004-01",
         "value": 5.0871,
-        "yoy_pct": -34.5643,
+        "yoy_pct": null,
         "yoy_delta": -2.6871
       },
       {
         "date": "2004-02",
         "value": 6.8793,
-        "yoy_pct": 13.9768,
+        "yoy_pct": null,
         "yoy_delta": 0.8436
       },
       {
         "date": "2004-03",
         "value": 9.0129,
-        "yoy_pct": 5.6736,
+        "yoy_pct": null,
         "yoy_delta": 0.4839
       },
       {
         "date": "2004-04",
         "value": 11.4833,
-        "yoy_pct": 20.2024,
+        "yoy_pct": null,
         "yoy_delta": 1.93
       },
       {
         "date": "2004-05",
         "value": 14.0258,
-        "yoy_pct": 12.4971,
+        "yoy_pct": null,
         "yoy_delta": 1.5581
       },
       {
         "date": "2004-06",
         "value": 17.26,
-        "yoy_pct": 2.1707,
+        "yoy_pct": null,
         "yoy_delta": 0.3667
       },
       {
         "date": "2004-07",
         "value": 19.7613,
-        "yoy_pct": 1.0224,
+        "yoy_pct": null,
         "yoy_delta": 0.2
       },
       {
         "date": "2004-08",
         "value": 19.6968,
-        "yoy_pct": 3.6499,
+        "yoy_pct": null,
         "yoy_delta": 0.6936
       },
       {
         "date": "2004-09",
         "value": 15.0267,
-        "yoy_pct": -9.4777,
+        "yoy_pct": null,
         "yoy_delta": -1.5733
       },
       {
         "date": "2004-10",
         "value": 12.0774,
-        "yoy_pct": -6.4239,
+        "yoy_pct": null,
         "yoy_delta": -0.8291
       },
       {
         "date": "2004-11",
         "value": 7.71,
-        "yoy_pct": 24.9595,
+        "yoy_pct": null,
         "yoy_delta": 1.54
       },
       {
         "date": "2004-12",
         "value": 6.4774,
-        "yoy_pct": 7.3786,
+        "yoy_pct": null,
         "yoy_delta": 0.4451
       },
       {
         "date": "2005-01",
         "value": 5.7968,
-        "yoy_pct": 13.951,
+        "yoy_pct": null,
         "yoy_delta": 0.7097
       },
       {
         "date": "2005-02",
         "value": 5.6536,
-        "yoy_pct": -17.8172,
+        "yoy_pct": null,
         "yoy_delta": -1.2257
       },
       {
         "date": "2005-03",
         "value": 9.4452,
-        "yoy_pct": 4.7965,
+        "yoy_pct": null,
         "yoy_delta": 0.4323
       },
       {
         "date": "2005-04",
         "value": 10.5133,
-        "yoy_pct": -8.447,
+        "yoy_pct": null,
         "yoy_delta": -0.97
       },
       {
         "date": "2005-05",
         "value": 14.5194,
-        "yoy_pct": 3.5192,
+        "yoy_pct": null,
         "yoy_delta": 0.4936
       },
       {
         "date": "2005-06",
         "value": 15.42,
-        "yoy_pct": -10.6605,
+        "yoy_pct": null,
         "yoy_delta": -1.84
       },
       {
         "date": "2005-07",
         "value": 18.5516,
-        "yoy_pct": -6.1216,
+        "yoy_pct": null,
         "yoy_delta": -1.2097
       },
       {
         "date": "2005-08",
         "value": 19.1452,
-        "yoy_pct": -2.8005,
+        "yoy_pct": null,
         "yoy_delta": -0.5516
       },
       {
         "date": "2005-09",
         "value": 14.8233,
-        "yoy_pct": -1.3536,
+        "yoy_pct": null,
         "yoy_delta": -0.2034
       },
       {
         "date": "2005-10",
         "value": 12.3258,
-        "yoy_pct": 2.0567,
+        "yoy_pct": null,
         "yoy_delta": 0.2484
       },
       {
         "date": "2005-11",
         "value": 6.5567,
-        "yoy_pct": -14.9585,
+        "yoy_pct": null,
         "yoy_delta": -1.1533
       },
       {
         "date": "2005-12",
         "value": 5.1194,
-        "yoy_pct": -20.9652,
+        "yoy_pct": null,
         "yoy_delta": -1.358
       },
       {
         "date": "2006-01",
         "value": 7.2419,
-        "yoy_pct": 24.9293,
+        "yoy_pct": null,
         "yoy_delta": 1.4451
       },
       {
         "date": "2006-02",
         "value": 5.4679,
-        "yoy_pct": -3.2846,
+        "yoy_pct": null,
         "yoy_delta": -0.1857
       },
       {
         "date": "2006-03",
         "value": 7.4806,
-        "yoy_pct": -20.8,
+        "yoy_pct": null,
         "yoy_delta": -1.9646
       },
       {
         "date": "2006-04",
         "value": 10.0233,
-        "yoy_pct": -4.6608,
+        "yoy_pct": null,
         "yoy_delta": -0.49
       },
       {
         "date": "2006-05",
         "value": 13.3161,
-        "yoy_pct": -8.2875,
+        "yoy_pct": null,
         "yoy_delta": -1.2033
       },
       {
         "date": "2006-06",
         "value": 16.7833,
-        "yoy_pct": 8.8411,
+        "yoy_pct": null,
         "yoy_delta": 1.3633
       },
       {
         "date": "2006-07",
         "value": 19.2677,
-        "yoy_pct": 3.86,
+        "yoy_pct": null,
         "yoy_delta": 0.7161
       },
       {
         "date": "2006-08",
         "value": 18.0161,
-        "yoy_pct": -5.8976,
+        "yoy_pct": null,
         "yoy_delta": -1.1291
       },
       {
         "date": "2006-09",
         "value": 15.9567,
-        "yoy_pct": 7.6461,
+        "yoy_pct": null,
         "yoy_delta": 1.1334
       },
       {
         "date": "2006-10",
         "value": 10.9742,
-        "yoy_pct": -10.9656,
+        "yoy_pct": null,
         "yoy_delta": -1.3516
       },
       {
         "date": "2006-11",
         "value": 7.3433,
-        "yoy_pct": 11.9969,
+        "yoy_pct": null,
         "yoy_delta": 0.7866
       },
       {
         "date": "2006-12",
         "value": 4.8,
-        "yoy_pct": -6.239,
+        "yoy_pct": null,
         "yoy_delta": -0.3194
       },
       {
         "date": "2007-01",
         "value": 3.771,
-        "yoy_pct": -47.928,
+        "yoy_pct": null,
         "yoy_delta": -3.4709
       },
       {
         "date": "2007-02",
         "value": 6.55,
-        "yoy_pct": 19.79,
+        "yoy_pct": null,
         "yoy_delta": 1.0821
       },
       {
         "date": "2007-03",
         "value": 8.5452,
-        "yoy_pct": 14.2315,
+        "yoy_pct": null,
         "yoy_delta": 1.0646
       },
       {
         "date": "2007-04",
         "value": 9.8433,
-        "yoy_pct": -1.7958,
+        "yoy_pct": null,
         "yoy_delta": -0.18
       },
       {
         "date": "2007-05",
         "value": 13.0742,
-        "yoy_pct": -1.8166,
+        "yoy_pct": null,
         "yoy_delta": -0.2419
       },
       {
         "date": "2007-06",
         "value": 15.59,
-        "yoy_pct": -7.11,
+        "yoy_pct": null,
         "yoy_delta": -1.1933
       },
       {
         "date": "2007-07",
         "value": 19.4548,
-        "yoy_pct": 0.9711,
+        "yoy_pct": null,
         "yoy_delta": 0.1871
       },
       {
         "date": "2007-08",
         "value": 17.9806,
-        "yoy_pct": -0.197,
+        "yoy_pct": null,
         "yoy_delta": -0.0355
       },
       {
         "date": "2007-09",
         "value": 14.9867,
-        "yoy_pct": -6.079,
+        "yoy_pct": null,
         "yoy_delta": -0.97
       },
       {
         "date": "2007-10",
         "value": 10.4613,
-        "yoy_pct": -4.6737,
+        "yoy_pct": null,
         "yoy_delta": -0.5129
       },
       {
         "date": "2007-11",
         "value": 7.11,
-        "yoy_pct": -3.177,
+        "yoy_pct": null,
         "yoy_delta": -0.2333
       },
       {
         "date": "2007-12",
         "value": 4.8,
-        "yoy_pct": 0.0,
+        "yoy_pct": null,
         "yoy_delta": 0.0
       },
       {
         "date": "2008-01",
         "value": 3.6258,
-        "yoy_pct": -3.8504,
+        "yoy_pct": null,
         "yoy_delta": -0.1452
       },
       {
         "date": "2008-02",
         "value": 6.3793,
-        "yoy_pct": -2.6061,
+        "yoy_pct": null,
         "yoy_delta": -0.1707
       },
       {
         "date": "2008-03",
         "value": 6.2774,
-        "yoy_pct": -26.5389,
+        "yoy_pct": null,
         "yoy_delta": -2.2678
       },
       {
         "date": "2008-04",
         "value": 7.5933,
-        "yoy_pct": -22.8582,
+        "yoy_pct": null,
         "yoy_delta": -2.25
       },
       {
         "date": "2008-05",
         "value": 12.6258,
-        "yoy_pct": -3.4297,
+        "yoy_pct": null,
         "yoy_delta": -0.4484
       },
       {
         "date": "2008-06",
         "value": 14.2167,
-        "yoy_pct": -8.8089,
+        "yoy_pct": null,
         "yoy_delta": -1.3733
       },
       {
         "date": "2008-07",
         "value": 17.8548,
-        "yoy_pct": -8.2242,
+        "yoy_pct": null,
         "yoy_delta": -1.6
       },
       {
         "date": "2008-08",
         "value": 18.1774,
-        "yoy_pct": 1.0945,
+        "yoy_pct": null,
         "yoy_delta": 0.1968
       },
       {
         "date": "2008-09",
         "value": 15.4267,
-        "yoy_pct": 2.9359,
+        "yoy_pct": null,
         "yoy_delta": 0.44
       },
       {
         "date": "2008-10",
         "value": 10.8774,
-        "yoy_pct": 3.9775,
+        "yoy_pct": null,
         "yoy_delta": 0.4161
       },
       {
         "date": "2008-11",
         "value": 9.49,
-        "yoy_pct": 33.474,
+        "yoy_pct": null,
         "yoy_delta": 2.38
       },
       {
         "date": "2008-12",
         "value": 3.2161,
-        "yoy_pct": -32.9979,
+        "yoy_pct": null,
         "yoy_delta": -1.5839
       },
       {
         "date": "2009-01",
         "value": 4.2323,
-        "yoy_pct": 16.7273,
+        "yoy_pct": null,
         "yoy_delta": 0.6065
       },
       {
         "date": "2009-02",
         "value": 5.2,
-        "yoy_pct": -18.4864,
+        "yoy_pct": null,
         "yoy_delta": -1.1793
       },
       {
         "date": "2009-03",
         "value": 5.7419,
-        "yoy_pct": -8.5306,
+        "yoy_pct": null,
         "yoy_delta": -0.5355
       },
       {
         "date": "2009-04",
         "value": 9.2933,
-        "yoy_pct": 22.3882,
+        "yoy_pct": null,
         "yoy_delta": 1.7
       },
       {
         "date": "2009-05",
         "value": 12.9194,
-        "yoy_pct": 2.3254,
+        "yoy_pct": null,
         "yoy_delta": 0.2936
       },
       {
         "date": "2009-06",
         "value": 17.07,
-        "yoy_pct": 20.0701,
+        "yoy_pct": null,
         "yoy_delta": 2.8533
       },
       {
         "date": "2009-07",
         "value": 20.1484,
-        "yoy_pct": 12.8458,
+        "yoy_pct": null,
         "yoy_delta": 2.2936
       },
       {
         "date": "2009-08",
         "value": 18.3903,
-        "yoy_pct": 1.1712,
+        "yoy_pct": null,
         "yoy_delta": 0.2129
       },
       {
         "date": "2009-09",
         "value": 16.3567,
-        "yoy_pct": 6.0285,
+        "yoy_pct": null,
         "yoy_delta": 0.93
       },
       {
         "date": "2009-10",
         "value": 11.1935,
-        "yoy_pct": 2.906,
+        "yoy_pct": null,
         "yoy_delta": 0.3161
       },
       {
         "date": "2009-11",
         "value": 8.3033,
-        "yoy_pct": -12.5047,
+        "yoy_pct": null,
         "yoy_delta": -1.1867
       },
       {
         "date": "2009-12",
         "value": 3.0226,
-        "yoy_pct": -6.0166,
+        "yoy_pct": null,
         "yoy_delta": -0.1935
       },
       {
         "date": "2010-01",
         "value": 7.9484,
-        "yoy_pct": 87.8033,
+        "yoy_pct": null,
         "yoy_delta": 3.7161
       },
       {
         "date": "2010-02",
         "value": 7.8143,
-        "yoy_pct": 50.275,
+        "yoy_pct": null,
         "yoy_delta": 2.6143
       },
       {
         "date": "2010-03",
         "value": 8.3484,
-        "yoy_pct": 45.3944,
+        "yoy_pct": null,
         "yoy_delta": 2.6065
       },
       {
         "date": "2010-04",
         "value": 9.5367,
-        "yoy_pct": 2.6191,
+        "yoy_pct": null,
         "yoy_delta": 0.2434
       },
       {
         "date": "2010-05",
         "value": 11.4548,
-        "yoy_pct": -11.3364,
+        "yoy_pct": null,
         "yoy_delta": -1.4646
       },
       {
         "date": "2010-06",
         "value": 14.48,
-        "yoy_pct": -15.1728,
+        "yoy_pct": null,
         "yoy_delta": -2.59
       },
       {
         "date": "2010-07",
         "value": 17.7355,
-        "yoy_pct": -11.9756,
+        "yoy_pct": null,
         "yoy_delta": -2.4129
       },
       {
         "date": "2010-08",
         "value": 18.0419,
-        "yoy_pct": -1.8945,
+        "yoy_pct": null,
         "yoy_delta": -0.3484
       },
       {
         "date": "2010-09",
         "value": 15.7367,
-        "yoy_pct": -3.7905,
+        "yoy_pct": null,
         "yoy_delta": -0.62
       },
       {
         "date": "2010-10",
         "value": 11.7871,
-        "yoy_pct": 5.3031,
+        "yoy_pct": null,
         "yoy_delta": 0.5936
       },
       {
         "date": "2010-11",
         "value": 6.5633,
-        "yoy_pct": -20.9555,
+        "yoy_pct": null,
         "yoy_delta": -1.74
       },
       {
         "date": "2010-12",
         "value": 6.1742,
-        "yoy_pct": 104.2678,
+        "yoy_pct": null,
         "yoy_delta": 3.1516
       },
       {
         "date": "2011-01",
         "value": 5.5226,
-        "yoy_pct": -30.5193,
+        "yoy_pct": null,
         "yoy_delta": -2.4258
       },
       {
         "date": "2011-02",
         "value": 4.2286,
-        "yoy_pct": -45.8864,
+        "yoy_pct": null,
         "yoy_delta": -3.5857
       },
       {
         "date": "2011-03",
         "value": 7.4194,
-        "yoy_pct": -11.1279,
+        "yoy_pct": null,
         "yoy_delta": -0.929
       },
       {
         "date": "2011-04",
         "value": 7.7233,
-        "yoy_pct": -19.015,
+        "yoy_pct": null,
         "yoy_delta": -1.8134
       },
       {
         "date": "2011-05",
         "value": 11.1645,
-        "yoy_pct": -2.5343,
+        "yoy_pct": null,
         "yoy_delta": -0.2903
       },
       {
         "date": "2011-06",
         "value": 14.7933,
-        "yoy_pct": 2.1637,
+        "yoy_pct": null,
         "yoy_delta": 0.3133
       },
       {
         "date": "2011-07",
         "value": 16.9839,
-        "yoy_pct": -4.2378,
+        "yoy_pct": null,
         "yoy_delta": -0.7516
       },
       {
         "date": "2011-08",
         "value": 18.329,
-        "yoy_pct": 1.5913,
+        "yoy_pct": null,
         "yoy_delta": 0.2871
       },
       {
         "date": "2011-09",
         "value": 17.11,
-        "yoy_pct": 8.7267,
+        "yoy_pct": null,
         "yoy_delta": 1.3733
       },
       {
         "date": "2011-10",
         "value": 11.3129,
-        "yoy_pct": -4.023,
+        "yoy_pct": null,
         "yoy_delta": -0.4742
       },
       {
         "date": "2011-11",
         "value": 6.27,
-        "yoy_pct": -4.4688,
+        "yoy_pct": null,
         "yoy_delta": -0.2933
       },
       {
         "date": "2011-12",
         "value": 4.3355,
-        "yoy_pct": -29.7804,
+        "yoy_pct": null,
         "yoy_delta": -1.8387
       },
       {
         "date": "2012-01",
         "value": 4.5032,
-        "yoy_pct": -18.4587,
+        "yoy_pct": null,
         "yoy_delta": -1.0194
       },
       {
         "date": "2012-02",
         "value": 6.2172,
-        "yoy_pct": 47.0274,
+        "yoy_pct": null,
         "yoy_delta": 1.9886
       },
       {
         "date": "2012-03",
         "value": 6.4226,
-        "yoy_pct": -13.435,
+        "yoy_pct": null,
         "yoy_delta": -0.9968
       },
       {
         "date": "2012-04",
         "value": 10.2767,
-        "yoy_pct": 33.061,
+        "yoy_pct": null,
         "yoy_delta": 2.5534
       },
       {
         "date": "2012-05",
         "value": 12.5968,
-        "yoy_pct": 12.8291,
+        "yoy_pct": null,
         "yoy_delta": 1.4323
       },
       {
         "date": "2012-06",
         "value": 14.35,
-        "yoy_pct": -2.9966,
+        "yoy_pct": null,
         "yoy_delta": -0.4433
       },
       {
         "date": "2012-07",
         "value": 17.7032,
-        "yoy_pct": 4.2352,
+        "yoy_pct": null,
         "yoy_delta": 0.7193
       },
       {
         "date": "2012-08",
         "value": 19.1484,
-        "yoy_pct": 4.4705,
+        "yoy_pct": null,
         "yoy_delta": 0.8194
       },
       {
         "date": "2012-09",
         "value": 16.0833,
-        "yoy_pct": -6.0006,
+        "yoy_pct": null,
         "yoy_delta": -1.0267
       },
       {
         "date": "2012-10",
         "value": 11.6839,
-        "yoy_pct": 3.2794,
+        "yoy_pct": null,
         "yoy_delta": 0.371
       },
       {
         "date": "2012-11",
         "value": 8.4533,
-        "yoy_pct": 34.8214,
+        "yoy_pct": null,
         "yoy_delta": 2.1833
       },
       {
         "date": "2012-12",
         "value": 5.6387,
-        "yoy_pct": 30.0588,
+        "yoy_pct": null,
         "yoy_delta": 1.3032
       },
       {
         "date": "2013-01",
         "value": 3.7323,
-        "yoy_pct": -17.1189,
+        "yoy_pct": null,
         "yoy_delta": -0.7709
       },
       {
         "date": "2013-02",
         "value": 6.5679,
-        "yoy_pct": 5.6408,
+        "yoy_pct": null,
         "yoy_delta": 0.3507
       },
       {
         "date": "2013-03",
         "value": 8.1871,
-        "yoy_pct": 27.4733,
+        "yoy_pct": null,
         "yoy_delta": 1.7645
       },
       {
         "date": "2013-04",
         "value": 10.0067,
-        "yoy_pct": -2.6273,
+        "yoy_pct": null,
         "yoy_delta": -0.27
       },
       {
         "date": "2013-05",
         "value": 13.929,
-        "yoy_pct": 10.5757,
+        "yoy_pct": null,
         "yoy_delta": 1.3322
       },
       {
         "date": "2013-06",
         "value": 17.1033,
-        "yoy_pct": 19.1868,
+        "yoy_pct": null,
         "yoy_delta": 2.7533
       },
       {
         "date": "2013-07",
         "value": 19.7806,
-        "yoy_pct": 11.7346,
+        "yoy_pct": null,
         "yoy_delta": 2.0774
       },
       {
         "date": "2013-08",
         "value": 19.6323,
-        "yoy_pct": 2.5271,
+        "yoy_pct": null,
         "yoy_delta": 0.4839
       },
       {
         "date": "2013-09",
         "value": 16.7267,
-        "yoy_pct": 4.0004,
+        "yoy_pct": null,
         "yoy_delta": 0.6434
       },
       {
         "date": "2013-10",
         "value": 10.4419,
-        "yoy_pct": -10.63,
+        "yoy_pct": null,
         "yoy_delta": -1.242
       },
       {
         "date": "2013-11",
         "value": 7.4167,
-        "yoy_pct": -12.2627,
+        "yoy_pct": null,
         "yoy_delta": -1.0366
       },
       {
         "date": "2013-12",
         "value": 3.6968,
-        "yoy_pct": -34.4388,
+        "yoy_pct": null,
         "yoy_delta": -1.9419
       },
       {
         "date": "2014-01",
         "value": 5.9161,
-        "yoy_pct": 58.5108,
+        "yoy_pct": null,
         "yoy_delta": 2.1838
       },
       {
         "date": "2014-02",
         "value": 4.8607,
-        "yoy_pct": -25.9931,
+        "yoy_pct": null,
         "yoy_delta": -1.7072
       },
       {
         "date": "2014-03",
         "value": 8.6258,
-        "yoy_pct": 5.3584,
+        "yoy_pct": null,
         "yoy_delta": 0.4387
       },
       {
         "date": "2014-04",
         "value": 10.75,
-        "yoy_pct": 7.428,
+        "yoy_pct": null,
         "yoy_delta": 0.7433
       },
       {
         "date": "2014-05",
         "value": 14.7355,
-        "yoy_pct": 5.7901,
+        "yoy_pct": null,
         "yoy_delta": 0.8065
       },
       {
         "date": "2014-06",
         "value": 16.2767,
-        "yoy_pct": -4.833,
+        "yoy_pct": null,
         "yoy_delta": -0.8266
       },
       {
         "date": "2014-07",
         "value": 20.0452,
-        "yoy_pct": 1.3377,
+        "yoy_pct": null,
         "yoy_delta": 0.2646
       },
       {
         "date": "2014-08",
         "value": 20.2968,
-        "yoy_pct": 3.3847,
+        "yoy_pct": null,
         "yoy_delta": 0.6645
       },
       {
         "date": "2014-09",
         "value": 17.1667,
-        "yoy_pct": 2.6305,
+        "yoy_pct": null,
         "yoy_delta": 0.44
       },
       {
         "date": "2014-10",
         "value": 14.3194,
-        "yoy_pct": 37.134,
+        "yoy_pct": null,
         "yoy_delta": 3.8775
       },
       {
         "date": "2014-11",
         "value": 7.69,
-        "yoy_pct": 3.6849,
+        "yoy_pct": null,
         "yoy_delta": 0.2733
       },
       {
         "date": "2014-12",
         "value": 6.8355,
-        "yoy_pct": 84.9032,
+        "yoy_pct": null,
         "yoy_delta": 3.1387
       },
       {
         "date": "2015-01",
         "value": 6.8387,
-        "yoy_pct": 15.5947,
+        "yoy_pct": null,
         "yoy_delta": 0.9226
       },
       {
         "date": "2015-02",
         "value": 9.1036,
-        "yoy_pct": 87.2899,
+        "yoy_pct": null,
         "yoy_delta": 4.2429
       },
       {
         "date": "2015-03",
         "value": 10.1452,
-        "yoy_pct": 17.6146,
+        "yoy_pct": null,
         "yoy_delta": 1.5194
       },
       {
         "date": "2015-04",
         "value": 10.4267,
-        "yoy_pct": -3.0074,
+        "yoy_pct": null,
         "yoy_delta": -0.3233
       },
       {
         "date": "2015-05",
         "value": 14.7226,
-        "yoy_pct": -0.0875,
+        "yoy_pct": null,
         "yoy_delta": -0.0129
       },
       {
         "date": "2015-06",
         "value": 19.23,
-        "yoy_pct": 18.1443,
+        "yoy_pct": null,
         "yoy_delta": 2.9533
       },
       {
         "date": "2015-07",
         "value": 21.1839,
-        "yoy_pct": 5.6807,
+        "yoy_pct": null,
         "yoy_delta": 1.1387
       },
       {
         "date": "2015-08",
         "value": 20.0452,
-        "yoy_pct": -1.2396,
+        "yoy_pct": null,
         "yoy_delta": -0.2516
       },
       {
         "date": "2015-09",
         "value": 15.35,
-        "yoy_pct": -10.5827,
+        "yoy_pct": null,
         "yoy_delta": -1.8167
       },
       {
         "date": "2015-10",
         "value": 13.8548,
-        "yoy_pct": -3.2445,
+        "yoy_pct": null,
         "yoy_delta": -0.4646
       },
       {
         "date": "2015-11",
         "value": 6.8633,
-        "yoy_pct": -10.7503,
+        "yoy_pct": null,
         "yoy_delta": -0.8267
       },
       {
         "date": "2015-12",
         "value": 6.0387,
-        "yoy_pct": -11.6568,
+        "yoy_pct": null,
         "yoy_delta": -0.7968
       },
       {
         "date": "2016-01",
         "value": 5.8613,
-        "yoy_pct": -14.2922,
+        "yoy_pct": null,
         "yoy_delta": -0.9774
       },
       {
         "date": "2016-02",
         "value": 8.4621,
-        "yoy_pct": -7.0467,
+        "yoy_pct": null,
         "yoy_delta": -0.6415
       },
       {
         "date": "2016-03",
         "value": 9.2742,
-        "yoy_pct": -8.5853,
+        "yoy_pct": null,
         "yoy_delta": -0.871
       },
       {
         "date": "2016-04",
         "value": 13.0067,
-        "yoy_pct": 24.7442,
+        "yoy_pct": null,
         "yoy_delta": 2.58
       },
       {
         "date": "2016-05",
         "value": 14.9677,
-        "yoy_pct": 1.6648,
+        "yoy_pct": null,
         "yoy_delta": 0.2451
       },
       {
         "date": "2016-06",
         "value": 16.8433,
-        "yoy_pct": -12.4113,
+        "yoy_pct": null,
         "yoy_delta": -2.3867
       },
       {
         "date": "2016-07",
         "value": 18.5806,
-        "yoy_pct": -12.289,
+        "yoy_pct": null,
         "yoy_delta": -2.6033
       },
       {
         "date": "2016-08",
         "value": 19.429,
-        "yoy_pct": -3.0741,
+        "yoy_pct": null,
         "yoy_delta": -0.6162
       },
       {
         "date": "2016-09",
         "value": 15.4033,
-        "yoy_pct": 0.3472,
+        "yoy_pct": null,
         "yoy_delta": 0.0533
       },
       {
         "date": "2016-10",
         "value": 12.371,
-        "yoy_pct": -10.7096,
+        "yoy_pct": null,
         "yoy_delta": -1.4838
       },
       {
         "date": "2016-11",
         "value": 10.4467,
-        "yoy_pct": 52.211,
+        "yoy_pct": null,
         "yoy_delta": 3.5834
       },
       {
         "date": "2016-12",
         "value": 3.4387,
-        "yoy_pct": -43.0556,
+        "yoy_pct": null,
         "yoy_delta": -2.6
       },
       {
         "date": "2017-01",
         "value": 3.271,
-        "yoy_pct": -44.1933,
+        "yoy_pct": null,
         "yoy_delta": -2.5903
       },
       {
         "date": "2017-02",
         "value": 4.9107,
-        "yoy_pct": -41.9683,
+        "yoy_pct": null,
         "yoy_delta": -3.5514
       },
       {
         "date": "2017-03",
         "value": 7.8419,
-        "yoy_pct": -15.4439,
+        "yoy_pct": null,
         "yoy_delta": -1.4323
       },
       {
         "date": "2017-04",
         "value": 10.07,
-        "yoy_pct": -22.5784,
+        "yoy_pct": null,
         "yoy_delta": -2.9367
       },
       {
         "date": "2017-05",
         "value": 13.9355,
-        "yoy_pct": -6.8962,
+        "yoy_pct": null,
         "yoy_delta": -1.0322
       },
       {
         "date": "2017-06",
         "value": 16.5467,
-        "yoy_pct": -1.7609,
+        "yoy_pct": null,
         "yoy_delta": -0.2966
       },
       {
         "date": "2017-07",
         "value": 19.3516,
-        "yoy_pct": 4.1495,
+        "yoy_pct": null,
         "yoy_delta": 0.771
       },
       {
         "date": "2017-08",
         "value": 20.1871,
-        "yoy_pct": 3.9019,
+        "yoy_pct": null,
         "yoy_delta": 0.7581
       },
       {
         "date": "2017-09",
         "value": 17.1233,
-        "yoy_pct": 11.1664,
+        "yoy_pct": null,
         "yoy_delta": 1.72
       },
       {
         "date": "2017-10",
         "value": 10.9742,
-        "yoy_pct": -11.2909,
+        "yoy_pct": null,
         "yoy_delta": -1.3968
       },
       {
         "date": "2017-11",
         "value": 8.0767,
-        "yoy_pct": -22.6866,
+        "yoy_pct": null,
         "yoy_delta": -2.37
       },
       {
         "date": "2017-12",
         "value": 4.4774,
-        "yoy_pct": 30.2062,
+        "yoy_pct": null,
         "yoy_delta": 1.0387
       },
       {
         "date": "2018-01",
         "value": 7.0516,
-        "yoy_pct": 115.5793,
+        "yoy_pct": null,
         "yoy_delta": 3.7806
       },
       {
         "date": "2018-02",
         "value": 5.1821,
-        "yoy_pct": 5.5267,
+        "yoy_pct": null,
         "yoy_delta": 0.2714
       },
       {
         "date": "2018-03",
         "value": 7.5677,
-        "yoy_pct": -3.4966,
+        "yoy_pct": null,
         "yoy_delta": -0.2742
       },
       {
         "date": "2018-04",
         "value": 10.34,
-        "yoy_pct": 2.6812,
+        "yoy_pct": null,
         "yoy_delta": 0.27
       },
       {
         "date": "2018-05",
         "value": 15.1677,
-        "yoy_pct": 8.8422,
+        "yoy_pct": null,
         "yoy_delta": 1.2322
       },
       {
         "date": "2018-06",
         "value": 16.2333,
-        "yoy_pct": -1.894,
+        "yoy_pct": null,
         "yoy_delta": -0.3134
       },
       {
         "date": "2018-07",
         "value": 20.3,
-        "yoy_pct": 4.9009,
+        "yoy_pct": null,
         "yoy_delta": 0.9484
       },
       {
         "date": "2018-08",
         "value": 19.3774,
-        "yoy_pct": -4.011,
+        "yoy_pct": null,
         "yoy_delta": -0.8097
       },
       {
         "date": "2018-09",
         "value": 15.6533,
-        "yoy_pct": -8.5848,
+        "yoy_pct": null,
         "yoy_delta": -1.47
       },
       {
         "date": "2018-10",
         "value": 11.4355,
-        "yoy_pct": 4.2035,
+        "yoy_pct": null,
         "yoy_delta": 0.4613
       },
       {
         "date": "2018-11",
         "value": 8.8333,
-        "yoy_pct": 9.3677,
+        "yoy_pct": null,
         "yoy_delta": 0.7566
       },
       {
         "date": "2018-12",
         "value": 6.4387,
-        "yoy_pct": 43.8044,
+        "yoy_pct": null,
         "yoy_delta": 1.9613
       },
       {
         "date": "2019-01",
         "value": 6.5581,
-        "yoy_pct": -6.9984,
+        "yoy_pct": null,
         "yoy_delta": -0.4935
       },
       {
         "date": "2019-02",
         "value": 2.725,
-        "yoy_pct": -47.4151,
+        "yoy_pct": null,
         "yoy_delta": -2.4571
       },
       {
         "date": "2019-03",
         "value": 7.8258,
-        "yoy_pct": 3.4105,
+        "yoy_pct": null,
         "yoy_delta": 0.2581
       },
       {
         "date": "2019-04",
         "value": 10.9033,
-        "yoy_pct": 5.4478,
+        "yoy_pct": null,
         "yoy_delta": 0.5633
       },
       {
         "date": "2019-05",
         "value": 14.8419,
-        "yoy_pct": -2.148,
+        "yoy_pct": null,
         "yoy_delta": -0.3258
       },
       {
         "date": "2019-06",
         "value": 16.5633,
-        "yoy_pct": 2.0329,
+        "yoy_pct": null,
         "yoy_delta": 0.33
       },
       {
         "date": "2019-07",
         "value": 18.7903,
-        "yoy_pct": -7.4369,
+        "yoy_pct": null,
         "yoy_delta": -1.5097
       },
       {
         "date": "2019-08",
         "value": 19.5258,
-        "yoy_pct": 0.7658,
+        "yoy_pct": null,
         "yoy_delta": 0.1484
       },
       {
         "date": "2019-09",
         "value": 16.2833,
-        "yoy_pct": 4.0247,
+        "yoy_pct": null,
         "yoy_delta": 0.63
       },
       {
         "date": "2019-10",
         "value": 9.8,
-        "yoy_pct": -14.302,
+        "yoy_pct": null,
         "yoy_delta": -1.6355
       },
       {
         "date": "2019-11",
         "value": 7.5733,
-        "yoy_pct": -14.2642,
+        "yoy_pct": null,
         "yoy_delta": -1.26
       },
       {
         "date": "2019-12",
         "value": 6.6742,
-        "yoy_pct": 3.6576,
+        "yoy_pct": null,
         "yoy_delta": 0.2355
       },
       {
         "date": "2020-01",
         "value": 6.8226,
-        "yoy_pct": 4.0332,
+        "yoy_pct": null,
         "yoy_delta": 0.2645
       },
       {
@@ -5255,465 +5255,463 @@
       {
         "date": "2020-03",
         "value": 6.7613,
-        "yoy_pct": -13.6024,
+        "yoy_pct": null,
         "yoy_delta": -1.0645
       },
       {
         "date": "2020-04",
         "value": 10.5167,
-        "yoy_pct": -3.5457,
+        "yoy_pct": null,
         "yoy_delta": -0.3866
       },
       {
         "date": "2020-05",
         "value": 14.2355,
-        "yoy_pct": -4.0857,
+        "yoy_pct": null,
         "yoy_delta": -0.6064
       },
       {
         "date": "2020-06",
         "value": 15.8633,
-        "yoy_pct": -4.2262,
+        "yoy_pct": null,
         "yoy_delta": -0.7
       },
       {
         "date": "2020-07",
         "value": 18.4194,
-        "yoy_pct": -1.9739,
+        "yoy_pct": null,
         "yoy_delta": -0.3709
       },
       {
         "date": "2020-08",
         "value": 18.9806,
-        "yoy_pct": -2.7922,
+        "yoy_pct": null,
         "yoy_delta": -0.5452
       },
       {
         "date": "2020-09",
         "value": 17.3667,
-        "yoy_pct": 6.6534,
+        "yoy_pct": null,
         "yoy_delta": 1.0834
       },
       {
         "date": "2020-10",
         "value": 12.0677,
-        "yoy_pct": 23.1398,
+        "yoy_pct": null,
         "yoy_delta": 2.2677
       },
       {
         "date": "2020-11",
         "value": 8.0133,
-        "yoy_pct": 5.8099,
+        "yoy_pct": null,
         "yoy_delta": 0.44
       },
       {
         "date": "2020-12",
         "value": 6.5,
-        "yoy_pct": -2.6101,
+        "yoy_pct": null,
         "yoy_delta": -0.1742
       },
       {
         "date": "2021-01",
         "value": 6.571,
-        "yoy_pct": -3.6877,
+        "yoy_pct": null,
         "yoy_delta": -0.2516
       },
       {
         "date": "2021-02",
         "value": 5.0071,
-        "yoy_pct": -19.731,
+        "yoy_pct": null,
         "yoy_delta": -1.2308
       },
       {
         "date": "2021-03",
         "value": 7.1742,
-        "yoy_pct": 6.1068,
+        "yoy_pct": null,
         "yoy_delta": 0.4129
       },
       {
         "date": "2021-04",
         "value": 10.8033,
-        "yoy_pct": 2.7252,
+        "yoy_pct": null,
         "yoy_delta": 0.2866
       },
       {
         "date": "2021-05",
         "value": 13.0419,
-        "yoy_pct": -8.3847,
+        "yoy_pct": null,
         "yoy_delta": -1.1936
       },
       {
         "date": "2021-06",
         "value": 18.5967,
-        "yoy_pct": 17.231,
+        "yoy_pct": null,
         "yoy_delta": 2.7334
       },
       {
         "date": "2021-07",
         "value": 19.8774,
-        "yoy_pct": 7.9156,
+        "yoy_pct": null,
         "yoy_delta": 1.458
       },
       {
         "date": "2021-08",
         "value": 19.2645,
-        "yoy_pct": 1.4957,
+        "yoy_pct": null,
         "yoy_delta": 0.2839
       },
       {
         "date": "2021-09",
         "value": 15.9833,
-        "yoy_pct": -7.9658,
+        "yoy_pct": null,
         "yoy_delta": -1.3834
       },
       {
         "date": "2021-10",
         "value": 11.1806,
-        "yoy_pct": -7.351,
+        "yoy_pct": null,
         "yoy_delta": -0.8871
       },
       {
         "date": "2021-11",
         "value": 8.93,
-        "yoy_pct": 11.4397,
+        "yoy_pct": null,
         "yoy_delta": 0.9167
       },
       {
         "date": "2021-12",
         "value": 4.0613,
-        "yoy_pct": -37.5185,
+        "yoy_pct": null,
         "yoy_delta": -2.4387
       },
       {
         "date": "2022-01",
         "value": 5.2968,
-        "yoy_pct": -19.3913,
+        "yoy_pct": null,
         "yoy_delta": -1.2742
       },
       {
         "date": "2022-02",
         "value": 5.7714,
-        "yoy_pct": 15.2643,
+        "yoy_pct": null,
         "yoy_delta": 0.7643
       },
       {
         "date": "2022-03",
         "value": 8.3839,
-        "yoy_pct": 16.8618,
+        "yoy_pct": null,
         "yoy_delta": 1.2097
       },
       {
         "date": "2022-04",
         "value": 8.46,
-        "yoy_pct": -21.6906,
+        "yoy_pct": null,
         "yoy_delta": -2.3433
       },
       {
         "date": "2022-05",
         "value": 11.6419,
-        "yoy_pct": -10.7346,
+        "yoy_pct": null,
         "yoy_delta": -1.4
       },
       {
         "date": "2022-06",
         "value": 15.9367,
-        "yoy_pct": -14.3036,
+        "yoy_pct": null,
         "yoy_delta": -2.66
       },
       {
         "date": "2022-07",
         "value": 19.5355,
-        "yoy_pct": -1.72,
+        "yoy_pct": null,
         "yoy_delta": -0.3419
       },
       {
         "date": "2022-08",
         "value": 20.1968,
-        "yoy_pct": 4.8395,
+        "yoy_pct": null,
         "yoy_delta": 0.9323
       },
       {
         "date": "2022-09",
         "value": 17.4033,
-        "yoy_pct": 8.8843,
+        "yoy_pct": null,
         "yoy_delta": 1.42
       },
       {
         "date": "2022-10",
         "value": 13.3613,
-        "yoy_pct": 19.5043,
+        "yoy_pct": null,
         "yoy_delta": 2.1807
       },
       {
         "date": "2022-11",
         "value": 5.56,
-        "yoy_pct": -37.738,
+        "yoy_pct": null,
         "yoy_delta": -3.37
       },
       {
         "date": "2022-12",
         "value": 4.0645,
-        "yoy_pct": 0.0788,
+        "yoy_pct": null,
         "yoy_delta": 0.0032
       },
       {
         "date": "2023-01",
         "value": 6.5484,
-        "yoy_pct": 23.6294,
+        "yoy_pct": null,
         "yoy_delta": 1.2516
       },
       {
         "date": "2023-02",
         "value": 5.0929,
-        "yoy_pct": -11.7562,
+        "yoy_pct": null,
         "yoy_delta": -0.6785
       },
       {
         "date": "2023-03",
         "value": 7.0161,
-        "yoy_pct": -16.3146,
+        "yoy_pct": null,
         "yoy_delta": -1.3678
       },
       {
         "date": "2023-04",
         "value": 8.9933,
-        "yoy_pct": 6.3038,
+        "yoy_pct": null,
         "yoy_delta": 0.5333
       },
       {
         "date": "2023-05",
         "value": 15.2871,
-        "yoy_pct": 31.311,
+        "yoy_pct": null,
         "yoy_delta": 3.6452
       },
       {
         "date": "2023-06",
         "value": 16.2633,
-        "yoy_pct": 2.0494,
+        "yoy_pct": null,
         "yoy_delta": 0.3266
       },
       {
         "date": "2023-07",
         "value": 19.8677,
-        "yoy_pct": 1.7005,
+        "yoy_pct": null,
         "yoy_delta": 0.3322
       },
       {
         "date": "2023-08",
         "value": 20.0742,
-        "yoy_pct": -0.607,
+        "yoy_pct": null,
         "yoy_delta": -0.1226
       },
       {
         "date": "2023-09",
         "value": 16.11,
-        "yoy_pct": -7.4313,
+        "yoy_pct": null,
         "yoy_delta": -1.2933
       },
       {
         "date": "2023-10",
         "value": 12.1645,
-        "yoy_pct": -8.9572,
+        "yoy_pct": null,
         "yoy_delta": -1.1968
       },
       {
         "date": "2023-11",
         "value": 7.5933,
-        "yoy_pct": 36.5701,
+        "yoy_pct": null,
         "yoy_delta": 2.0333
       },
       {
         "date": "2023-12",
         "value": 7.929,
-        "yoy_pct": 95.0793,
+        "yoy_pct": null,
         "yoy_delta": 3.8645
       },
       {
         "date": "2024-01",
         "value": 5.2677,
-        "yoy_pct": -19.5574,
+        "yoy_pct": null,
         "yoy_delta": -1.2807
       },
       {
         "date": "2024-02",
         "value": 6.9414,
-        "yoy_pct": 36.2956,
+        "yoy_pct": null,
         "yoy_delta": 1.8485
       },
       {
         "date": "2024-03",
         "value": 8.0484,
-        "yoy_pct": 14.7133,
+        "yoy_pct": null,
         "yoy_delta": 1.0323
       },
       {
         "date": "2024-04",
         "value": 9.9967,
-        "yoy_pct": 11.1572,
+        "yoy_pct": null,
         "yoy_delta": 1.0034
       },
       {
         "date": "2024-05",
         "value": 12.7742,
-        "yoy_pct": -16.438,
+        "yoy_pct": null,
         "yoy_delta": -2.5129
       },
       {
         "date": "2024-06",
         "value": 15.8467,
-        "yoy_pct": -2.5616,
+        "yoy_pct": null,
         "yoy_delta": -0.4166
       },
       {
         "date": "2024-07",
         "value": 20.3226,
-        "yoy_pct": 2.2896,
+        "yoy_pct": null,
         "yoy_delta": 0.4549
       },
       {
         "date": "2024-08",
         "value": 18.4903,
-        "yoy_pct": -7.8902,
+        "yoy_pct": null,
         "yoy_delta": -1.5839
       },
       {
         "date": "2024-09",
         "value": 16.4367,
-        "yoy_pct": 2.0279,
+        "yoy_pct": null,
         "yoy_delta": 0.3267
       },
       {
         "date": "2024-10",
         "value": 12.0032,
-        "yoy_pct": -1.326,
+        "yoy_pct": null,
         "yoy_delta": -0.1613
       },
       {
         "date": "2024-11",
         "value": 8.21,
-        "yoy_pct": 8.1216,
+        "yoy_pct": null,
         "yoy_delta": 0.6167
       },
       {
         "date": "2024-12",
         "value": 6.8774,
-        "yoy_pct": -13.2627,
+        "yoy_pct": null,
         "yoy_delta": -1.0516
       },
       {
         "date": "2025-01",
         "value": 4.4452,
-        "yoy_pct": -15.614,
+        "yoy_pct": null,
         "yoy_delta": -0.8225
       },
       {
         "date": "2025-02",
         "value": 5.0429,
-        "yoy_pct": -27.3504,
+        "yoy_pct": null,
         "yoy_delta": -1.8985
       },
       {
         "date": "2025-03",
         "value": 8.529,
-        "yoy_pct": 5.9714,
+        "yoy_pct": null,
         "yoy_delta": 0.4806
       },
       {
         "date": "2025-04",
         "value": 10.84,
-        "yoy_pct": 8.4358,
+        "yoy_pct": null,
         "yoy_delta": 0.8433
       },
       {
         "date": "2025-05",
         "value": 13.3968,
-        "yoy_pct": 4.8739,
+        "yoy_pct": null,
         "yoy_delta": 0.6226
       },
       {
         "date": "2025-06",
         "value": 16.6667,
-        "yoy_pct": 5.1746,
+        "yoy_pct": null,
         "yoy_delta": 0.82
       },
       {
         "date": "2025-07",
         "value": 19.5903,
-        "yoy_pct": -3.6034,
+        "yoy_pct": null,
         "yoy_delta": -0.7323
       },
       {
         "date": "2025-08",
         "value": 19.7097,
-        "yoy_pct": 6.5948,
+        "yoy_pct": null,
         "yoy_delta": 1.2194
       },
       {
         "date": "2025-09",
         "value": 17.21,
-        "yoy_pct": 4.7047,
+        "yoy_pct": null,
         "yoy_delta": 0.7733
       },
       {
         "date": "2025-10",
         "value": 11.3129,
-        "yoy_pct": -5.751,
+        "yoy_pct": null,
         "yoy_delta": -0.6903
       },
       {
         "date": "2025-11",
         "value": 9.5067,
-        "yoy_pct": 15.7942,
+        "yoy_pct": null,
         "yoy_delta": 1.2967
       },
       {
         "date": "2025-12",
         "value": 7.4774,
-        "yoy_pct": 8.7242,
+        "yoy_pct": null,
         "yoy_delta": 0.6
       },
       {
         "date": "2026-01",
         "value": 6.2258,
-        "yoy_pct": 40.0567,
+        "yoy_pct": null,
         "yoy_delta": 1.7806
       },
       {
         "date": "2026-02",
         "value": 6.9536,
-        "yoy_pct": 37.8889,
+        "yoy_pct": null,
         "yoy_delta": 1.9107
       },
       {
         "date": "2026-03",
         "value": 7.8097,
-        "yoy_pct": -8.4336,
+        "yoy_pct": null,
         "yoy_delta": -0.7193
       },
       {
         "date": "2026-04",
         "value": 10.7867,
-        "yoy_pct": -0.4917,
+        "yoy_pct": null,
         "yoy_delta": -0.0533
       },
       {
         "date": "2026-05",
         "value": 14.3742,
-        "yoy_pct": 7.2958,
+        "yoy_pct": null,
         "yoy_delta": 0.9774
       },
       {
         "date": "2026-06",
         "value": 17.1233,
-        "yoy_pct": 2.7396,
+        "yoy_pct": null,
         "yoy_delta": 0.4566
       }
     ]
   },
   "summary": {
     "uv": {
-      "avg_yoy_pct": 0.9756,
-      "change_1993_to_2026_pct": 5.3516,
       "min": 0.06,
       "max": 9.2595,
       "start_value": 0.1,
@@ -5731,11 +5729,23 @@
         "10": 3.9999,
         "11": 2.6529,
         "12": 1.7653
-      }
+      },
+      "trend": {
+        "per_decade": -0.5523,
+        "total": -1.1046,
+        "baseline": 4.5699,
+        "recent": 4.1912,
+        "baseline_period": "2001-2010",
+        "recent_period": "2012-2021",
+        "unit": "uv",
+        "source_window": "2001-2021",
+        "source": "nasa_power",
+        "confident": true
+      },
+      "avg_yoy_pct": 0.9756,
+      "change_1993_to_2026_pct": 5.3516
     },
     "temperature": {
-      "avg_yoy_pct": 1.4824,
-      "change_1993_to_2026_pct": 19.0772,
       "min": 1.1964,
       "max": 21.1839,
       "start_value": 6.9032,
@@ -5753,7 +5763,21 @@
         "10": 11.5821,
         "11": 7.7207,
         "12": 5.1553
-      }
+      },
+      "trend": {
+        "per_decade": 0.1178,
+        "total": 0.5301,
+        "baseline": 11.1352,
+        "recent": 11.5894,
+        "baseline_period": "1981-1990",
+        "recent_period": "2017-2026",
+        "unit": "degC",
+        "source_window": "1981-2026",
+        "source": null,
+        "confident": true
+      },
+      "avg_yoy_delta": 0.0216,
+      "change_delta": 2.7433
     }
   },
   "period": {

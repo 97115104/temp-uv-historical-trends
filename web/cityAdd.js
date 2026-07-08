@@ -5,8 +5,7 @@ const UV_START = "2021-01-01";
 const WHO_UV_START_MONTH = "2021-01";
 const NASA_UV_START_YEAR = 2001;
 const MAX_SELECTED = 5;
-export const DATA_VERSION = 4;
-const MIN_TEMP_BASE_C = 3.0;
+export const DATA_VERSION = 5;
 const MIN_UV_BASE = 0.5;
 
 const OPEN_METEO_ARCHIVE = "https://archive-api.open-meteo.com/v1/archive";
@@ -168,6 +167,28 @@ async function reverseGeocode(lat, lon) {
   return rankGeocodeResults(results, results[0].name)[0];
 }
 
+function normalizeGeoResult(result) {
+  return {
+    id: makeCityId(result),
+    name: result.name,
+    region: result.admin1 || "",
+    country: result.country_code || "",
+    lat: Number(result.latitude.toFixed(4)),
+    lon: Number(result.longitude.toFixed(4)),
+  };
+}
+
+/** Resolve a free-text city name to a normalized city meta (best match), or null. */
+export async function resolveCityByName(query) {
+  const results = await searchCities(query);
+  return results.length ? normalizeGeoResult(results[0]) : null;
+}
+
+/** Resolve the user's coordinates to a normalized city meta. */
+export async function resolveCityByCoords(lat, lon) {
+  return normalizeGeoResult(await reverseGeocode(lat, lon));
+}
+
 async function searchCities(query) {
   if (!query || query.trim().length < 2) return [];
   const url = new URL("https://geocoding-api.open-meteo.com/v1/search");
@@ -306,26 +327,6 @@ function applyUvCalibration(records, factors) {
   });
 }
 
-function uvCalibrationFactors(records) {
-  const factors = {};
-  for (let month = 1; month <= 12; month += 1) {
-    const mm = String(month).padStart(2, "0");
-    const nasa = records.find((r) => r.date === `2020-${mm}` && r.source === "nasa_power");
-    const who = records.find(
-      (r) => r.date >= WHO_UV_START_MONTH && r.date.endsWith(`-${mm}`) && r.source === "open_meteo_who"
-    );
-    if (nasa && who && nasa.value > 0.01) {
-      factors[month] = who.value / nasa.value;
-    }
-  }
-  return factors;
-}
-
-function calibrateUvSeries(records) {
-  const factors = uvCalibrationFactors(records);
-  return applyUvCalibration(records, factors);
-}
-
 async function fetchCombinedUv(lat, lon, endDate) {
   const endYear = Number(endDate.slice(0, 4));
   const [nasa, who] = await Promise.all([
@@ -338,15 +339,14 @@ async function fetchCombinedUv(lat, lon, endDate) {
   return applyUvCalibration(merged, factors);
 }
 
+// Year-over-year percent change. UV only — temperature uses degree anomalies
+// (yoy_delta) because °C is an interval scale where percentages are meaningless.
 function safeYoyPct(curr, prev, metric, currSource, prevSource) {
+  if (metric !== "uv") return null;
   if (curr == null || prev == null || Number.isNaN(curr) || Number.isNaN(prev)) return null;
-  if (metric === "uv" && currSource && prevSource && currSource !== prevSource) return null;
-  if (metric === "temperature" && Math.abs(prev) < MIN_TEMP_BASE_C) return null;
-  if (metric === "uv" && prev < MIN_UV_BASE) return null;
-  if (prev <= 0) return null;
-  const pct = ((curr - prev) / prev) * 100;
-  if (metric === "temperature" && prev > 0 && pct < -100) return null;
-  return pct;
+  if (currSource && prevSource && currSource !== prevSource) return null;
+  if (prev < MIN_UV_BASE || prev <= 0) return null;
+  return ((curr - prev) / prev) * 100;
 }
 
 function yoyDelta(curr, prev) {
@@ -382,23 +382,91 @@ function seriesToRecords(records) {
   });
 }
 
-function computeSummary(records) {
+function annualMeans(records, source = null) {
+  const buckets = new Map();
+  for (const row of records) {
+    if (source != null && row.source !== source) continue;
+    if (row.value == null) continue;
+    const year = Number(row.date.slice(0, 4));
+    const b = buckets.get(year) || { sum: 0, count: 0 };
+    b.sum += row.value;
+    b.count += 1;
+    buckets.set(year, b);
+  }
+  return [...buckets.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([year, b]) => ({ year, mean: b.sum / b.count }));
+}
+
+function linearSlopePerYear(annual) {
+  if (annual.length < 3) return null;
+  const xs = annual.map((a) => a.year);
+  const ys = annual.map((a) => a.mean);
+  const xm = xs.reduce((s, v) => s + v, 0) / xs.length;
+  const ym = ys.reduce((s, v) => s + v, 0) / ys.length;
+  let num = 0;
+  let den = 0;
+  for (let i = 0; i < xs.length; i += 1) {
+    num += (xs[i] - xm) * (ys[i] - ym);
+    den += (xs[i] - xm) ** 2;
+  }
+  if (den === 0) return null;
+  return num / den;
+}
+
+function computeTrend(records, metric) {
+  if (!records.length) return null;
+  let source = null;
+  let confident = true;
+  if (metric === "uv") {
+    let bestSpan = -1;
+    const sources = [...new Set(records.map((r) => r.source).filter(Boolean))];
+    for (const src of sources) {
+      const annual = annualMeans(records, src);
+      const span = annual.length ? annual[annual.length - 1].year - annual[0].year : -1;
+      if (span > bestSpan) {
+        bestSpan = span;
+        source = src;
+      }
+    }
+    confident = bestSpan >= 10;
+  }
+  const annual = annualMeans(records, source);
+  if (annual.length < 3) return null;
+  const slope = linearSlopePerYear(annual);
+  if (slope == null) return null;
+
+  const spanYears = annual[annual.length - 1].year - annual[0].year;
+  const window = Math.min(10, annual.length);
+  const baseline = annual.slice(0, window).reduce((s, a) => s + a.mean, 0) / window;
+  const recent = annual.slice(-window).reduce((s, a) => s + a.mean, 0) / window;
+  const round4 = (v) => Number(v.toFixed(4));
+
+  return {
+    per_decade: round4(slope * 10),
+    total: round4(slope * spanYears),
+    baseline: round4(baseline),
+    recent: round4(recent),
+    baseline_period: `${annual[0].year}-${annual[window - 1].year}`,
+    recent_period: `${annual[annual.length - window].year}-${annual[annual.length - 1].year}`,
+    unit: metric === "temperature" ? "degC" : "uv",
+    source_window: `${annual[0].year}-${annual[annual.length - 1].year}`,
+    source,
+    confident: confident && spanYears >= 10,
+  };
+}
+
+function computeSummary(records, metric) {
   const values = records.map((r) => r.value).filter((v) => v != null);
   if (!values.length) return {};
-  const yoy = records.map((r) => r.yoy_pct).filter((v) => v != null);
   const start = values[0];
   const end = values[values.length - 1];
   const lastDate = records[records.length - 1].date;
   const monthStr = lastDate.split("-")[1];
   const sameMonth = records.filter((r) => r.date.endsWith(`-${monthStr}`));
-  let changePct = null;
-  if (sameMonth.length >= 2) {
-    const smStart = sameMonth[0].value;
-    const smEnd = sameMonth[sameMonth.length - 1].value;
-    changePct = smStart ? Number((((smEnd - smStart) / smStart) * 100).toFixed(4)) : null;
-  } else if (start) {
-    changePct = Number((((end - start) / start) * 100).toFixed(4));
-  }
+  const smStart = sameMonth.length >= 2 ? sameMonth[0].value : start;
+  const smEnd = sameMonth.length >= 2 ? sameMonth[sameMonth.length - 1].value : end;
+
   const seasonal = {};
   for (const row of records) {
     const month = row.date.split("-")[1];
@@ -406,17 +474,29 @@ function computeSummary(records) {
     seasonal[month].sum += row.value;
     seasonal[month].count += 1;
   }
-  return {
-    avg_yoy_pct: yoy.length ? Number((yoy.reduce((a, b) => a + b, 0) / yoy.length).toFixed(4)) : null,
-    change_1993_to_2026_pct: changePct,
-    min: Number(Math.min(...values).toFixed(4)),
-    max: Number(Math.max(...values).toFixed(4)),
-    start_value: Number(start.toFixed(4)),
-    end_value: Number(end.toFixed(4)),
+  const round4 = (v) => Number(v.toFixed(4));
+
+  const summary = {
+    min: round4(Math.min(...values)),
+    max: round4(Math.max(...values)),
+    start_value: round4(start),
+    end_value: round4(end),
     seasonal_baseline: Object.fromEntries(
-      Object.entries(seasonal).map(([month, agg]) => [month, Number((agg.sum / agg.count).toFixed(4))])
+      Object.entries(seasonal).map(([month, agg]) => [month, round4(agg.sum / agg.count)])
     ),
+    trend: computeTrend(records, metric),
   };
+
+  if (metric === "uv") {
+    const yoy = records.map((r) => r.yoy_pct).filter((v) => v != null);
+    summary.avg_yoy_pct = yoy.length ? round4(yoy.reduce((a, b) => a + b, 0) / yoy.length) : null;
+    summary.change_1993_to_2026_pct = smStart ? round4(((smEnd - smStart) / smStart) * 100) : null;
+  } else {
+    const delta = records.map((r) => r.yoy_delta).filter((v) => v != null);
+    summary.avg_yoy_delta = delta.length ? round4(delta.reduce((a, b) => a + b, 0) / delta.length) : null;
+    summary.change_delta = round4(smEnd - smStart);
+  }
+  return summary;
 }
 
 export async function fetchCityGraphEntry(city) {
@@ -444,8 +524,8 @@ export async function fetchCityGraphEntry(city) {
       uv: seriesToRecords(uvRecords),
     },
     summary: {
-      temperature: computeSummary(tempRecords),
-      uv: computeSummary(uvRecords),
+      temperature: computeSummary(tempRecords, "temperature"),
+      uv: computeSummary(uvRecords, "uv"),
     },
     period: { start: periodStart, end: periodEnd },
     sources: {
@@ -503,6 +583,31 @@ export async function ensureCityDataLoaded(state, cityId) {
   } finally {
     state.loadingCities.delete(cityId);
   }
+}
+
+/** Add a resolved city (built-in or brand-new) to state, fetch its data if needed,
+ * and optionally select it. Used by the conversational query + location flows. */
+export async function addCityByMeta(state, meta, { select = true } = {}) {
+  const known = builtInCityIds.has(meta.id) || state.citiesConfig.cities.some((c) => c.id === meta.id);
+  if (!state.citiesConfig.cities.some((c) => c.id === meta.id)) {
+    state.citiesConfig.cities.push(meta);
+  }
+  if (!state.graph.nodes.some((n) => n.id === `loc:${meta.id}`)) {
+    state.graph.nodes.push({ id: `loc:${meta.id}`, type: "Place", label: cityLabel(meta) });
+  }
+  unhideCity(meta.id);
+  if (select) state.selected.add(meta.id);
+
+  if (known) {
+    await ensureCityDataLoaded(state, meta.id);
+    return meta.id;
+  }
+
+  const entry = await fetchCityGraphEntry(meta);
+  saveCustomCityGraph(meta, entry);
+  state.graph.cities[meta.id] = entry;
+  state.loadedCities.add(meta.id);
+  return meta.id;
 }
 
 export function saveCustomCityGraph(city, graphEntry) {

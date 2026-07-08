@@ -6,11 +6,22 @@ import {
   getVisibleCities,
   ensureCityDataLoaded,
   setBuiltInCityIds,
+  resolveCityByName,
+  resolveCityByCoords,
+  addCityByMeta,
 } from "./cityAdd.js";
+import { parseQuery, describeIntent } from "./intent.js";
+
+const SUGGESTION_PILLS = [
+  "UV in Covina since 1993, month by month",
+  "Is Los Angeles getting hotter?",
+  "Compare summer UV: Los Angeles vs Seattle",
+  "New York temperature since 1981",
+  "Seattle UV year over year",
+];
 
 const MAX_CITIES = 5;
 const CITY_COLORS = ["#2563eb", "#dc2626", "#16a34a", "#9333ea", "#ea580c"];
-const COLORS = CITY_COLORS;
 const CHART_TEXT = "#1d1d1f";
 const CHART_MUTED = "#6e6e73";
 const CHART_GRID = "#e8e8ed";
@@ -30,7 +41,7 @@ function hasYoyData(point, metric = state.metric) {
 function yoySeriesValue(point, metric = state.metric) {
   if (usesYoyDelta(metric)) {
     if (point.yoy_delta == null || Number.isNaN(point.yoy_delta)) return null;
-    return convertTempValue(point.yoy_delta);
+    return convertTempDelta(point.yoy_delta);
   }
   return point.yoy_pct;
 }
@@ -48,10 +59,6 @@ function yoyStatsFromSeries(series, metric = state.metric) {
     latest_date: points[points.length - 1].date,
     count: values.length,
   };
-}
-
-function yoyUnitSuffix() {
-  return usesYoyDelta() ? `°${state.tempUnit}` : "%";
 }
 
 function formatYoyStat(value) {
@@ -145,9 +152,8 @@ async function loadData() {
     state.attestationUrl = attest?.verify_url;
   }
 
-  const defaultId = state.graph.metadata.default_city;
-  state.selected.add(defaultId);
-
+  // Landing starts empty: insights/charts appear only after the user picks a city.
+  // Deep links (?cities=) still populate a selection via applyUrlParams().
   const period = state.graph.metadata.period || {};
   state.periodMin = period.earliest_temperature || period.start || "1981-01";
   state.periodMax = period.end || period.latest_nasa || "2025-12";
@@ -177,8 +183,10 @@ async function loadData() {
 async function loadSelectedCityData() {
   const loaders = [...state.selected].map((cityId) => ensureCityDataLoaded(state, cityId));
   await Promise.all(loaders);
-  state.periodMin = computeDataPeriodMin();
-  state.periodMax = computeDataPeriodMax();
+  const dmin = computeDataPeriodMin();
+  const dmax = computeDataPeriodMax();
+  if (dmin) state.periodMin = dmin;
+  if (dmax) state.periodMax = dmax;
 }
 
 function computeDataPeriodMin() {
@@ -260,10 +268,166 @@ function updateUrl() {
   history.replaceState(null, "", `?${params}`);
 }
 
+function setLoading(text) {
+  const el = document.getElementById("loading-overlay");
+  if (!el) return;
+  if (text) {
+    const label = document.getElementById("loading-text");
+    if (label) label.textContent = text;
+    el.classList.remove("hidden");
+  } else {
+    el.classList.add("hidden");
+  }
+}
+
+function syncControlsToState() {
+  document.querySelectorAll('input[name="metric"]').forEach((el) => { el.checked = el.value === state.metric; });
+  document.querySelectorAll('input[name="chart-view"]').forEach((el) => { el.checked = el.value === state.chartView; });
+  document.querySelectorAll('input[name="temp-unit"]').forEach((el) => { el.checked = el.value === state.tempUnit; });
+  const monthSelect = document.getElementById("calendar-month");
+  if (monthSelect) monthSelect.value = String(state.calendarMonth);
+  updateTempUnitVisibility();
+  updateViewVisibility();
+}
+
+function initChartsReveal() {
+  const btn = document.getElementById("toggle-charts");
+  const view = document.getElementById("charts-view");
+  if (!btn || !view) return;
+  btn.addEventListener("click", () => {
+    const collapsed = view.classList.toggle("charts-collapsed");
+    btn.textContent = collapsed ? "Show charts" : "Hide charts";
+    if (!collapsed) {
+      setTimeout(() => { mainChart?.resize(); yoyChart?.resize(); }, 30);
+    }
+  });
+}
+
+function initAsk() {
+  const form = document.getElementById("ask-form");
+  const input = document.getElementById("ask-input");
+  const pills = document.getElementById("ask-pills");
+  const locate = document.getElementById("ask-locate");
+
+  if (form && input) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (text) runQuery(text);
+    });
+  }
+
+  if (pills) {
+    pills.innerHTML = SUGGESTION_PILLS
+      .map((p) => `<button type="button" class="ask-pill">${p}</button>`)
+      .join("");
+    pills.querySelectorAll(".ask-pill").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (input) input.value = btn.textContent;
+        runQuery(btn.textContent);
+      });
+    });
+  }
+
+  if (locate) locate.addEventListener("click", () => loadLocation({ prompt: true }));
+}
+
+async function applyIntent(intent) {
+  const resolved = [];
+  for (const cityQuery of intent.cityQueries) {
+    try {
+      const meta = await resolveCityByName(cityQuery);
+      if (meta) resolved.push(meta);
+    } catch { /* skip unresolved */ }
+  }
+
+  if (resolved.length) {
+    state.selected.clear();
+    for (const meta of resolved.slice(0, MAX_CITIES)) {
+      await addCityByMeta(state, meta, { select: true });
+    }
+  }
+
+  if (intent.metric) state.metric = intent.metric;
+  if (intent.chartView) state.chartView = intent.chartView;
+
+  state.periodMin = computeDataPeriodMin();
+  state.periodMax = computeDataPeriodMax();
+  if (intent.periodStart) {
+    state.periodStart = intent.periodStart < state.periodMin ? state.periodMin : intent.periodStart;
+  }
+  if (intent.periodEnd) {
+    state.periodEnd = intent.periodEnd > state.periodMax ? state.periodMax : intent.periodEnd;
+  }
+  if (state.periodStart > state.periodEnd) state.periodStart = state.periodMin;
+
+  syncControlsToState();
+  renderCityList();
+  renderAll();
+  return resolved;
+}
+
+async function runQuery(text) {
+  const intent = parseQuery(text, { periodMin: state.periodMin, periodMax: state.periodMax });
+  const understood = document.getElementById("ask-understood");
+  setLoading("Fetching climate records…");
+  try {
+    await applyIntent(intent);
+    if (understood) {
+      const labels = [...state.selected].map(getCityLabel);
+      const desc = describeIntent(intent, { cityLabels: labels });
+      understood.textContent = desc ? `Showing: ${desc}` : "";
+    }
+  } catch (err) {
+    console.error(err);
+    showToast("Couldn't build that view — try a suggestion or search for a city.");
+  } finally {
+    setLoading(null);
+  }
+}
+
+async function loadLocation({ prompt = false } = {}) {
+  if (!navigator.geolocation) {
+    if (prompt) showToast("Location isn't available in this browser — search for a city instead.");
+    return false;
+  }
+  return new Promise((resolve) => {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          setLoading("Finding your location…");
+          const meta = await resolveCityByCoords(position.coords.latitude, position.coords.longitude);
+          state.selected.clear();
+          await addCityByMeta(state, meta, { select: true });
+          state.periodMin = computeDataPeriodMin();
+          state.periodMax = computeDataPeriodMax();
+          state.periodEnd = state.periodMax;
+          syncControlsToState();
+          renderCityList();
+          renderAll();
+          resolve(true);
+        } catch {
+          if (prompt) showToast("Couldn't load your location — search for a city instead.");
+          resolve(false);
+        } finally {
+          setLoading(null);
+        }
+      },
+      () => {
+        if (prompt) showToast("Location permission denied — search for a city instead.");
+        resolve(false);
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 }
+    );
+  });
+}
+
 function initUI() {
   renderCityList();
   initMonthSelect();
   bindControls();
+  initAsk();
+  initChartsReveal();
   initCityAdd(state, {
     async onAdded(city, { loading } = {}) {
       if (loading) {
@@ -284,26 +448,17 @@ function initUI() {
 }
 
 function highlightCityRow(cityId) {
-  const row = document.querySelector(`.city-item[data-city-id="${cityId}"]`);
+  const row = document.querySelector(`.city-chip[data-city-id="${cityId}"]`);
   if (!row) return;
   row.classList.add("city-item--highlight");
   row.scrollIntoView({ block: "nearest", behavior: "smooth" });
   setTimeout(() => row.classList.remove("city-item--highlight"), 2500);
 }
 
-function ensureSelectionAfterRemove() {
-  if (state.selected.size > 0) return;
-  const visible = getVisibleCities(state);
-  const defaultId = state.graph.metadata.default_city;
-  const fallback = visible.find((c) => c.id === defaultId) || visible[0];
-  if (fallback) state.selected.add(fallback.id);
-}
-
 async function onCityRemove(cityId, event) {
   event.preventDefault();
   event.stopPropagation();
   removeCity(state, cityId);
-  ensureSelectionAfterRemove();
   renderCityList();
   await loadSelectedCityData();
   renderAll();
@@ -311,29 +466,46 @@ async function onCityRemove(cityId, event) {
 
 function renderCityList() {
   const container = document.getElementById("city-list");
+  if (!container) return;
   container.innerHTML = "";
 
   for (const city of getVisibleCities(state)) {
+    const selected = state.selected.has(city.id);
     const loading = state.loadingCities.has(city.id);
-    container.appendChild(createCityCheckbox(city.id, `${city.name}, ${city.region}`, loading));
+    const color = selected ? getCityColor(city.id) : "transparent";
+    const chip = document.createElement("div");
+    chip.className = `city-chip${selected ? " is-selected" : ""}`;
+    chip.dataset.cityId = city.id;
+    chip.innerHTML = `
+      <button type="button" class="city-chip-toggle" aria-pressed="${selected}">
+        <span class="city-dot" style="background:${color}"></span>${city.name}${loading ? " …" : ""}
+      </button>
+      <button type="button" class="city-chip-remove" aria-label="Remove ${city.name}">×</button>
+    `;
+    chip.querySelector(".city-chip-toggle").addEventListener("click", () => toggleCitySelection(city.id));
+    chip.querySelector(".city-chip-remove").addEventListener("click", (e) => onCityRemove(city.id, e));
+    container.appendChild(chip);
   }
 }
 
-function createCityCheckbox(id, label, loading = false) {
-  const div = document.createElement("div");
-  div.className = "city-item";
-  div.dataset.cityId = id;
-  const checked = state.selected.has(id) ? "checked" : "";
-  const color = state.selected.has(id) ? getCityColor(id) : "transparent";
-  const loadingMark = loading ? '<span class="city-loading" aria-hidden="true">…</span>' : "";
-  div.innerHTML = `
-    <input type="checkbox" id="city-${id}" value="${id}" ${checked}>
-    <label for="city-${id}"><span class="city-dot" style="background:${color}"></span>${label}${loadingMark}</label>
-    <button type="button" class="city-remove" aria-label="Remove ${label}">×</button>
-  `;
-  div.querySelector("input").addEventListener("change", onCityToggle);
-  div.querySelector(".city-remove").addEventListener("click", (e) => onCityRemove(id, e));
-  return div;
+async function toggleCitySelection(id) {
+  if (state.selected.has(id)) {
+    state.selected.delete(id);
+    renderCityList();
+    renderAll();
+    return;
+  }
+  if (state.selected.size >= MAX_CITIES) {
+    showToast(`You can compare up to ${MAX_CITIES} cities at once. Remove one to add another.`);
+    return;
+  }
+  state.selected.add(id);
+  renderCityList();
+  await ensureCityDataLoaded(state, id);
+  state.periodMin = computeDataPeriodMin() || state.periodMin;
+  state.periodMax = computeDataPeriodMax() || state.periodMax;
+  renderCityList();
+  renderAll();
 }
 
 function initMonthSelect() {
@@ -361,6 +533,13 @@ function convertTempValue(celsius) {
   return state.tempUnit === "F" ? celsius * 9 / 5 + 32 : celsius;
 }
 
+// Convert a temperature *difference* (anomaly). A delta scales by 9/5 only —
+// no +32 offset, which would be wrong for a change in degrees.
+function convertTempDelta(celsius) {
+  if (celsius == null || Number.isNaN(celsius)) return null;
+  return state.tempUnit === "F" ? celsius * 9 / 5 : celsius;
+}
+
 function formatMetricValue(value) {
   if (value == null || Number.isNaN(value)) return "—";
   const v = state.metric === "temperature" ? convertTempValue(value) : value;
@@ -382,16 +561,9 @@ function updateViewVisibility() {
 function updateDateRangeHint() {
   const el = document.getElementById("date-range-hint");
   if (!el) return;
-  const period = state.graph?.metadata?.period || {};
-  const calendarMonth = period.calendar_month;
-  const earliest = formatMonthLabel(state.periodMin);
-  const latest = formatMonthLabel(state.periodMax);
-  const today = calendarMonth ? formatMonthLabel(calendarMonth) : "today";
-  const uvStart = period.earliest_uv ? formatMonthLabel(period.earliest_uv) : null;
-  const whoStart = period.earliest_uv_who || period.uv_who_start;
-  const whoLabel = whoStart ? formatMonthLabel(whoStart) : "2021";
-  el.textContent =
-    `Temperature (ERA5) ${earliest}–${latest}. UV: NASA POWER ${uvStart || "2001"}–${whoLabel}, WHO peaks ${whoLabel}–${formatMonthLabel(period.end || latest)} (pre-2021 NASA adjusted to WHO scale). Default start ${formatMonthLabel(state.periodStart)}. Calendar: ${today}.`;
+  const tempYear = (state.periodMin || "").slice(0, 4);
+  const uvYear = (state.graph?.metadata?.period?.earliest_uv || "2001").slice(0, 4);
+  el.textContent = `Temperature from ${tempYear}, UV from ${uvYear} (monthly peak, ~1-month lag).`;
 }
 
 function syncDateInputs() {
@@ -473,26 +645,6 @@ function bindControls() {
   });
 }
 
-async function onCityToggle(e) {
-  const id = e.target.value;
-  if (e.target.checked) {
-    if (state.selected.size >= MAX_CITIES) {
-      e.target.checked = false;
-      showToast(`You can compare up to ${MAX_CITIES} cities at once. Uncheck one to add another.`);
-      return;
-    }
-    state.selected.add(id);
-    renderCityList();
-    await ensureCityDataLoaded(state, id);
-    state.periodMin = computeDataPeriodMin();
-    state.periodMax = computeDataPeriodMax();
-  } else {
-    state.selected.delete(id);
-  }
-  renderCityList();
-  renderAll();
-}
-
 function getCityData(cityId) {
   return state.graph.cities[cityId];
 }
@@ -513,7 +665,27 @@ function getSeries(cityId, metric) {
   );
 }
 
+function updateSelectionVisibility() {
+  const hasSelection = state.selected.size > 0;
+  document.getElementById("insights-bar")?.classList.toggle("hidden", !hasSelection);
+  document.querySelector(".charts-reveal")?.classList.toggle("hidden", !hasSelection);
+  // Example prompts only make sense before a selection exists.
+  document.getElementById("ask-pills")?.classList.toggle("hidden", hasSelection);
+  if (!hasSelection) {
+    document.getElementById("charts-view")?.classList.add("charts-collapsed");
+    const btn = document.getElementById("toggle-charts");
+    if (btn) btn.textContent = "Show charts";
+    const understood = document.getElementById("ask-understood");
+    if (understood) understood.textContent = "";
+  }
+}
+
 function renderAll() {
+  updateSelectionVisibility();
+  if (state.selected.size === 0) {
+    renderCityList();
+    return;
+  }
   updateUrl();
   renderHeader();
   updateViewVisibility();
@@ -626,6 +798,54 @@ function showTempLegend(show) {
   document.getElementById("temp-legend").classList.toggle("hidden", !show);
 }
 
+/** Least-squares fit over point index; returns the two endpoints for a trend line. */
+function trendLineEndpoints(dataArr) {
+  const pts = dataArr
+    .map((p, i) => ({ i, x: p.x, y: p.y }))
+    .filter((p) => p.y != null && !Number.isNaN(p.y));
+  if (pts.length < 3) return null;
+  const n = pts.length;
+  const xm = pts.reduce((s, p) => s + p.i, 0) / n;
+  const ym = pts.reduce((s, p) => s + p.y, 0) / n;
+  let num = 0;
+  let den = 0;
+  for (const p of pts) {
+    num += (p.i - xm) * (p.y - ym);
+    den += (p.i - xm) ** 2;
+  }
+  if (den === 0) return null;
+  const slope = num / den;
+  const intercept = ym - slope * xm;
+  const first = pts[0];
+  const last = pts[pts.length - 1];
+  return [
+    { x: first.x, y: intercept + slope * first.i },
+    { x: last.x, y: intercept + slope * last.i },
+  ];
+}
+
+function pushTrendLine(datasets, dataArr, cityColor, label) {
+  const endpoints = trendLineEndpoints(dataArr);
+  if (!endpoints) return;
+  datasets.push({
+    type: "line",
+    label: `${label} · trend`,
+    data: endpoints,
+    borderColor: cityColor,
+    borderDash: [6, 4],
+    borderWidth: 1.5,
+    pointRadius: 0,
+    pointHoverRadius: 0,
+    fill: false,
+    tension: 0,
+    order: 99,
+  });
+}
+
+function isTrendLabel(label) {
+  return typeof label === "string" && label.endsWith(" · trend");
+}
+
 function renderMainChart() {
   const ctx = document.getElementById("main-chart");
   const datasets = [];
@@ -647,9 +867,10 @@ function renderMainChart() {
       const styles = useTempGradient
         ? buildTempPointStyles(values, globalRange.min, globalRange.max, multiCity ? cityColor : null)
         : null;
+      const monthData = filtered.map((p) => ({ x: p.date.slice(0, 4), y: metricValue(p.value) }));
       datasets.push({
         label: getCityLabel(cityId),
-        data: filtered.map((p) => ({ x: p.date.slice(0, 4), y: metricValue(p.value) })),
+        data: monthData,
         borderColor: useTempGradient && multiCity ? cityColor : (styles ? styles.map((s) => s.borderColor) : cityColor),
         backgroundColor: useTempGradient
           ? styles.map((s) => s.backgroundColor)
@@ -657,6 +878,7 @@ function renderMainChart() {
         borderWidth: 1,
         borderSkipped: false,
       });
+      pushTrendLine(datasets, monthData, cityColor, getCityLabel(cityId));
     } else if (state.chartView === "yoy-pct") {
       datasets.push({
         label: getCityLabel(cityId),
@@ -670,12 +892,13 @@ function renderMainChart() {
       });
     } else {
       const values = series.map((p) => metricValue(p.value));
+      const timelineData = series.map((p) => ({ x: p.date, y: metricValue(p.value) }));
       const styles = useTempGradient
         ? buildTempPointStyles(values, globalRange.min, globalRange.max, multiCity ? cityColor : null)
         : null;
       datasets.push({
         label: getCityLabel(cityId),
-        data: series.map((p) => ({ x: p.date, y: metricValue(p.value) })),
+        data: timelineData,
         borderColor: cityColor,
         backgroundColor: cityColor + "22",
         borderWidth: 2,
@@ -687,6 +910,7 @@ function renderMainChart() {
         fill: false,
         tension: 0.2,
       });
+      pushTrendLine(datasets, timelineData, cityColor, getCityLabel(cityId));
     }
   }
 
@@ -705,7 +929,11 @@ function renderMainChart() {
             color: CHART_TEXT,
             usePointStyle: true,
             pointStyle: "circle",
+            filter: (item) => !isTrendLabel(item.text),
           },
+        },
+        tooltip: {
+          filter: (item) => !isTrendLabel(item.dataset?.label),
         },
       },
       scales: {
@@ -811,15 +1039,18 @@ function pctChange(start, end) {
 
 /** Compare first vs last same calendar month in a series (seasonally fair trend). */
 function sameMonthPeriodChange(series) {
-  if (!series.length) return { change_pct: null, change_month: null };
+  if (!series.length) return { change_pct: null, change_delta: null, change_month: null };
   const lastPoint = series[series.length - 1];
   const monthStr = lastPoint.date.split("-")[1];
   const sameMonth = series.filter((p) => p.date.endsWith(`-${monthStr}`));
   if (sameMonth.length < 2) {
-    return { change_pct: null, change_month: parseInt(monthStr, 10) };
+    return { change_pct: null, change_delta: null, change_month: parseInt(monthStr, 10) };
   }
+  const startVal = sameMonth[0].value;
+  const endVal = sameMonth[sameMonth.length - 1].value;
   return {
-    change_pct: pctChange(sameMonth[0].value, sameMonth[sameMonth.length - 1].value),
+    change_pct: pctChange(startVal, endVal),
+    change_delta: convertTempDelta(endVal - startVal),
     change_month: parseInt(monthStr, 10),
     change_start_date: sameMonth[0].date,
     change_end_date: sameMonth[sameMonth.length - 1].date,
@@ -827,14 +1058,11 @@ function sameMonthPeriodChange(series) {
 }
 
 function summaryContextLabel() {
-  const range = `${state.periodStart} – ${state.periodEnd}`;
-  if (state.chartView === "yoy-month") {
-    return `${MONTHS[state.calendarMonth - 1]} across years · ${range}`;
-  }
-  if (state.chartView === "yoy-pct") {
-    return `Year-over-year % change · ${range}`;
-  }
-  return `Month-by-month · ${range}`;
+  const startYear = (state.periodStart || "").slice(0, 4);
+  const endYear = (state.periodEnd || "").slice(0, 4);
+  const n = state.selected.size;
+  const cityWord = n === 1 ? "1 place" : `${n} places`;
+  return `${cityWord} · ${startYear}–${endYear}`;
 }
 
 function computeViewSummary(cityId) {
@@ -844,31 +1072,23 @@ function computeViewSummary(cityId) {
   if (state.chartView === "yoy-pct") {
     const stats = yoyStatsFromSeries(series, state.metric);
     if (stats.empty) return { empty: true };
+    stats.trend = getCityTrend(cityId, state.metric);
     return stats;
   }
 
-  const withMom = series.map((point, i) => {
-    let mom_pct = null;
-    if (state.chartView === "timeline" && i > 0) {
-      const prev = series[i - 1].value;
-      if (prev != null && prev !== 0) {
-        mom_pct = ((point.value - prev) / prev) * 100;
-      }
-    }
-    return { ...point, mom_pct };
-  });
-
-  const yoyValues = series.map((p) => p.yoy_pct).filter((v) => v != null);
-  const momValues = withMom.map((p) => p.mom_pct).filter((v) => v != null);
+  const isTemp = state.metric === "temperature";
   const values = series.map((p) => p.value);
   const last = values[values.length - 1];
   const periodChange = sameMonthPeriodChange(series);
 
   const summary = {
     empty: false,
-    avg_yoy_pct: avg(yoyValues),
-    latest_yoy_pct: series[series.length - 1]?.yoy_pct ?? null,
-    change_pct: periodChange.change_pct,
+    latest_yoy_pct: isTemp ? null : (series[series.length - 1]?.yoy_pct ?? null),
+    latest_yoy_delta: isTemp
+      ? convertTempDelta(series[series.length - 1]?.yoy_delta ?? null)
+      : null,
+    change_pct: isTemp ? null : periodChange.change_pct,
+    change_delta: isTemp ? periodChange.change_delta : null,
     change_month: periodChange.change_month,
     change_start_date: periodChange.change_start_date,
     change_end_date: periodChange.change_end_date,
@@ -879,18 +1099,40 @@ function computeViewSummary(cityId) {
     min_date: series[values.indexOf(Math.min(...values))]?.date,
     max_date: series[values.indexOf(Math.max(...values))]?.date,
     count: series.length,
+    trend: getCityTrend(cityId, state.metric),
   };
 
-  if (state.chartView === "timeline" && state.metric === "temperature") {
-    summary.avg_mom_pct = avg(momValues);
-    summary.latest_mom_pct = withMom[withMom.length - 1]?.mom_pct ?? null;
+  if (isTemp) {
+    const deltaVals = series.map((p) => convertTempDelta(p.yoy_delta)).filter((v) => v != null);
+    summary.avg_yoy_delta = avg(deltaVals);
+    summary.avg_yoy_pct = null;
+  } else {
+    const yoyValues = series.map((p) => p.yoy_pct).filter((v) => v != null);
+    summary.avg_yoy_pct = avg(yoyValues);
+  }
+
+  if (state.chartView === "timeline" && isTemp) {
+    const momDeltas = [];
+    for (let i = 1; i < series.length; i += 1) {
+      const d = convertTempDelta(series[i].value - series[i - 1].value);
+      if (d != null) momDeltas.push(d);
+    }
+    summary.avg_mom_delta = avg(momDeltas);
+    summary.latest_mom_delta = momDeltas.length ? momDeltas[momDeltas.length - 1] : null;
   }
 
   return summary;
 }
 
+/** Read the precomputed long-term trend for a city/metric from the loaded graph. */
+function getCityTrend(cityId, metric = state.metric) {
+  return getCityData(cityId)?.summary?.[metric]?.trend || null;
+}
+
 function comparisonColumns() {
-  const unitSuffix = state.metric === "temperature" ? ` (${state.tempUnit})` : "";
+  const isTemp = state.metric === "temperature";
+  const unitSuffix = isTemp ? ` (°${state.tempUnit})` : "";
+
   if (state.chartView === "yoy-pct") {
     const yoyLabel = usesYoyDelta() ? `YoY Δ (°${state.tempUnit})` : "YoY %";
     return [
@@ -901,35 +1143,49 @@ function comparisonColumns() {
       { key: "max", label: `Max ${yoyLabel}`, sortable: true },
     ];
   }
+
+  const avgKey = isTemp ? "avg_yoy_delta" : "avg_yoy_pct";
+  const avgLabel = isTemp ? `Avg YoY Δ (°${state.tempUnit})` : "Avg YoY %";
+  const latestKey = isTemp ? "latest_yoy_delta" : "latest_yoy_pct";
+  const latestLabel = isTemp ? `Latest YoY Δ (°${state.tempUnit})` : "Latest YoY %";
+  const changeKey = isTemp ? "change_delta" : "change_pct";
+  const changeLabel = isTemp ? `Same-month Δ (°${state.tempUnit})` : "Same-month Δ %";
+
   if (state.chartView === "yoy-month") {
     return [
       { key: "name", label: "City", sortable: true },
-      { key: "avg_yoy_pct", label: "Avg YoY %", sortable: true },
-      { key: "latest_yoy_pct", label: "Latest YoY %", sortable: true },
-      { key: "change_pct", label: "Same-month Δ %", sortable: true },
+      { key: avgKey, label: avgLabel, sortable: true },
+      { key: latestKey, label: latestLabel, sortable: true },
+      { key: changeKey, label: changeLabel, sortable: true },
       { key: "min", label: `Min${unitSuffix}`, sortable: true },
       { key: "max", label: `Max${unitSuffix}`, sortable: true },
     ];
   }
   return [
     { key: "name", label: "City", sortable: true },
-    { key: "avg_yoy_pct", label: "Avg YoY %", sortable: true },
-    ...(state.metric === "temperature" && state.chartView === "timeline"
-      ? [{ key: "avg_mom_pct", label: "Avg MoM %", sortable: true }]
+    { key: avgKey, label: avgLabel, sortable: true },
+    ...(isTemp && state.chartView === "timeline"
+      ? [{ key: "avg_mom_delta", label: `Avg MoM Δ (°${state.tempUnit})`, sortable: true }]
       : []),
-    { key: "change_pct", label: "Same-month Δ %", sortable: true },
+    { key: changeKey, label: changeLabel, sortable: true },
     { key: "min", label: `Min${unitSuffix}`, sortable: true },
     { key: "max", label: `Max${unitSuffix}`, sortable: true },
   ];
 }
 
+const TEMP_DELTA_KEYS = new Set([
+  "avg_yoy_delta", "latest_yoy_delta", "change_delta", "avg_mom_delta", "latest_mom_delta",
+]);
+
 function formatComparisonValue(key, value) {
   if (key === "name") return value;
   if (value == null || Number.isNaN(value)) return "—";
-  if (state.chartView === "yoy-pct") {
-    if (["avg_yoy_pct", "latest_yoy_pct", "min", "max"].includes(key)) {
-      return formatYoyStat(value);
-    }
+  if (state.chartView === "yoy-pct" &&
+      ["avg_yoy_pct", "latest_yoy_pct", "min", "max"].includes(key)) {
+    return formatYoyStat(value);
+  }
+  if (TEMP_DELTA_KEYS.has(key)) {
+    return `${Number(value).toFixed(2)}°${state.tempUnit}`;
   }
   if (key === "min" || key === "max") {
     const formatted = formatMetricValue(value);
@@ -945,81 +1201,121 @@ function formatMonthLabel(dateStr) {
   return `${MONTHS[parseInt(month, 10) - 1]} ${year}`;
 }
 
+/** Long-run typical value for a calendar month (seasonal baseline). */
+function getTypicalForMonth(cityId, metric, month) {
+  if (!month) return null;
+  const baseline = getCityData(cityId)?.summary?.[metric]?.seasonal_baseline;
+  if (!baseline) return null;
+  const v = baseline[String(month)] ?? baseline[month] ?? null;
+  return v == null ? null : Number(v);
+}
+
+/** Plain-language "has it changed?" verdict from the long-term trend. */
+function trendVerdict(trend, metric) {
+  if (!trend) return null;
+
+  if (metric === "temperature") {
+    const total = convertTempDelta(trend.total);
+    const perDec = convertTempDelta(trend.per_decade);
+    const u = `°${state.tempUnit}`;
+    const warmThreshold = state.tempUnit === "F" ? 0.9 : 0.5;
+    let tone = "flat";
+    let hero = "About the same";
+    if (total >= warmThreshold) { tone = "hot"; hero = `+${total.toFixed(1)}${u} warmer`; }
+    else if (total <= -warmThreshold) { tone = "cold"; hero = `${total.toFixed(1)}${u} cooler`; }
+    const sub = `${perDec >= 0 ? "+" : ""}${perDec.toFixed(2)}${u}/decade · vs ${trend.baseline_period}`;
+    return { hero, sub, tone };
+  }
+
+  // UV
+  if (trend.confident === false) {
+    return {
+      hero: "Trend unclear",
+      sub: `Not enough single-source UV history to call a trend (${trend.source_window}).`,
+      tone: "flat",
+    };
+  }
+  const total = trend.total;
+  const perDec = trend.per_decade;
+  let hero = "About the same";
+  if (total >= 0.3) hero = `+${total.toFixed(1)} higher`;
+  else if (total <= -0.3) hero = `${total.toFixed(1)} lower`;
+  const sub = `${perDec >= 0 ? "+" : ""}${perDec.toFixed(2)}/decade · ${trend.source_window}`;
+  return { hero, sub, tone: "flat" };
+}
+
+/** Format an absolute value for a specific metric, independent of state.metric. */
+function formatValueFor(metric, value) {
+  if (value == null || Number.isNaN(value)) return "—";
+  if (metric === "temperature") return `${Number(convertTempValue(value)).toFixed(1)}°${state.tempUnit}`;
+  return Number(value).toFixed(1);
+}
+
+/** Latest value + typical for the latest month, for one metric within the period. */
+function metricSnapshot(cityId, metric) {
+  const data = getCityData(cityId);
+  const series = (data?.series?.[metric] || []).filter(
+    (p) => p.date >= state.periodStart && p.date <= state.periodEnd
+  );
+  if (!series.length) return null;
+  const last = series[series.length - 1];
+  const monthNum = parseInt(last.date.split("-")[1], 10);
+  return {
+    latest_value: last.value,
+    latest_date: last.date,
+    monthNum,
+    typical: getTypicalForMonth(cityId, metric, monthNum),
+    trend: data?.summary?.[metric]?.trend || null,
+  };
+}
+
+/** One metric's verdict + latest-vs-typical block, for the both-metrics card. */
+function metricVerdictBlock(cityId, metric, label) {
+  const snap = metricSnapshot(cityId, metric);
+  if (!snap) {
+    return `<div class="metric-verdict"><span class="mv-label">${label}</span><p class="hint">No data in range.</p></div>`;
+  }
+  const verdict = trendVerdict(snap.trend, metric);
+  const verdictBlock = verdict
+    ? `<div class="verdict verdict-${verdict.tone}">
+        <span class="verdict-hero">${verdict.hero}</span>
+        <span class="verdict-sub">${verdict.sub}</span>
+      </div>`
+    : "";
+
+  const monthLbl = snap.monthNum ? monthName(snap.monthNum) : "";
+  const latestStr = formatValueFor(metric, snap.latest_value);
+  const typicalStr = snap.typical != null ? formatValueFor(metric, snap.typical) : "—";
+
+  let latestLine;
+  if (metric === "uv") {
+    const band = snap.latest_value != null ? uvWhoCategory(snap.latest_value) : null;
+    const badge = band ? `<span class="uv-badge ${band.class}">${band.label}</span>` : "";
+    latestLine = `Latest peak (${formatMonthLabel(snap.latest_date)}): <strong>${latestStr}</strong> ${badge} · typical ${monthLbl}: ${typicalStr}`;
+  } else {
+    latestLine = `Latest (${formatMonthLabel(snap.latest_date)}): <strong>${latestStr}</strong> · typical ${monthLbl}: ${typicalStr}`;
+  }
+
+  return `
+    <div class="metric-verdict">
+      <span class="mv-label">${label}</span>
+      ${verdictBlock}
+      <p class="latest-line">${latestLine}</p>
+    </div>`;
+}
+
 function renderInsights() {
   document.getElementById("summary-context").textContent = summaryContextLabel();
   const el = document.getElementById("summary-table");
-  const unit = state.metric === "temperature" ? state.tempUnit : "";
-  const showTempBadges = state.metric === "temperature" && state.chartView !== "yoy-pct";
 
   const cards = [...state.selected].map((cityId) => {
     const cityColor = getCityColor(cityId);
-    const s = computeViewSummary(cityId);
-    if (s.empty) {
-      return `
-        <article class="insight-card">
-          <h3><span class="city-dot" style="background:${cityColor}"></span>${getCityLabel(cityId)}</h3>
-          <p class="hint">No data for the current view and date range.</p>
-        </article>
-      `;
-    }
-
-    const cityUvBadge = state.metric === "uv" && state.chartView !== "yoy-pct" && s.latest_value != null
-      ? (() => {
-          const band = uvWhoCategory(s.latest_value);
-          return band
-            ? `<span class="uv-badge ${band.class}">${formatMetricValue(s.latest_value)} ${band.label}</span>`
-            : "";
-        })()
-      : "";
-
-    const badges = showTempBadges ? `
-      <div class="insight-badges">
-        <span class="badge badge-cold">Coldest · ${formatMonthLabel(s.min_date)} · ${formatMetricValue(s.min)}${unit ? `°${unit}` : ""}</span>
-        <span class="badge badge-hot">Hottest · ${formatMonthLabel(s.max_date)} · ${formatMetricValue(s.max)}${unit ? `°${unit}` : ""}</span>
-      </div>
-    ` : "";
-
-    if (state.chartView === "yoy-pct") {
-      const unit = yoyUnitSuffix();
-      const rangeNote = usesYoyDelta()
-        ? `Same-month change vs prior year, in ${unit}`
-        : "Same-month UV index change vs prior year";
-      return `
-        <article class="insight-card">
-          <h3><span class="city-dot" style="background:${cityColor}"></span>${getCityLabel(cityId)}</h3>
-          <div class="insight-stats">
-            <div class="stat"><span class="stat-value">${formatYoyStat(s.avg_yoy_pct)}</span><span class="stat-label">Avg YoY</span></div>
-            <div class="stat"><span class="stat-value">${formatYoyStat(s.latest_yoy_pct)}</span><span class="stat-label">Latest YoY</span></div>
-            <div class="stat"><span class="stat-value">${formatYoyStat(s.min)}</span><span class="stat-label">Min YoY</span></div>
-            <div class="stat"><span class="stat-value">${formatYoyStat(s.max)}</span><span class="stat-label">Max YoY</span></div>
-            <p class="stat-note">${s.latest_date || "—"} · Range ${formatYoyStat(s.min)} to ${formatYoyStat(s.max)} · ${rangeNote}</p>
-          </div>
-        </article>
-      `;
-    }
-
-    const month = MONTHS[state.calendarMonth - 1];
-    const latestLabel = state.chartView === "yoy-month"
-      ? `Latest ${month}`
-      : "Latest";
-    const changeLabel = state.chartView === "yoy-month"
-      ? `${month} Δ`
-      : (s.change_month ? `${monthName(s.change_month)} Δ` : "Same-month Δ");
-    const changeNote = s.change_start_date && s.change_end_date
-      ? `${formatMonthLabel(s.change_start_date)} → ${formatMonthLabel(s.change_end_date)}`
-      : "";
-
     return `
       <article class="insight-card">
         <h3><span class="city-dot" style="background:${cityColor}"></span>${getCityLabel(cityId)}</h3>
-        ${cityUvBadge}
-        ${badges}
-        <div class="insight-stats">
-          <div class="stat"><span class="stat-value">${formatMetricValue(s.latest_value)}${unit ? `°${unit}` : ""}</span><span class="stat-label">${latestLabel}</span></div>
-          <div class="stat"><span class="stat-value">${fmt(s.avg_yoy_pct)}%</span><span class="stat-label">Avg YoY</span></div>
-          <div class="stat"><span class="stat-value">${fmt(s.change_pct)}%</span><span class="stat-label">${changeLabel}</span></div>
-          ${state.chartView === "timeline" && state.metric === "temperature" ? `<div class="stat"><span class="stat-value">${fmt(s.avg_mom_pct)}%</span><span class="stat-label">Avg MoM</span></div>` : ""}
-          <p class="stat-note">${s.latest_date || "—"}${changeNote ? ` · ${changeNote}` : ""}${state.chartView === "timeline" && state.metric === "temperature" && s.latest_mom_pct != null ? ` · Latest MoM ${fmt(s.latest_mom_pct)}%` : ""}</p>
+        <div class="metric-verdicts">
+          ${metricVerdictBlock(cityId, "temperature", "Temperature")}
+          ${metricVerdictBlock(cityId, "uv", "UV")}
         </div>
       </article>
     `;
@@ -1089,15 +1385,7 @@ function renderComparisonTable() {
   const tbody = table.querySelector("tbody");
   const rows = [...state.selected].map((cityId) => {
     const s = computeViewSummary(cityId);
-    return {
-      name: getCityLabel(cityId),
-      avg_yoy_pct: s.empty ? null : s.avg_yoy_pct,
-      avg_mom_pct: s.empty ? null : s.avg_mom_pct,
-      latest_yoy_pct: s.empty ? null : s.latest_yoy_pct,
-      change_pct: s.empty ? null : s.change_pct,
-      min: s.empty ? null : s.min,
-      max: s.empty ? null : s.max,
-    };
+    return { name: getCityLabel(cityId), ...(s.empty ? {} : s) };
   });
 
   rows.sort((a, b) => compareTableRows(a, b, state.sortKey, state.sortAsc));

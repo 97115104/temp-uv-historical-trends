@@ -18,16 +18,20 @@
   </header>
 
   <main class="layout">
-    <aside class="sidebar">
-      <section class="panel">
-        <h2>Cities</h2>
-        <p class="hint" id="city-hint">Default: Covina, CA. Compare up to 5 cities at once.</p>
-        <div id="city-list" class="city-list"></div>
-        <div class="city-add">
-          <button type="button" id="city-add-btn" class="city-add-btn" aria-expanded="false" title="Add a city">
-            <span class="city-add-icon" aria-hidden="true">+</span>
-            <span>Add city</span>
-          </button>
+    <div class="content">
+      <section class="ask-hero" id="ask-hero">
+        <div class="ask-hero-inner">
+          <h2 class="ask-title">See how UV and temperature have changed over time</h2>
+          <p class="ask-sub">Ask about any city — or use your location — to see whether UV and temperature are trending up, down, or holding steady over the decades. Add cities to compare.</p>
+          <form class="ask-form" id="ask-form">
+            <input type="text" id="ask-input" class="ask-input" autocomplete="off"
+              placeholder="Try: UV in Covina since 1993, month by month">
+            <button type="submit" class="ask-submit">Show trends</button>
+          </form>
+          <div class="ask-actions">
+            <button type="button" class="ask-locate" id="ask-locate">Use my location</button>
+            <button type="button" class="ask-locate" id="city-add-btn" aria-expanded="false">+ Add a city</button>
+          </div>
           <div id="city-add-panel" class="city-add-panel hidden">
             <label class="sr-only" for="city-search">Search for a city</label>
             <div class="city-add-row">
@@ -37,54 +41,16 @@
             <ul id="city-suggestions" class="city-suggestions hidden"></ul>
           </div>
           <p id="city-add-status" class="hint city-add-status"></p>
+          <div id="city-list" class="city-chips"></div>
+          <div class="ask-pills" id="ask-pills"></div>
+          <p class="ask-understood hint" id="ask-understood"></p>
         </div>
       </section>
 
-      <section class="panel">
-        <h2>Metric</h2>
-        <div class="metric-toggle" id="metric-toggle">
-          <label><input type="radio" name="metric" value="uv" checked> UV Index (WHO)</label>
-          <label><input type="radio" name="metric" value="temperature"> Temperature</label>
-        </div>
-        <div id="temp-unit-toggle" class="temp-unit-toggle hidden">
-          <label><input type="radio" name="temp-unit" value="F" checked> °F</label>
-          <label><input type="radio" name="temp-unit" value="C"> °C</label>
-        </div>
-      </section>
-
-      <section class="panel" id="chart-view-panel">
-        <h2>Chart view</h2>
-        <div class="view-toggle" id="view-toggle">
-          <label><input type="radio" name="chart-view" value="timeline" checked> Month-by-month timeline</label>
-          <label><input type="radio" name="chart-view" value="yoy-month"> Same month across years</label>
-          <label><input type="radio" name="chart-view" value="yoy-pct"> Year-over-year % change</label>
-        </div>
-        <div id="month-filter" class="month-filter hidden">
-          <label for="calendar-month">Calendar month</label>
-          <select id="calendar-month"></select>
-        </div>
-        <div id="date-range" class="date-range">
-          <label class="date-range-label">Date range</label>
-          <p class="hint" id="date-range-hint">Loading date range…</p>
-          <div class="date-inputs">
-            <div class="date-field">
-              <label for="period-start">Start</label>
-              <input type="month" id="period-start">
-            </div>
-            <div class="date-field">
-              <label for="period-end">End</label>
-              <input type="month" id="period-end">
-            </div>
-          </div>
-        </div>
-      </section>
-    </aside>
-
-    <div class="content">
-      <section class="insights-bar" id="insights-bar">
+      <section class="insights-bar hidden" id="insights-bar">
         <div class="insights-bar-inner">
           <div class="insights-header">
-            <p class="insights-eyebrow">Insights</p>
+            <p class="insights-eyebrow">What the records show</p>
             <p class="insights-context" id="summary-context"></p>
           </div>
           <div class="nl-summary-block">
@@ -95,7 +61,51 @@
         </div>
       </section>
 
-      <div id="charts-view">
+      <div class="charts-reveal hidden">
+        <button type="button" id="toggle-charts" class="toggle-charts">Show charts</button>
+      </div>
+
+      <div id="charts-view" class="charts-collapsed">
+        <section class="panel chart-controls">
+          <div class="control-group">
+            <span class="control-label">Chart metric</span>
+            <div class="metric-toggle" id="metric-toggle">
+              <label><input type="radio" name="metric" value="uv" checked> UV</label>
+              <label><input type="radio" name="metric" value="temperature"> Temperature</label>
+            </div>
+            <div id="temp-unit-toggle" class="temp-unit-toggle hidden">
+              <label><input type="radio" name="temp-unit" value="F" checked> °F</label>
+              <label><input type="radio" name="temp-unit" value="C"> °C</label>
+            </div>
+          </div>
+          <div class="control-group">
+            <span class="control-label">Chart view</span>
+            <div class="view-toggle" id="view-toggle">
+              <label><input type="radio" name="chart-view" value="timeline" checked> Month-by-month</label>
+              <label><input type="radio" name="chart-view" value="yoy-month"> Same month across years</label>
+              <label><input type="radio" name="chart-view" value="yoy-pct"> Year-over-year change</label>
+            </div>
+            <div id="month-filter" class="month-filter hidden">
+              <label for="calendar-month">Calendar month</label>
+              <select id="calendar-month"></select>
+            </div>
+          </div>
+          <div class="control-group" id="date-range">
+            <span class="control-label">Date range</span>
+            <div class="date-inputs">
+              <div class="date-field">
+                <label for="period-start">Start</label>
+                <input type="month" id="period-start">
+              </div>
+              <div class="date-field">
+                <label for="period-end">End</label>
+                <input type="month" id="period-end">
+              </div>
+            </div>
+            <p class="hint" id="date-range-hint"></p>
+          </div>
+        </section>
+
         <section class="chart-panel">
           <div class="chart-wrap">
             <canvas id="main-chart"></canvas>
@@ -133,7 +143,10 @@
 
       <footer class="footer">
         <p>
-          Data: temperature from <a href="https://open-meteo.com/en/docs/historical-weather-api" target="_blank" rel="noopener">Open-Meteo ERA5</a>; UV from <a href="https://power.larc.nasa.gov/" target="_blank" rel="noopener">NASA POWER</a> (2001–2020) and <a href="https://open-meteo.com/en/docs/historical-forecast-api" target="_blank" rel="noopener">Open-Meteo WHO</a> (2021+).
+          Data: temperature is the ERA5 monthly mean from <a href="https://open-meteo.com/en/docs/historical-weather-api" target="_blank" rel="noopener">Open-Meteo</a>; UV is the <strong>monthly peak</strong> (WHO scale) from <a href="https://power.larc.nasa.gov/" target="_blank" rel="noopener">NASA POWER</a> (2001–2020, adjusted to the WHO scale) and <a href="https://open-meteo.com/en/docs/historical-forecast-api" target="_blank" rel="noopener">Open-Meteo</a> (2021+).
+        </p>
+        <p>
+          Values reflect the latest complete month (roughly a 1-week to 1-month lag), not today's live conditions. UV from these models reads a little lower than some phone weather apps, and pre-2021 UV is scale-adjusted — so long-run UV trends are indicative. Temperature change is shown in degrees, the standard way to measure warming.
         </p>
         <p id="attestation-line"></p>
       </footer>
@@ -141,6 +154,13 @@
   </main>
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <div id="loading-overlay" class="loading-overlay hidden" role="status" aria-live="polite">
+    <div class="loading-card">
+      <div class="loading-spinner" aria-hidden="true"></div>
+      <p id="loading-text">Loading…</p>
+    </div>
+  </div>
 
   <script type="module" src="app.js"></script>
 </body>

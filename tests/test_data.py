@@ -1,13 +1,30 @@
 import json
+import os
 import random
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 GRAPH_PATH = ROOT / "data" / "knowledge_graph.json"
 CITIES_PATH = ROOT / "cities.json"
+
+# Physically plausible monthly-mean temperature bounds per city, expressed in °F
+# then converted to °C (the stored unit). These are independent sanity guardrails:
+# e.g. New York's coldest monthly mean should sit above ~15°F, not near 0.
+TEMP_BOUNDS_F = {
+    "covina-ca": (40, 95),
+    "los-angeles-ca": (40, 95),
+    "san-francisco-ca": (35, 88),
+    "seattle-wa": (25, 88),
+    "new-york-ny": (15, 92),
+}
+
+
+def f_to_c(f):
+    return (f - 32) * 5 / 9
 
 
 @pytest.fixture(scope="module")
@@ -37,7 +54,7 @@ def test_date_range_per_city(graph):
     for city_id, city in graph["cities"].items():
         series = city["series"]["temperature"]
         assert series, f"No temperature data for {city_id}"
-        assert series[0]["date"] >= "1981-01", f"{city_id} should include NASA temperature history"
+        assert series[0]["date"] >= "1981-01", f"{city_id} should include temperature history"
         assert series[-1]["date"] >= "2025-01"
 
 
@@ -70,62 +87,64 @@ def test_uv_seasonality(graph):
         assert summer > winter, f"{city_id}: summer UV should exceed winter"
 
 
+def test_uv_physically_bounded(graph):
+    for city_id, city in graph["cities"].items():
+        values = [p["value"] for p in city["series"]["uv"]]
+        assert min(values) >= 0, f"{city_id} has negative UV"
+        assert max(values) <= 14, f"{city_id} UV peak {max(values)} is implausibly high"
+
+
 def test_temperature_range(graph):
-    bounds = {
-        "covina-ca": (-5, 45),
-        "los-angeles-ca": (-5, 45),
-        "san-francisco-ca": (-5, 40),
-        "seattle-wa": (-15, 40),
-        "new-york-ny": (-25, 45),
-    }
     for city_id, city in graph["cities"].items():
         temps = [p["value"] for p in city["series"]["temperature"]]
-        lo, hi = bounds.get(city_id, (-30, 50))
-        assert min(temps) >= lo, f"{city_id} temp below {lo}"
-        assert max(temps) <= hi, f"{city_id} temp above {hi}"
+        lo_f, hi_f = TEMP_BOUNDS_F.get(city_id, (-10, 100))
+        lo, hi = f_to_c(lo_f), f_to_c(hi_f)
+        assert min(temps) >= lo, f"{city_id} coldest monthly mean {min(temps):.1f}°C below {lo_f}°F"
+        assert max(temps) <= hi, f"{city_id} hottest monthly mean {max(temps):.1f}°C above {hi_f}°F"
 
 
-def test_yoy_calculation(graph):
-    from build_data import MIN_TEMP_BASE_C, safe_yoy_pct
-
+def test_temperature_has_no_percentage_yoy(graph):
+    """Temperature must never carry a percentage YoY (meaningless on °C)."""
     for city_id, city in graph["cities"].items():
-        series = city["series"]["temperature"]
-        valid = [p for p in series if p["yoy_pct"] is not None]
-        if len(valid) < 3:
-            continue
-        samples = random.sample(valid, min(3, len(valid)))
-        by_date = {p["date"]: p["value"] for p in series}
-        for point in samples:
-            year, month = map(int, point["date"].split("-"))
-            prev_date = f"{year - 1:04d}-{month:02d}"
-            if prev_date not in by_date:
-                continue
-            prev_val = by_date[prev_date]
-            expected = safe_yoy_pct(point["value"], prev_val, "temperature")
-            assert point["yoy_pct"] == expected, f"{city_id} YoY mismatch {point['date']}"
+        for point in city["series"]["temperature"]:
+            assert point.get("yoy_pct") is None, f"{city_id} temperature has yoy_pct at {point['date']}"
 
 
-def test_no_extreme_yoy_spikes(graph):
-    for city_id, city in graph["cities"].items():
-        for metric in ("uv", "temperature"):
-            for point in city["series"].get(metric, []):
-                yoy = point.get("yoy_pct")
-                if yoy is None:
-                    continue
-                if metric == "temperature":
-                    by_date = {p["date"]: p["value"] for p in city["series"][metric]}
-                    year, month = map(int, point["date"].split("-"))
-                    prev_date = f"{year - 1:04d}-{month:02d}"
-                    prev = by_date.get(prev_date)
-                    if prev is not None and prev > 0:
-                        assert yoy >= -100, f"{city_id} temp YoY {yoy} at {point['date']} implies impossible drop"
-
-
-def test_temperature_yoy_delta_present(graph):
+def test_temperature_yoy_delta_present_and_sane(graph):
     for city_id, city in graph["cities"].items():
         series = city["series"]["temperature"]
         deltas = [p["yoy_delta"] for p in series if p.get("yoy_delta") is not None]
         assert len(deltas) > 100, f"{city_id} should have yoy_delta values"
+        # Year-over-year monthly-mean swings beyond ±15°C are not credible.
+        assert max(abs(d) for d in deltas) <= 15, f"{city_id} has an implausible YoY delta"
+
+
+def test_temperature_yoy_delta_matches_series(graph):
+    for city_id, city in graph["cities"].items():
+        series = city["series"]["temperature"]
+        by_date = {p["date"]: p["value"] for p in series}
+        checked = 0
+        for point in series:
+            if point.get("yoy_delta") is None:
+                continue
+            year, month = map(int, point["date"].split("-"))
+            prev = by_date.get(f"{year - 1:04d}-{month:02d}")
+            if prev is None:
+                continue
+            assert abs(point["yoy_delta"] - (point["value"] - prev)) < 0.01
+            checked += 1
+        assert checked > 50, f"{city_id}: too few yoy_delta checks"
+
+
+def test_uv_yoy_bounded(graph):
+    """UV YoY % can never drop below -100% (UV >= 0) and shouldn't spike absurdly."""
+    for city_id, city in graph["cities"].items():
+        for point in city["series"]["uv"]:
+            yoy = point.get("yoy_pct")
+            if yoy is None:
+                continue
+            assert yoy >= -100, f"{city_id} UV YoY {yoy} below -100% at {point['date']}"
+            assert yoy <= 200, f"{city_id} UV YoY {yoy} implausibly high at {point['date']}"
 
 
 def test_uv_yoy_at_2021_reasonable(graph):
@@ -137,20 +156,54 @@ def test_uv_yoy_at_2021_reasonable(graph):
                     assert abs(yoy) <= 100, f"{city_id} UV YoY at {point['date']} is {yoy}"
 
 
-def test_temperature_yoy_skips_near_zero_base(graph):
-    from build_data import MIN_TEMP_BASE_C
+def test_uv_yoy_calculation(graph):
+    from build_data import safe_yoy_pct
 
     for city_id, city in graph["cities"].items():
-        series = city["series"]["temperature"]
-        by_date = {p["date"]: p["value"] for p in series}
-        for point in series:
-            if point["yoy_pct"] is None:
-                continue
+        series = city["series"]["uv"]
+        valid = [p for p in series if p.get("yoy_pct") is not None]
+        if len(valid) < 3:
+            continue
+        by_date = {p["date"]: p for p in series}
+        for point in random.sample(valid, min(3, len(valid))):
             year, month = map(int, point["date"].split("-"))
-            prev_date = f"{year - 1:04d}-{month:02d}"
-            prev_val = by_date.get(prev_date)
-            if prev_val is not None and abs(prev_val) < MIN_TEMP_BASE_C:
-                pytest.fail(f"{city_id} has YoY at {point['date']} with near-zero base {prev_val}")
+            prev = by_date.get(f"{year - 1:04d}-{month:02d}")
+            if prev is None:
+                continue
+            expected = safe_yoy_pct(
+                point["value"], prev["value"], "uv", point.get("source"), prev.get("source")
+            )
+            assert point["yoy_pct"] == expected, f"{city_id} UV YoY mismatch {point['date']}"
+
+
+def _independent_trend_per_decade(series, source=None):
+    """Recompute the per-decade trend from scratch (numpy), independent of build_data."""
+    df = pd.DataFrame(series)
+    if source is not None and "source" in df.columns:
+        df = df[df["source"] == source]
+    if df.empty:
+        return None
+    df = df.assign(year=df["date"].str[:4].astype(int))
+    annual = df.groupby("year")["value"].mean()
+    if len(annual) < 3:
+        return None
+    slope = np.polyfit(annual.index.to_numpy(dtype=float), annual.to_numpy(dtype=float), 1)[0]
+    return slope * 10
+
+
+def test_trend_matches_independent_recomputation(graph):
+    for city_id, city in graph["cities"].items():
+        for metric in ("temperature", "uv"):
+            summary = city["summary"].get(metric, {})
+            trend = summary.get("trend")
+            assert trend is not None, f"{city_id} {metric} missing trend"
+            expected = _independent_trend_per_decade(
+                city["series"][metric], trend.get("source")
+            )
+            assert expected is not None, f"{city_id} {metric} trend not recomputable"
+            assert abs(trend["per_decade"] - expected) < 0.05, (
+                f"{city_id} {metric} trend {trend['per_decade']} != recomputed {expected:.4f}"
+            )
 
 
 def test_summary_consistency(graph):
@@ -161,19 +214,20 @@ def test_summary_consistency(graph):
             if not series or not summary:
                 continue
             df = pd.DataFrame(series)
-            last_date = series[-1]["date"]
-            month_str = last_date.split("-")[1]
+            month_str = series[-1]["date"].split("-")[1]
             same_month = df[df["date"].str.endswith(f"-{month_str}")]
             if len(same_month) >= 2:
                 sm_start = float(same_month.iloc[0]["value"])
                 sm_end = float(same_month.iloc[-1]["value"])
-                expected = (sm_end - sm_start) / sm_start * 100 if sm_start else None
             else:
-                start = series[0]["value"]
-                end = series[-1]["value"]
-                expected = (end - start) / start * 100 if start else None
-            if expected is not None:
-                assert abs(summary["change_1993_to_2026_pct"] - expected) < 0.1
+                sm_start = float(series[0]["value"])
+                sm_end = float(series[-1]["value"])
+            if metric == "uv":
+                expected = (sm_end - sm_start) / sm_start * 100 if sm_start else None
+                if expected is not None:
+                    assert abs(summary["change_1993_to_2026_pct"] - expected) < 0.1
+            else:
+                assert abs(summary["change_delta"] - (sm_end - sm_start)) < 0.1
 
 
 def test_cross_city_ordering(graph):
@@ -183,9 +237,7 @@ def test_cross_city_ordering(graph):
         df["month"] = df["date"].str[-2:].astype(int)
         return df[df["month"].isin([12, 1, 2])]["value"].mean()
 
-    nyc = winter_mean("new-york-ny")
-    covina = winter_mean("covina-ca")
-    assert nyc < covina
+    assert winter_mean("new-york-ny") < winter_mean("covina-ca")
 
 
 def test_graph_meta_exists():
@@ -194,11 +246,10 @@ def test_graph_meta_exists():
         pytest.skip("graph-meta.json not found — run build_data.py first")
     with meta_path.open(encoding="utf-8") as f:
         meta = json.load(f)
-    assert meta.get("metadata", {}).get("data_version", 0) >= 4
+    assert meta.get("metadata", {}).get("data_version", 0) >= 5
     assert len(meta.get("city_ids", [])) == 5
     for city_id in meta["city_ids"]:
-        city_path = ROOT / "data" / "cities" / f"{city_id}.json"
-        assert city_path.exists(), f"Missing per-city file for {city_id}"
+        assert (ROOT / "data" / "cities" / f"{city_id}.json").exists()
 
 
 def test_provenance():
@@ -209,7 +260,43 @@ def test_provenance():
         prov = json.load(f)
     assert "generated_at" in prov
     pd.Timestamp(prov["generated_at"])
-    assert len(prov.get("sources", [])) >= 1
-    source_ids = {s["id"] for s in prov["sources"]}
+    source_ids = {s["id"] for s in prov.get("sources", [])}
     assert "open_meteo_era5" in source_ids or "nasa_power" in source_ids
     assert len(prov.get("cities", [])) == 5
+
+
+# --- Independent network re-fetch spot checks (opt-in) ---------------------------
+# Run with: RUN_NETWORK_TESTS=1 pytest -q  (skipped by default / offline).
+
+network = pytest.mark.skipif(
+    not os.environ.get("RUN_NETWORK_TESTS"),
+    reason="set RUN_NETWORK_TESTS=1 to run live source re-fetch checks",
+)
+
+
+@network
+def test_temperature_matches_source_refetch(graph, cities_config):
+    import requests
+
+    city = random.choice(cities_config["cities"])
+    series = graph["cities"][city["id"]]["series"]["temperature"]
+    point = random.choice([p for p in series if p["date"] >= "1990-01"])
+    year, month = point["date"].split("-")
+    start = f"{year}-{month}-01"
+    end = (pd.Timestamp(start) + pd.offsets.MonthEnd(0)).strftime("%Y-%m-%d")
+
+    resp = requests.get(
+        "https://archive-api.open-meteo.com/v1/archive",
+        params={
+            "latitude": city["lat"], "longitude": city["lon"],
+            "start_date": start, "end_date": end,
+            "daily": "temperature_2m_mean", "models": "era5", "timezone": "UTC",
+        },
+        timeout=60,
+    )
+    resp.raise_for_status()
+    vals = [v for v in resp.json()["daily"]["temperature_2m_mean"] if v is not None]
+    refetched = sum(vals) / len(vals)
+    assert abs(refetched - point["value"]) < 1.0, (
+        f"{city['id']} {point['date']} stored {point['value']} vs re-fetched {refetched:.2f}"
+    )

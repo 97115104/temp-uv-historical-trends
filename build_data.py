@@ -19,7 +19,6 @@ ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
 WEB_DATA_DIR = ROOT / "web" / "data"
 
-PERIOD_START = "1993-11"
 DEFAULT_PERIOD_START = "1993-11"
 NASA_START_YEAR = 1981
 NASA_POWER_URL = "https://power.larc.nasa.gov/api/temporal/monthly/point"
@@ -28,8 +27,7 @@ OPEN_METEO_HISTORICAL_URL = "https://historical-forecast-api.open-meteo.com/v1/f
 UV_START_DATE = "2021-01-01"
 WHO_UV_START_MONTH = "2021-01"
 NASA_UV_START_YEAR = 2001
-DATA_VERSION = 4
-MIN_TEMP_BASE_C = 3.0
+DATA_VERSION = 5
 MIN_UV_BASE = 0.5
 
 _now = datetime.now(timezone.utc)
@@ -227,38 +225,6 @@ def apply_uv_calibration(uv_df: pd.DataFrame, factors: dict[int, float]) -> pd.D
     return out
 
 
-def calibrate_uv_series(uv_df: pd.DataFrame) -> pd.DataFrame:
-    """Scale NASA monthly means toward WHO peak scale for a continuous timeline."""
-    if uv_df.empty:
-        return uv_df
-    out = uv_df.copy()
-    out["value_raw"] = out["uv"].astype(float)
-    factors = uv_calibration_factors(out)
-    return apply_uv_calibration(out, factors)
-
-
-def uv_calibration_factors(uv_df: pd.DataFrame) -> dict[int, float]:
-    """Per calendar-month scale factors from merged frame (fallback)."""
-    factors: dict[int, float] = {}
-    if uv_df.empty or "source" not in uv_df.columns:
-        return factors
-    for month in range(1, 13):
-        mm = f"{month:02d}"
-        nasa_rows = uv_df[(uv_df["date"] == f"2020-{mm}") & (uv_df["source"] == "nasa_power")]
-        who_candidates = uv_df[
-            (uv_df["date"].str.endswith(f"-{mm}"))
-            & (uv_df["date"] >= WHO_UV_START_MONTH)
-            & (uv_df["source"] == "open_meteo_who")
-        ]
-        if nasa_rows.empty or who_candidates.empty:
-            continue
-        nasa_val = float(nasa_rows.iloc[0]["uv"])
-        who_val = float(who_candidates.iloc[0]["uv"])
-        if nasa_val > 0.01:
-            factors[month] = who_val / nasa_val
-    return factors
-
-
 def safe_yoy_pct(
     curr: float | None,
     prev: float | None,
@@ -266,20 +232,17 @@ def safe_yoy_pct(
     curr_source: str | None = None,
     prev_source: str | None = None,
 ) -> float | None:
+    """Year-over-year percent change. UV only — temperature uses degree anomalies
+    (yoy_delta) because °C is an interval scale where percentages are meaningless."""
+    if metric != "uv":
+        return None
     if curr is None or prev is None or pd.isna(curr) or pd.isna(prev):
         return None
-    if metric == "uv" and curr_source and prev_source and curr_source != prev_source:
+    if curr_source and prev_source and curr_source != prev_source:
         return None
-    if metric == "temperature" and abs(float(prev)) < MIN_TEMP_BASE_C:
-        return None
-    if metric == "uv" and float(prev) < MIN_UV_BASE:
-        return None
-    if float(prev) <= 0:
+    if float(prev) < MIN_UV_BASE or float(prev) <= 0:
         return None
     pct = (float(curr) - float(prev)) / float(prev) * 100
-    # >100% drop from a positive baseline implies a negative monthly mean — not credible.
-    if metric == "temperature" and float(prev) > 0 and pct < -100:
-        return None
     return round(pct, 4)
 
 
@@ -356,48 +319,79 @@ def fetch_nasa_uv(lat: float, lon: float, start_year: int, end_year: int) -> pd.
     return pd.DataFrame(records).sort_values("date").reset_index(drop=True)
 
 
-def fetch_nasa_power(lat: float, lon: float, start_year: int, end_year: int) -> pd.DataFrame:
-    params = {
-        "parameters": "T2M,ALLSKY_SFC_UV_INDEX",
-        "community": "RE",
-        "longitude": lon,
-        "latitude": lat,
-        "start": start_year,
-        "end": end_year,
-        "format": "JSON",
+def _annual_means(series_df: pd.DataFrame, value_col: str, source: str | None = None) -> pd.Series:
+    df = series_df
+    if source is not None and "source" in df.columns:
+        df = df[df["source"] == source]
+    if df.empty:
+        return pd.Series(dtype=float)
+    tmp = df.assign(year=df["date"].str[:4].astype(int))
+    return tmp.groupby("year")[value_col].mean().sort_index()
+
+
+def _linear_slope_per_year(annual: pd.Series) -> float | None:
+    """Least-squares slope (value per year) of an annual-mean series."""
+    if len(annual) < 3:
+        return None
+    years = annual.index.to_numpy(dtype=float)
+    vals = annual.to_numpy(dtype=float)
+    denom = float(((years - years.mean()) ** 2).sum())
+    if denom == 0:
+        return None
+    return float(((years - years.mean()) * (vals - vals.mean())).sum() / denom)
+
+
+def compute_trend(series_df: pd.DataFrame, metric: str, value_col: str = "value") -> dict[str, Any] | None:
+    """Long-term trend from annual means: per-decade slope, total change, and
+    baseline vs recent decade. UV is computed within a single consistent source
+    window (the 2021 NASA->WHO splice would otherwise fabricate a trend)."""
+    if series_df.empty:
+        return None
+
+    source = None
+    confident = True
+    if metric == "uv" and "source" in series_df.columns:
+        # Prefer the source group covering the longest span of full years.
+        best_span = -1
+        for src in series_df["source"].dropna().unique():
+            annual = _annual_means(series_df, value_col, source=src)
+            span = int(annual.index.max() - annual.index.min()) if len(annual) else -1
+            if span > best_span:
+                best_span, source = span, src
+        confident = best_span >= 10
+
+    annual = _annual_means(series_df, value_col, source=source)
+    if len(annual) < 3:
+        return None
+    slope = _linear_slope_per_year(annual)
+    if slope is None:
+        return None
+
+    span_years = int(annual.index.max() - annual.index.min())
+    window = min(10, len(annual))
+    baseline = float(annual.iloc[:window].mean())
+    recent = float(annual.iloc[-window:].mean())
+    years = list(annual.index)
+
+    return {
+        "per_decade": round(slope * 10, 4),
+        "total": round(slope * span_years, 4),
+        "baseline": round(baseline, 4),
+        "recent": round(recent, 4),
+        "baseline_period": f"{years[0]}-{years[min(window, len(years)) - 1]}",
+        "recent_period": f"{years[-window]}-{years[-1]}",
+        "unit": "degC" if metric == "temperature" else "uv",
+        "source_window": f"{years[0]}-{years[-1]}",
+        "source": source,
+        "confident": bool(confident and span_years >= 10),
     }
-    response = requests.get(NASA_POWER_URL, params=params, timeout=120)
-    response.raise_for_status()
-    payload = response.json()
-
-    parameters = payload.get("properties", {}).get("parameter", {})
-    t2m = parameters.get("T2M", {})
-    uv = parameters.get("ALLSKY_SFC_UV_INDEX", {})
-
-    records: list[dict[str, Any]] = []
-    for key, temp in t2m.items():
-        if len(key) != 6:
-            continue
-        year, month = int(key[:4]), int(key[4:6])
-        if month < 1 or month > 12 or temp == -999.0:
-            continue
-        date = f"{year:04d}-{month:02d}"
-        if date > PERIOD_END:
-            continue
-        uv_val = None
-        if key in uv and uv[key] != -999.0:
-            uv_val = float(uv[key])
-        records.append({"date": date, "temperature": float(temp), "uv": uv_val})
-
-    return pd.DataFrame(records).sort_values("date").reset_index(drop=True)
 
 
-def compute_summary(series_df: pd.DataFrame, value_col: str = "value") -> dict[str, Any]:
+def compute_summary(series_df: pd.DataFrame, metric: str, value_col: str = "value") -> dict[str, Any]:
     if series_df.empty:
         return {}
 
     values = series_df[value_col].astype(float)
-    yoy = series_df["yoy_pct"].dropna() if "yoy_pct" in series_df else pd.Series(dtype=float)
     start_val = float(values.iloc[0])
     end_val = float(values.iloc[-1])
 
@@ -408,9 +402,8 @@ def compute_summary(series_df: pd.DataFrame, value_col: str = "value") -> dict[s
     if len(same_month) >= 2:
         sm_start = float(same_month.iloc[0][value_col])
         sm_end = float(same_month.iloc[-1][value_col])
-        change_pct = ((sm_end - sm_start) / sm_start * 100) if sm_start else None
     else:
-        change_pct = ((end_val - start_val) / start_val * 100) if start_val else None
+        sm_start, sm_end = start_val, end_val
 
     seasonal = (
         series_df.assign(month=series_df["date"].str[-2:].astype(int))
@@ -420,15 +413,27 @@ def compute_summary(series_df: pd.DataFrame, value_col: str = "value") -> dict[s
         .to_dict()
     )
 
-    return {
-        "avg_yoy_pct": round(float(yoy.mean()), 4) if not yoy.empty else None,
-        "change_1993_to_2026_pct": round(change_pct, 4) if change_pct is not None else None,
+    summary: dict[str, Any] = {
         "min": round(float(values.min()), 4),
         "max": round(float(values.max()), 4),
         "start_value": round(start_val, 4),
         "end_value": round(end_val, 4),
         "seasonal_baseline": {str(k): v for k, v in seasonal.items()},
+        "trend": compute_trend(series_df, metric, value_col),
     }
+
+    if metric == "uv":
+        yoy = series_df["yoy_pct"].dropna() if "yoy_pct" in series_df else pd.Series(dtype=float)
+        change_pct = ((sm_end - sm_start) / sm_start * 100) if sm_start else None
+        summary["avg_yoy_pct"] = round(float(yoy.mean()), 4) if not yoy.empty else None
+        summary["change_1993_to_2026_pct"] = round(change_pct, 4) if change_pct is not None else None
+    else:
+        # Temperature: degree anomalies, never percentages.
+        delta = series_df["yoy_delta"].dropna() if "yoy_delta" in series_df else pd.Series(dtype=float)
+        summary["avg_yoy_delta"] = round(float(delta.mean()), 4) if not delta.empty else None
+        summary["change_delta"] = round(sm_end - sm_start, 4)
+
+    return summary
 
 
 def series_to_records(df: pd.DataFrame, value_col: str = "value") -> list[dict[str, Any]]:
@@ -484,12 +489,19 @@ def build_graph_edges(city_id: str, series: dict[str, list[dict[str, Any]]]) -> 
 
 
 def build_comparison_edges(cities_data: dict[str, Any], metric: str) -> list[dict[str, Any]]:
+    """Compare cities by their long-term trend per decade (degC/decade for
+    temperature, UV-index/decade for UV) — a fair, source-consistent basis."""
     edges = []
     city_ids = list(cities_data.keys())
+
+    def trend_of(cid: str) -> float | None:
+        trend = cities_data[cid]["summary"].get(metric, {}).get("trend")
+        return trend.get("per_decade") if trend else None
+
     for i, cid_a in enumerate(city_ids):
-        change_a = cities_data[cid_a]["summary"].get(metric, {}).get("change_1993_to_2026_pct")
+        change_a = trend_of(cid_a)
         for cid_b in city_ids[i + 1 :]:
-            change_b = cities_data[cid_b]["summary"].get(metric, {}).get("change_1993_to_2026_pct")
+            change_b = trend_of(cid_b)
             if change_a is not None and change_b is not None:
                 edges.append(
                     {
@@ -497,7 +509,7 @@ def build_comparison_edges(cities_data: dict[str, Any], metric: str) -> list[dic
                         "to": f"loc:{cid_b}",
                         "type": "comparedWith",
                         "metric": metric,
-                        "delta_pct_1993_2026": round(change_a - change_b, 4),
+                        "delta_trend_per_decade": round(change_a - change_b, 4),
                     }
                 )
     return edges
@@ -537,8 +549,8 @@ def build_city_data(city: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any
             "temperature": series_to_records(temp_df),
         },
         "summary": {
-            "uv": compute_summary(uv_df),
-            "temperature": compute_summary(temp_df),
+            "uv": compute_summary(uv_df, "uv"),
+            "temperature": compute_summary(temp_df, "temperature"),
         },
         "period": {"start": temp_df["date"].min(), "end": period_end},
     }

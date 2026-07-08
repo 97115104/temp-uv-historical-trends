@@ -1,8 +1,6 @@
 {
   "covina-ca": {
     "uv": {
-      "avg_yoy_pct": 0.3256,
-      "change_1993_to_2026_pct": -7.0853,
       "min": 0.48,
       "max": 9.96,
       "start_value": 0.51,
@@ -20,11 +18,23 @@
         "10": 6.5178,
         "11": 5.1576,
         "12": 4.0113
-      }
+      },
+      "trend": {
+        "per_decade": -0.685,
+        "total": -1.37,
+        "baseline": 6.2547,
+        "recent": 5.7593,
+        "baseline_period": "2001-2010",
+        "recent_period": "2012-2021",
+        "unit": "uv",
+        "source_window": "2001-2021",
+        "source": "nasa_power",
+        "confident": true
+      },
+      "avg_yoy_pct": 0.3256,
+      "change_1993_to_2026_pct": -7.0853
     },
     "temperature": {
-      "avg_yoy_pct": 0.6291,
-      "change_1993_to_2026_pct": -13.8564,
       "min": 10.4613,
       "max": 26.6867,
       "start_value": 14.1968,
@@ -42,13 +52,25 @@
         "10": 19.9446,
         "11": 15.8783,
         "12": 12.673
-      }
+      },
+      "trend": {
+        "per_decade": 0.1741,
+        "total": 0.7836,
+        "baseline": 18.0063,
+        "recent": 18.5728,
+        "baseline_period": "1981-1990",
+        "recent_period": "2017-2026",
+        "unit": "degC",
+        "source_window": "1981-2026",
+        "source": null,
+        "confident": true
+      },
+      "avg_yoy_delta": 0.0128,
+      "change_delta": -3.4267
     }
   },
   "los-angeles-ca": {
     "uv": {
-      "avg_yoy_pct": 0.2226,
-      "change_1993_to_2026_pct": -7.9702,
       "min": 0.46,
       "max": 10.2708,
       "start_value": 0.5,
@@ -66,11 +88,23 @@
         "10": 6.5274,
         "11": 5.1334,
         "12": 4.0242
-      }
+      },
+      "trend": {
+        "per_decade": -0.7018,
+        "total": -1.4037,
+        "baseline": 6.2754,
+        "recent": 5.7634,
+        "baseline_period": "2001-2010",
+        "recent_period": "2012-2021",
+        "unit": "uv",
+        "source_window": "2001-2021",
+        "source": "nasa_power",
+        "confident": true
+      },
+      "avg_yoy_pct": 0.2226,
+      "change_1993_to_2026_pct": -7.9702
     },
     "temperature": {
-      "avg_yoy_pct": 0.5516,
-      "change_1993_to_2026_pct": -15.1962,
       "min": 10.7097,
       "max": 26.8167,
       "start_value": 14.3968,
@@ -88,13 +122,25 @@
         "10": 19.9824,
         "11": 16.0085,
         "12": 12.7975
-      }
+      },
+      "trend": {
+        "per_decade": 0.1374,
+        "total": 0.6183,
+        "baseline": 18.0483,
+        "recent": 18.4863,
+        "baseline_period": "1981-1990",
+        "recent_period": "2017-2026",
+        "unit": "degC",
+        "source_window": "1981-2026",
+        "source": null,
+        "confident": true
+      },
+      "avg_yoy_delta": 0.0083,
+      "change_delta": -3.7266
     }
   },
   "san-francisco-ca": {
     "uv": {
-      "avg_yoy_pct": 0.4578,
-      "change_1993_to_2026_pct": -7.252,
       "min": 0.28,
       "max": 9.45,
       "start_value": 0.36,
@@ -112,11 +158,23 @@
         "10": 6.0697,
         "11": 4.3484,
         "12": 3.1896
-      }
+      },
+      "trend": {
+        "per_decade": -0.6763,
+        "total": -1.3526,
+        "baseline": 5.8755,
+        "recent": 5.3874,
+        "baseline_period": "2001-2010",
+        "recent_period": "2012-2021",
+        "unit": "uv",
+        "source_window": "2001-2021",
+        "source": "nasa_power",
+        "confident": true
+      },
+      "avg_yoy_pct": 0.4578,
+      "change_1993_to_2026_pct": -7.252
     },
     "temperature": {
-      "avg_yoy_pct": 0.7318,
-      "change_1993_to_2026_pct": -7.632,
       "min": 6.6839,
       "max": 20.86,
       "start_value": 10.3645,
@@ -134,13 +192,25 @@
         "10": 16.5749,
         "11": 12.8992,
         "12": 10.124
-      }
+      },
+      "trend": {
+        "per_decade": 0.1468,
+        "total": 0.6607,
+        "baseline": 14.3148,
+        "recent": 14.9385,
+        "baseline_period": "1981-1990",
+        "recent_period": "2017-2026",
+        "unit": "degC",
+        "source_window": "1981-2026",
+        "source": null,
+        "confident": true
+      },
+      "avg_yoy_delta": 0.0199,
+      "change_delta": -1.46
     }
   },
   "seattle-wa": {
     "uv": {
-      "avg_yoy_pct": 0.9756,
-      "change_1993_to_2026_pct": 5.3516,
       "min": 0.06,
       "max": 9.2595,
       "start_value": 0.1,
@@ -158,11 +228,23 @@
         "10": 3.9999,
         "11": 2.6529,
         "12": 1.7653
-      }
+      },
+      "trend": {
+        "per_decade": -0.5523,
+        "total": -1.1046,
+        "baseline": 4.5699,
+        "recent": 4.1912,
+        "baseline_period": "2001-2010",
+        "recent_period": "2012-2021",
+        "unit": "uv",
+        "source_window": "2001-2021",
+        "source": "nasa_power",
+        "confident": true
+      },
+      "avg_yoy_pct": 0.9756,
+      "change_1993_to_2026_pct": 5.3516
     },
     "temperature": {
-      "avg_yoy_pct": 1.4824,
-      "change_1993_to_2026_pct": 19.0772,
       "min": 1.1964,
       "max": 21.1839,
       "start_value": 6.9032,
@@ -180,13 +262,25 @@
         "10": 11.5821,
         "11": 7.7207,
         "12": 5.1553
-      }
+      },
+      "trend": {
+        "per_decade": 0.1178,
+        "total": 0.5301,
+        "baseline": 11.1352,
+        "recent": 11.5894,
+        "baseline_period": "1981-1990",
+        "recent_period": "2017-2026",
+        "unit": "degC",
+        "source_window": "1981-2026",
+        "source": null,
+        "confident": true
+      },
+      "avg_yoy_delta": 0.0216,
+      "change_delta": 2.7433
     }
   },
   "new-york-ny": {
     "uv": {
-      "avg_yoy_pct": 0.433,
-      "change_1993_to_2026_pct": 6.5941,
       "min": 0.19,
       "max": 8.9109,
       "start_value": 0.22,
@@ -204,11 +298,23 @@
         "10": 5.574,
         "11": 3.9439,
         "12": 2.736
-      }
+      },
+      "trend": {
+        "per_decade": -0.5699,
+        "total": -1.1398,
+        "baseline": 5.1722,
+        "recent": 4.7745,
+        "baseline_period": "2001-2010",
+        "recent_period": "2012-2021",
+        "unit": "uv",
+        "source_window": "2001-2021",
+        "source": "nasa_power",
+        "confident": true
+      },
+      "avg_yoy_pct": 0.433,
+      "change_1993_to_2026_pct": 6.5941
     },
     "temperature": {
-      "avg_yoy_pct": -1.9889,
-      "change_1993_to_2026_pct": 3.3308,
       "min": -6.2286,
       "max": 26.8065,
       "start_value": -5.1258,
@@ -226,7 +332,21 @@
         "10": 13.8533,
         "11": 8.1372,
         "12": 2.9042
-      }
+      },
+      "trend": {
+        "per_decade": 0.1989,
+        "total": 0.8953,
+        "baseline": 11.9041,
+        "recent": 12.6561,
+        "baseline_period": "1981-1990",
+        "recent_period": "2017-2026",
+        "unit": "degC",
+        "source_window": "1981-2026",
+        "source": null,
+        "confident": true
+      },
+      "avg_yoy_delta": 0.0144,
+      "change_delta": 0.74
     }
   }
 }

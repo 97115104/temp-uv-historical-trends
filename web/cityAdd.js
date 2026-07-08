@@ -10,6 +10,8 @@ const MIN_UV_BASE = 0.5;
 
 const OPEN_METEO_ARCHIVE = "https://archive-api.open-meteo.com/v1/archive";
 const OPEN_METEO_HISTORICAL = "https://historical-forecast-api.open-meteo.com/v1/forecast";
+const NOMINATIM_REVERSE = "https://nominatim.openstreetmap.org/reverse";
+const NASA_POWER_URL = "https://power.larc.nasa.gov/api/temporal/monthly/point";
 
 let searchTimer = null;
 let builtInCityIds = new Set();
@@ -152,19 +154,110 @@ function rankGeocodeResults(results, query) {
   });
 }
 
+function pickPlaceName(address = {}) {
+  return (
+    address.city ||
+    address.town ||
+    address.village ||
+    address.municipality ||
+    address.hamlet ||
+    address.county ||
+    ""
+  );
+}
+
+function distanceKm(lat1, lon1, lat2, lon2) {
+  const toRad = (deg) => (deg * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+  return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function pickClosestGeocodeResult(results, lat, lon, countryCode = "") {
+  const candidates = countryCode
+    ? results.filter((r) => r.country_code === countryCode)
+    : results;
+  const pool = candidates.length ? candidates : results;
+  return [...pool].sort((a, b) => {
+    const da = distanceKm(lat, lon, a.latitude, a.longitude);
+    const db = distanceKm(lat, lon, b.latitude, b.longitude);
+    return da - db;
+  })[0];
+}
+
 async function reverseGeocode(lat, lon) {
-  const url = new URL("https://geocoding-api.open-meteo.com/v1/reverse");
-  url.searchParams.set("latitude", String(lat));
-  url.searchParams.set("longitude", String(lon));
-  url.searchParams.set("count", "5");
-  url.searchParams.set("language", "en");
-  url.searchParams.set("format", "json");
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Could not look up your location.");
-  const data = await res.json();
-  const results = (data.results || []).filter((r) => r.feature_code?.startsWith("PPL") || (r.population || 0) > 0);
+  // #region agent log
+  fetch("http://127.0.0.1:7287/ingest/755ead2c-e358-4614-ab66-2eb5a9e774d8", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "530b69" },
+    body: JSON.stringify({
+      sessionId: "530b69",
+      runId: "post-fix",
+      hypothesisId: "A",
+      location: "cityAdd.js:reverseGeocode:start",
+      message: "reverse geocode start",
+      data: { lat, lon, provider: "nominatim+open-meteo-search" },
+      timestamp: Date.now(),
+    }),
+  }).catch(() => {});
+  // #endregion
+
+  const nomUrl = new URL(NOMINATIM_REVERSE);
+  nomUrl.searchParams.set("lat", String(lat));
+  nomUrl.searchParams.set("lon", String(lon));
+  nomUrl.searchParams.set("format", "json");
+  nomUrl.searchParams.set("addressdetails", "1");
+  nomUrl.searchParams.set("accept-language", "en");
+  nomUrl.searchParams.set("zoom", "10");
+
+  const nomRes = await fetch(nomUrl);
+  // #region agent log
+  fetch("http://127.0.0.1:7287/ingest/755ead2c-e358-4614-ab66-2eb5a9e774d8", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "530b69" },
+    body: JSON.stringify({
+      sessionId: "530b69",
+      runId: "post-fix",
+      hypothesisId: "A",
+      location: "cityAdd.js:reverseGeocode:nominatim",
+      message: "nominatim reverse response",
+      data: { ok: nomRes.ok, status: nomRes.status },
+      timestamp: Date.now(),
+    }),
+  }).catch(() => {});
+  // #endregion
+  if (!nomRes.ok) throw new Error("Could not look up your location.");
+
+  const nomData = await nomRes.json();
+  const placeName = pickPlaceName(nomData.address || {});
+  if (!placeName) throw new Error("No city found near your location.");
+
+  const countryCode = (nomData.address?.country_code || "").toUpperCase();
+  const results = (await searchCities(placeName)).filter(
+    (r) => r.feature_code?.startsWith("PPL") || (r.population || 0) > 0
+  );
   if (!results.length) throw new Error("No city found near your location.");
-  return rankGeocodeResults(results, results[0].name)[0];
+
+  const best = pickClosestGeocodeResult(results, lat, lon, countryCode);
+  // #region agent log
+  fetch("http://127.0.0.1:7287/ingest/755ead2c-e358-4614-ab66-2eb5a9e774d8", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "530b69" },
+    body: JSON.stringify({
+      sessionId: "530b69",
+      runId: "post-fix",
+      hypothesisId: "A",
+      location: "cityAdd.js:reverseGeocode:success",
+      message: "reverse geocode resolved",
+      data: { placeName, resolvedName: best.name, countryCode: best.country_code },
+      timestamp: Date.now(),
+    }),
+  }).catch(() => {});
+  // #endregion
+  return best;
 }
 
 function normalizeGeoResult(result) {
@@ -277,12 +370,23 @@ function parseNasaUvMonthly(payload) {
 }
 
 async function fetchNasaUv(lat, lon, startYear, endYear) {
-  const url = new URL("/api/nasa-power", window.location.origin);
-  url.searchParams.set("latitude", String(lat));
-  url.searchParams.set("longitude", String(lon));
-  url.searchParams.set("start", String(startYear));
-  url.searchParams.set("end", String(endYear));
-  const res = await fetch(url);
+  const proxyUrl = new URL("/api/nasa-power", window.location.origin);
+  proxyUrl.searchParams.set("latitude", String(lat));
+  proxyUrl.searchParams.set("longitude", String(lon));
+  proxyUrl.searchParams.set("start", String(startYear));
+  proxyUrl.searchParams.set("end", String(endYear));
+
+  const directUrl = new URL(NASA_POWER_URL);
+  directUrl.searchParams.set("parameters", "T2M,ALLSKY_SFC_UV_INDEX");
+  directUrl.searchParams.set("community", "RE");
+  directUrl.searchParams.set("longitude", String(lon));
+  directUrl.searchParams.set("latitude", String(lat));
+  directUrl.searchParams.set("start", String(startYear));
+  directUrl.searchParams.set("end", String(endYear));
+  directUrl.searchParams.set("format", "JSON");
+
+  let res = await fetch(proxyUrl);
+  if (!res.ok) res = await fetch(directUrl);
   if (!res.ok) throw new Error("NASA POWER UV fetch failed.");
   const data = await res.json();
   if (data.error) throw new Error(data.error);

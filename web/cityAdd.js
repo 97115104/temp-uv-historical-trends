@@ -6,6 +6,8 @@ const WHO_UV_START_MONTH = "2021-01";
 const NASA_UV_START_YEAR = 2001;
 export const MAX_SELECTED = 5;
 export const DATA_VERSION = 5;
+export const RATE_LIMIT_TOAST =
+  "Too many weather data requests. Please wait a minute and try again.";
 const MIN_UV_BASE = 0.5;
 
 const OPEN_METEO_ARCHIVE = "https://archive-api.open-meteo.com/v1/archive";
@@ -30,6 +32,15 @@ function enqueueApiFetch(fn) {
   return task;
 }
 
+export function formatFetchError(err) {
+  if (!err) return "Could not load climate data for that city.";
+  const msg = err.message || "";
+  if (err.status === 429 || /429|too many requests|weather data service is busy/i.test(msg)) {
+    return RATE_LIMIT_TOAST;
+  }
+  return msg || "Could not load climate data for that city.";
+}
+
 async function throttleOpenMeteo() {
   const wait = OPEN_METEO_MIN_GAP_MS - (Date.now() - lastOpenMeteoFetchMs);
   if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait));
@@ -45,11 +56,15 @@ async function fetchJsonWithRetry(url, { retries = 5, baseDelayMs = 2000 } = {})
       continue;
     }
     if (res.status === 429) {
-      throw new Error("Weather data service is busy — wait a moment and try again.");
+      const err = new Error(RATE_LIMIT_TOAST);
+      err.status = 429;
+      throw err;
     }
     return res;
   }
-  throw new Error("Weather data service is busy — wait a moment and try again.");
+  const err = new Error(RATE_LIMIT_TOAST);
+  err.status = 429;
+  throw err;
 }
 
 export function setBuiltInCityIds(ids) {
@@ -883,7 +898,7 @@ export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showTo
         delete state.graph.cities[city.id];
       }
       state.selected.delete(city.id);
-      showToast?.(err.message || "Could not load climate data for that city.");
+      showToast?.(formatFetchError(err));
       onAdded?.(city, { loading: false, failed: true });
       return false;
     }
@@ -933,7 +948,7 @@ export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showTo
       await addCityFromResult(result);
     } catch (err) {
       console.error("selectSuggestion failed:", err);
-      showToast?.(err.message || "Could not add that city.");
+      showToast?.(formatFetchError(err));
     }
   }
 
@@ -980,7 +995,7 @@ export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showTo
         list.classList.remove("hidden");
         setStatus("Pick a city from the suggestions.");
       } catch (err) {
-        setStatus(err.message, true);
+        setStatus(formatFetchError(err), true);
       }
     }, 250);
   });

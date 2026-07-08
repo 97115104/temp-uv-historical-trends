@@ -10,6 +10,8 @@ import {
   addCityByMeta,
   resolveUvDisplayTrend,
   MAX_SELECTED,
+  formatFetchError,
+  RATE_LIMIT_TOAST,
 } from "./cityAdd.js";
 const CITY_COLORS = ["#2563eb", "#dc2626", "#16a34a", "#9333ea", "#ea580c"];
 const CHART_TEXT = "#1d1d1f";
@@ -94,7 +96,8 @@ function showToast(message) {
   el.textContent = message;
   el.classList.remove("hidden");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.add("hidden"), 4200);
+  const duration = message === RATE_LIMIT_TOAST ? 8000 : 4200;
+  toastTimer = setTimeout(() => el.classList.add("hidden"), duration);
 }
 
 const UV_WHO_BANDS = [
@@ -165,14 +168,22 @@ async function loadData() {
   initUI();
   renderHeader();
   if (state.selected.size > 0) {
-    await loadSelectedCityData();
+    try {
+      await loadSelectedCityData();
+    } catch (err) {
+      showToast(formatFetchError(err));
+    }
     revealCharts();
     syncControlsToState();
   }
   if (urlCityState.unknownCityIds.length) {
     setLoading("Loading cities from link…");
     await resolveUrlCitySlugs(urlCityState.unknownCityIds);
-    await loadSelectedCityData();
+    try {
+      await loadSelectedCityData();
+    } catch (err) {
+      showToast(formatFetchError(err));
+    }
     revealCharts();
     syncControlsToState();
   }
@@ -271,6 +282,7 @@ async function resolveUrlCitySlugs(slugs) {
       if (meta) await addCityByMeta(state, meta, { select: true });
     } catch (err) {
       console.warn(`Could not resolve city from URL slug: ${slug}`, err);
+      showToast(formatFetchError(err));
     }
   }
 }
@@ -363,8 +375,9 @@ async function loadLocation({ prompt = false } = {}) {
           const meta = await resolveCityByCoords(position.coords.latitude, position.coords.longitude);
           await resetToLocationCity(meta);
           resolve(true);
-        } catch {
-          if (prompt) showToast("Couldn't load your location — search for a city instead.");
+        } catch (err) {
+          const msg = formatFetchError(err);
+          if (prompt || err?.status === 429 || msg === RATE_LIMIT_TOAST) showToast(msg);
           resolve(false);
         } finally {
           setLoading(null);
@@ -422,7 +435,11 @@ async function onCityRemove(cityId, event) {
   event.stopPropagation();
   removeCity(state, cityId);
   renderCityList();
-  await loadSelectedCityData();
+  try {
+    await loadSelectedCityData();
+  } catch (err) {
+    showToast(formatFetchError(err));
+  }
   renderAll();
 }
 
@@ -469,7 +486,14 @@ async function toggleCitySelection(id) {
     return;
   }
   state.selected.add(id);
-  await ensureCityDataLoaded(state, id);
+  try {
+    await ensureCityDataLoaded(state, id);
+  } catch (err) {
+    state.selected.delete(id);
+    showToast(formatFetchError(err));
+    renderCityList();
+    return;
+  }
   state.periodMin = computeDataPeriodMin() || state.periodMin;
   state.periodMax = computeDataPeriodMax() || state.periodMax;
   renderCityList();

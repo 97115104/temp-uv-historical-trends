@@ -58,23 +58,10 @@ function tempVerb(trend, unit) {
   return "held about steady";
 }
 
-function trendSpanYears(trend) {
-  const match = trend?.source_window?.match(/^(\d{4})-(\d{4})$/);
-  if (!match) return 0;
-  return Number(match[2]) - Number(match[1]);
-}
-
 function uvDisplayTrend(city, ctx) {
-  const records = ctx.getSeries?.(city.id, "uv") || city.graph?.series?.uv || [];
+  const records = ctx.getSeries(city.id, "uv");
   const summary = city.graph?.summary?.uv || {};
-  if (ctx.resolveUvDisplayTrend) return ctx.resolveUvDisplayTrend(records, summary);
-  const trend = summary.trend;
-  if (!trend) return null;
-  if (trend.confident !== false) return trend;
-  const indicative = summary.indicative_trend;
-  if (indicative && trendSpanYears(indicative) >= 10) return indicative;
-  if (trendSpanYears(trend) >= 3) return trend;
-  return indicative || trend;
+  return ctx.resolveUvDisplayTrend(records, summary);
 }
 
 function tempDirection(trend, unit) {
@@ -108,9 +95,6 @@ function divergenceExplanation(city, ctx) {
   }
   if (tDir === "down" && uDir === "up") {
     return `Cooler air on average (${tempMag}°${ctx.tempUnit} since ${decadeLabel(temp)}) can coexist with higher UV peaks (~${uvMag} index points) when cloud cover or pollution shifts differ from the temperature average.`;
-  }
-  if (ctx.explainDivergence && tDir !== uDir && tDir !== "flat" && uDir !== "flat") {
-    return `Temperature and UV are trending in different directions here — normal, because one tracks average heat and the other tracks peak sunburn risk drivers.`;
   }
   return null;
 }

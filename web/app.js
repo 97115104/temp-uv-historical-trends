@@ -9,9 +9,8 @@ import {
   resolveCityBySlug,
   addCityByMeta,
   resolveUvDisplayTrend,
+  MAX_SELECTED,
 } from "./cityAdd.js";
-
-const MAX_CITIES = 5;
 const CITY_COLORS = ["#2563eb", "#dc2626", "#16a34a", "#9333ea", "#ea580c"];
 const CHART_TEXT = "#1d1d1f";
 const CHART_MUTED = "#6e6e73";
@@ -78,10 +77,8 @@ const state = {
   sortKey: "name",
   sortAsc: true,
   sortBound: false,
-  explainDivergence: false,
   attestationUrl: null,
   summaryRequestId: 0,
-  loadedCities: new Set(),
   loadingCities: new Set(),
   builtInCityIds: new Set(),
 };
@@ -131,8 +128,6 @@ async function loadData() {
   state.citiesConfig = await citiesRes.json();
   state.graph = {
     metadata: meta.metadata,
-    nodes: meta.nodes || [],
-    edges: meta.edges || [],
     cities: {},
   };
   state.builtInCityIds = new Set(meta.city_ids || state.citiesConfig.cities.map((c) => c.id));
@@ -241,11 +236,8 @@ function applyUrlParams() {
 
   if (cities) {
     state.selected.clear();
-    const validIds = new Set([
-      ...state.builtInCityIds,
-      ...state.citiesConfig.cities.map((c) => c.id),
-    ]);
-    cities.split(",").slice(0, MAX_CITIES).forEach((id) => {
+    const validIds = new Set(state.citiesConfig.cities.map((c) => c.id));
+    cities.split(",").slice(0, MAX_SELECTED).forEach((id) => {
       const trimmed = id.trim();
       if (!trimmed) return;
       if (validIds.has(trimmed)) state.selected.add(trimmed);
@@ -335,7 +327,6 @@ function revealCharts() {
 
 async function resetToLocationCity(meta) {
   state.selected.clear();
-  state.explainDivergence = false;
   await addCityByMeta(state, meta, { select: true });
   state.periodMin = computeDataPeriodMin();
   state.periodMax = computeDataPeriodMax();
@@ -468,12 +459,11 @@ async function toggleCitySelection(id) {
     renderAll();
     return;
   }
-  if (state.selected.size >= MAX_CITIES) {
-    showToast(`You can compare up to ${MAX_CITIES} cities at once. Remove one to add another.`);
+  if (state.selected.size >= MAX_SELECTED) {
+    showToast(`You can compare up to ${MAX_SELECTED} cities at once. Remove one to add another.`);
     return;
   }
   state.selected.add(id);
-  renderCityList();
   await ensureCityDataLoaded(state, id);
   state.periodMin = computeDataPeriodMin() || state.periodMin;
   state.periodMax = computeDataPeriodMax() || state.periodMax;
@@ -732,7 +722,6 @@ function summaryContext() {
     formatMonthLabel,
     monthName,
     getSeries,
-    explainDivergence: state.explainDivergence,
     resolveUvDisplayTrend,
   };
 }
@@ -877,12 +866,6 @@ function chartTimeScale({ unit = "month", maxTicksLimit = 14 } = {}) {
   };
 }
 
-/** Pick the best UV trend to show when the single-source record is too short. */
-function getUvDisplayTrend(cityId) {
-  const data = getCityData(cityId);
-  return resolveUvDisplayTrend(data?.series?.uv || [], data?.summary?.uv || {});
-}
-
 function longTermTempDirection(cityId) {
   const total = convertTempDelta(getCityData(cityId)?.summary?.temperature?.trend?.total);
   if (total == null || Number.isNaN(total)) return "flat";
@@ -893,7 +876,8 @@ function longTermTempDirection(cityId) {
 }
 
 function longTermUvDirection(cityId) {
-  const total = getUvDisplayTrend(cityId)?.total;
+  const data = getCityData(cityId);
+  const total = resolveUvDisplayTrend(data?.series?.uv || [], data?.summary?.uv || {})?.total;
   if (total == null || Number.isNaN(total)) return "flat";
   if (total >= 0.3) return "up";
   if (total <= -0.3) return "down";
@@ -1305,14 +1289,6 @@ function trendVerdict(trend, metric) {
     return { hero, sub, tone };
   }
 
-  // UV
-  if (!trend) {
-    return {
-      hero: "Trend unclear",
-      sub: "Not enough UV history to estimate a trend.",
-      tone: "flat",
-    };
-  }
   if (trend._display === "indicative") {
     const total = trend.total;
     const perDec = trend.per_decade;
@@ -1357,10 +1333,7 @@ function formatValueFor(metric, value) {
 
 /** Latest value + typical for the latest month, for one metric within the period. */
 function metricSnapshot(cityId, metric) {
-  const data = getCityData(cityId);
-  const series = (data?.series?.[metric] || []).filter(
-    (p) => p.date >= state.periodStart && p.date <= state.periodEnd
-  );
+  const series = getSeries(cityId, metric);
   if (!series.length) return null;
   const last = series[series.length - 1];
   const monthNum = parseInt(last.date.split("-")[1], 10);
@@ -1370,8 +1343,8 @@ function metricSnapshot(cityId, metric) {
     monthNum,
     typical: getTypicalForMonth(cityId, metric, monthNum),
     trend: metric === "uv"
-      ? getUvDisplayTrend(cityId)
-      : (data?.summary?.[metric]?.trend || null),
+      ? resolveUvDisplayTrend(getSeries(cityId, "uv"), getCityData(cityId)?.summary?.uv || {})
+      : (getCityData(cityId)?.summary?.[metric]?.trend || null),
   };
 }
 

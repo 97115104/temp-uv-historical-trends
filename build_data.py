@@ -683,7 +683,6 @@ def write_outputs(
     with provenance_path.open("w", encoding="utf-8") as f:
         json.dump(provenance, f, indent=2)
 
-    shutil.copy2(graph_path, WEB_DATA_DIR / "knowledge_graph.json")
     with (WEB_DATA_DIR / "cities.json").open("w", encoding="utf-8") as f:
         json.dump(cities_config, f, indent=2)
 
@@ -716,7 +715,6 @@ def write_outputs(
         json.dump(provenance, f, indent=2)
 
     print(f"Wrote {graph_path}", flush=True)
-    print(f"Wrote {WEB_DATA_DIR / 'knowledge_graph.json'}", flush=True)
 
 
 def main() -> None:

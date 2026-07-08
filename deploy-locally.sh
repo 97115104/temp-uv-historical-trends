@@ -128,11 +128,10 @@ ensure_python_deps() {
 }
 
 ensure_data() {
-  local graph="$REPO_ROOT/web/data/knowledge_graph.json"
   local meta="$REPO_ROOT/web/data/graph-meta.json"
   local cities="$REPO_ROOT/web/data/cities.json"
 
-  if [[ ! -f "$graph" || ! -f "$meta" || ! -f "$cities" ]]; then
+  if [[ ! -f "$meta" || ! -f "$cities" ]]; then
     info "Building dashboard data (first run; ~30 seconds)..."
     if ! python3 "$REPO_ROOT/build_data.py"; then
       error "build_data.py failed. Fix errors above, then run: python3 build_data.py"

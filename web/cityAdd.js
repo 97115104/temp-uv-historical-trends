@@ -4,7 +4,7 @@ const ERA5_START = "1981-01-01";
 const UV_START = "2021-01-01";
 const WHO_UV_START_MONTH = "2021-01";
 const NASA_UV_START_YEAR = 2001;
-const MAX_SELECTED = 5;
+export const MAX_SELECTED = 5;
 export const DATA_VERSION = 5;
 const MIN_UV_BASE = 0.5;
 
@@ -91,11 +91,6 @@ export function unhideCity(cityId) {
   return true;
 }
 
-export function getVisibleCities(state) {
-  const hidden = loadHiddenCities();
-  return state.citiesConfig.cities.filter((city) => !hidden.has(city.id));
-}
-
 export function mergeCustomCities(state) {
   const bundle = loadCustomCities();
   for (const city of bundle.cities) {
@@ -105,9 +100,6 @@ export function mergeCustomCities(state) {
       state.citiesConfig.cities.push(city);
     }
     state.graph.cities[city.id] = bundle.graphEntries[city.id];
-    if (!state.graph.nodes.some((n) => n.id === `loc:${city.id}`)) {
-      state.graph.nodes.push({ id: `loc:${city.id}`, type: "Place", label: cityLabel(city) });
-    }
   }
   return bundle;
 }
@@ -125,8 +117,6 @@ export function existingCityMatch(state, { id, name, region }, { includeHidden =
 export function removeCity(state, cityId) {
   state.selected.delete(cityId);
   delete state.graph.cities[cityId];
-  state.graph.nodes = state.graph.nodes.filter((n) => n.id !== `loc:${cityId}`);
-  state.loadedCities?.delete(cityId);
   state.loadingCities?.delete(cityId);
 
   if (isCustomCity(cityId)) {
@@ -561,10 +551,6 @@ function computeTrend(records, metric, { allSources = false } = {}) {
   };
 }
 
-export function computeIndicativeUvTrend(records) {
-  return computeTrend(records, "uv", { allSources: true });
-}
-
 function trendSpanYears(trend) {
   const match = trend?.source_window?.match(/^(\d{4})-(\d{4})$/);
   if (!match) return 0;
@@ -686,7 +672,6 @@ async function refreshCustomCityEntry(state, cityId, bundle) {
     bundle.graphEntries[cityId] = refreshed;
     saveCustomCities(bundle);
     state.graph.cities[cityId] = refreshed;
-    state.loadedCities.add(cityId);
     return refreshed;
   } catch (err) {
     console.warn(`Could not refresh custom city data for ${cityId}`, err);
@@ -697,7 +682,6 @@ async function refreshCustomCityEntry(state, cityId, bundle) {
 export async function ensureCityDataLoaded(state, cityId) {
   const cached = state.graph.cities[cityId];
   if (cached?.series?.temperature?.length && uvSeriesHasNasaHistory(cached.series?.uv)) {
-    state.loadedCities.add(cityId);
     return cached;
   }
   if (state.loadingCities.has(cityId)) {
@@ -711,7 +695,6 @@ export async function ensureCityDataLoaded(state, cityId) {
       if (!res.ok) throw new Error(`Could not load data for ${cityId}`);
       const entry = await res.json();
       state.graph.cities[cityId] = entry;
-      state.loadedCities.add(cityId);
       return entry;
     }
 
@@ -725,7 +708,6 @@ export async function ensureCityDataLoaded(state, cityId) {
         if (refreshed) return refreshed;
       }
       state.graph.cities[cityId] = entry;
-      state.loadedCities.add(cityId);
       return entry;
     }
 
@@ -733,7 +715,6 @@ export async function ensureCityDataLoaded(state, cityId) {
     if (!cityMeta) throw new Error(`Unknown city: ${cityId}`);
     const entry = await fetchCityGraphEntry(cityMeta);
     state.graph.cities[cityId] = entry;
-    state.loadedCities.add(cityId);
     return entry;
   } finally {
     state.loadingCities.delete(cityId);
@@ -749,9 +730,6 @@ export async function addCityByMeta(state, meta, { select = true } = {}) {
   if (!state.citiesConfig.cities.some((c) => c.id === meta.id)) {
     state.citiesConfig.cities.push(meta);
   }
-  if (!state.graph.nodes.some((n) => n.id === `loc:${meta.id}`)) {
-    state.graph.nodes.push({ id: `loc:${meta.id}`, type: "Place", label: cityLabel(meta) });
-  }
   unhideCity(meta.id);
   if (select) state.selected.add(meta.id);
 
@@ -763,7 +741,6 @@ export async function addCityByMeta(state, meta, { select = true } = {}) {
   const entry = await fetchCityGraphEntry(meta);
   saveCustomCityGraph(meta, entry);
   state.graph.cities[meta.id] = entry;
-  state.loadedCities.add(meta.id);
   return meta.id;
 }
 
@@ -787,7 +764,7 @@ function formatSuggestion(result) {
   return `${region}${country}`.replace(/^, /, "");
 }
 
-export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showToast, ensureCityData }) {
+export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showToast }) {
   const btn = document.getElementById("city-add-btn");
   const panel = document.getElementById("city-add-panel");
   const input = document.getElementById("city-search");
@@ -825,9 +802,6 @@ export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showTo
 
     if (isNew) {
       state.citiesConfig.cities.push(city);
-      if (!state.graph.nodes.some((n) => n.id === `loc:${city.id}`)) {
-        state.graph.nodes.push({ id: `loc:${city.id}`, type: "Place", label: cityLabel(city) });
-      }
     }
 
     state.selected.add(city.id);
@@ -846,14 +820,12 @@ export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showTo
       if (!entry?.series?.temperature?.length) {
         throw new Error("Could not load climate data for that city.");
       }
-      state.loadedCities.add(city.id);
       onAdded?.(city, { loading: false });
       return true;
     } catch (err) {
       console.error("Add city failed:", city.id, err);
       if (isNew) {
         state.citiesConfig.cities = state.citiesConfig.cities.filter((c) => c.id !== city.id);
-        state.graph.nodes = state.graph.nodes.filter((n) => n.id !== `loc:${city.id}`);
         delete state.graph.cities[city.id];
       }
       state.selected.delete(city.id);
@@ -911,39 +883,10 @@ export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showTo
     }
   }
 
-  if (locateBtn) {
+  if (locateBtn && onUseLocation) {
     locateBtn.addEventListener("click", async () => {
-      if (onUseLocation) {
-        closePanel();
-        await onUseLocation();
-        return;
-      }
-      if (!navigator.geolocation) {
-        setStatus("Location is not supported in this browser.", true);
-        return;
-      }
-      setStatus("Getting your location…");
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          try {
-            const { latitude, longitude } = position.coords;
-            const geoResult = await reverseGeocode(latitude, longitude);
-            input.value = geoResult.name;
-            await addCityFromResult(geoResult);
-          } catch (err) {
-            setStatus(err.message, true);
-          }
-        },
-        (err) => {
-          const messages = {
-            1: "Location permission denied. Allow location access or search by name.",
-            2: "Could not determine your position. Try again or search by name.",
-            3: "Location request timed out. Try again or search by name.",
-          };
-          setStatus(messages[err.code] || "Could not use your location.", true);
-        },
-        { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 }
-      );
+      closePanel();
+      await onUseLocation();
     });
   }
 

@@ -15,6 +15,42 @@ const NASA_POWER_URL = "https://power.larc.nasa.gov/api/temporal/monthly/point";
 
 let searchTimer = null;
 let builtInCityIds = new Set();
+let apiFetchQueue = Promise.resolve();
+let lastOpenMeteoFetchMs = 0;
+const OPEN_METEO_MIN_GAP_MS = 1500;
+
+/** Serialize live API fetches so parallel city adds don't hit Open-Meteo rate limits. */
+function enqueueApiFetch(fn) {
+  const task = apiFetchQueue.then(async () => {
+    const result = await fn();
+    await new Promise((resolve) => setTimeout(resolve, OPEN_METEO_MIN_GAP_MS));
+    return result;
+  });
+  apiFetchQueue = task.catch(() => {});
+  return task;
+}
+
+async function throttleOpenMeteo() {
+  const wait = OPEN_METEO_MIN_GAP_MS - (Date.now() - lastOpenMeteoFetchMs);
+  if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait));
+  lastOpenMeteoFetchMs = Date.now();
+}
+
+async function fetchJsonWithRetry(url, { retries = 5, baseDelayMs = 2000 } = {}) {
+  for (let attempt = 0; attempt <= retries; attempt += 1) {
+    await throttleOpenMeteo();
+    const res = await fetch(url);
+    if ((res.status === 429 || res.status >= 500) && attempt < retries) {
+      await new Promise((resolve) => setTimeout(resolve, baseDelayMs * (2 ** attempt)));
+      continue;
+    }
+    if (res.status === 429) {
+      throw new Error("Weather data service is busy — wait a moment and try again.");
+    }
+    return res;
+  }
+  throw new Error("Weather data service is busy — wait a moment and try again.");
+}
 
 export function setBuiltInCityIds(ids) {
   builtInCityIds = new Set(ids);
@@ -118,6 +154,7 @@ export function removeCity(state, cityId) {
   state.selected.delete(cityId);
   delete state.graph.cities[cityId];
   state.loadingCities?.delete(cityId);
+  state.cityLoadPromises?.delete(cityId);
 
   if (isCustomCity(cityId)) {
     state.citiesConfig.cities = state.citiesConfig.cities.filter((c) => c.id !== cityId);
@@ -278,7 +315,7 @@ async function searchCities(query) {
   url.searchParams.set("count", "12");
   url.searchParams.set("language", "en");
   url.searchParams.set("format", "json");
-  const res = await fetch(url);
+  const res = await fetchJsonWithRetry(url);
   if (!res.ok) throw new Error("City search failed.");
   const data = await res.json();
   const results = (data.results || []).filter((r) => r.feature_code?.startsWith("PPL") || (r.population || 0) > 0);
@@ -324,7 +361,7 @@ async function fetchOpenMeteoTemperature(lat, lon, endDate) {
   url.searchParams.set("models", "era5");
   url.searchParams.set("timezone", "UTC");
 
-  const res = await fetch(url);
+  const res = await fetchJsonWithRetry(url);
   if (!res.ok) throw new Error("Open-Meteo temperature fetch failed.");
   const data = await res.json();
   return aggregateDailyToMonthly(data.daily, "temperature_2m_mean");
@@ -339,7 +376,7 @@ async function fetchOpenMeteoUv(lat, lon, endDate) {
   url.searchParams.set("hourly", "uv_index");
   url.searchParams.set("timezone", "UTC");
 
-  const res = await fetch(url);
+  const res = await fetchJsonWithRetry(url);
   if (!res.ok) throw new Error("Open-Meteo UV fetch failed.");
   const data = await res.json();
   return aggregateHourlyToMonthlyMax(data.hourly, "uv_index");
@@ -376,7 +413,7 @@ async function fetchNasaUv(lat, lon, startYear, endYear) {
   directUrl.searchParams.set("format", "JSON");
 
   let res = await fetch(proxyUrl);
-  if (!res.ok) res = await fetch(directUrl);
+  if (!res.ok) res = await fetchJsonWithRetry(directUrl);
   if (!res.ok) throw new Error("NASA POWER UV fetch failed.");
   const data = await res.json();
   if (data.error) throw new Error(data.error);
@@ -423,10 +460,8 @@ function applyUvCalibration(records, factors) {
 
 async function fetchCombinedUv(lat, lon, endDate) {
   const endYear = Number(endDate.slice(0, 4));
-  const [nasa, who] = await Promise.all([
-    fetchNasaUv(lat, lon, NASA_UV_START_YEAR, endYear).catch(() => []),
-    fetchOpenMeteoUv(lat, lon, endDate),
-  ]);
+  const nasa = await fetchNasaUv(lat, lon, NASA_UV_START_YEAR, endYear).catch(() => []);
+  const who = await fetchOpenMeteoUv(lat, lon, endDate);
   const whoWithSource = who.map((row) => ({ ...row, source: "open_meteo_who" }));
   const factors = uvCalibrationFactorsFromSources(nasa, whoWithSource);
   const merged = mergeUvSeries(nasa, whoWithSource);
@@ -625,11 +660,15 @@ function computeSummary(records, metric) {
 }
 
 export async function fetchCityGraphEntry(city) {
-  const endDate = lastCompleteDate();
-  const [temperature, uv] = await Promise.all([
-    fetchOpenMeteoTemperature(city.lat, city.lon, endDate),
-    fetchCombinedUv(city.lat, city.lon, endDate),
-  ]);
+  return enqueueApiFetch(async () => {
+    const endDate = lastCompleteDate();
+    const temperature = await fetchOpenMeteoTemperature(city.lat, city.lon, endDate);
+    const uv = await fetchCombinedUv(city.lat, city.lon, endDate);
+    return buildCityGraphEntry(city, temperature, uv);
+  });
+}
+
+function buildCityGraphEntry(city, temperature, uv) {
 
   if (!temperature.length) throw new Error("No temperature data returned for this location.");
 
@@ -660,34 +699,7 @@ export async function fetchCityGraphEntry(city) {
   };
 }
 
-function uvSeriesHasNasaHistory(uvSeries = []) {
-  return uvSeries.some((point) => point.source === "nasa_power");
-}
-
-async function refreshCustomCityEntry(state, cityId, bundle) {
-  const cityMeta = state.citiesConfig.cities.find((c) => c.id === cityId);
-  if (!cityMeta) return null;
-  try {
-    const refreshed = await fetchCityGraphEntry(cityMeta);
-    bundle.graphEntries[cityId] = refreshed;
-    saveCustomCities(bundle);
-    state.graph.cities[cityId] = refreshed;
-    return refreshed;
-  } catch (err) {
-    console.warn(`Could not refresh custom city data for ${cityId}`, err);
-    return null;
-  }
-}
-
-export async function ensureCityDataLoaded(state, cityId) {
-  const cached = state.graph.cities[cityId];
-  if (cached?.series?.temperature?.length && uvSeriesHasNasaHistory(cached.series?.uv)) {
-    return cached;
-  }
-  if (state.loadingCities.has(cityId)) {
-    return null;
-  }
-
+async function loadCityData(state, cityId) {
   state.loadingCities.add(cityId);
   try {
     if (isBuiltInCity(cityId)) {
@@ -721,27 +733,73 @@ export async function ensureCityDataLoaded(state, cityId) {
   }
 }
 
+function uvSeriesHasNasaHistory(uvSeries = []) {
+  return uvSeries.some((point) => point.source === "nasa_power");
+}
+
+async function refreshCustomCityEntry(state, cityId, bundle) {
+  const cityMeta = state.citiesConfig.cities.find((c) => c.id === cityId);
+  if (!cityMeta) return null;
+  try {
+    const refreshed = await fetchCityGraphEntry(cityMeta);
+    bundle.graphEntries[cityId] = refreshed;
+    saveCustomCities(bundle);
+    state.graph.cities[cityId] = refreshed;
+    return refreshed;
+  } catch (err) {
+    console.warn(`Could not refresh custom city data for ${cityId}`, err);
+    return null;
+  }
+}
+
+export async function ensureCityDataLoaded(state, cityId) {
+  const cached = state.graph.cities[cityId];
+  if (cached?.series?.temperature?.length && uvSeriesHasNasaHistory(cached.series?.uv)) {
+    return cached;
+  }
+
+  if (!state.cityLoadPromises) state.cityLoadPromises = new Map();
+  const inFlight = state.cityLoadPromises.get(cityId);
+  if (inFlight) return inFlight;
+
+  const loadPromise = loadCityData(state, cityId);
+  state.cityLoadPromises.set(cityId, loadPromise);
+  try {
+    return await loadPromise;
+  } finally {
+    state.cityLoadPromises.delete(cityId);
+  }
+}
+
 /** Add a resolved city (built-in or brand-new) to state, fetch its data if needed,
  * and optionally select it. Used by the conversational query + location flows. */
 export async function addCityByMeta(state, meta, { select = true } = {}) {
   const builtInId = matchBuiltInCityId(meta, state);
   if (builtInId) meta = { ...meta, id: builtInId };
-  const known = builtInCityIds.has(meta.id) || state.citiesConfig.cities.some((c) => c.id === meta.id);
-  if (!state.citiesConfig.cities.some((c) => c.id === meta.id)) {
+  const isNew = !state.citiesConfig.cities.some((c) => c.id === meta.id);
+  if (isNew) {
     state.citiesConfig.cities.push(meta);
   }
   unhideCity(meta.id);
   if (select) state.selected.add(meta.id);
 
-  if (known) {
-    await ensureCityDataLoaded(state, meta.id);
+  try {
+    const entry = await ensureCityDataLoaded(state, meta.id);
+    if (!entry?.series?.temperature?.length) {
+      throw new Error("Could not load climate data for that city.");
+    }
+    if (!isBuiltInCity(meta.id)) {
+      saveCustomCityGraph(meta, entry);
+    }
     return meta.id;
+  } catch (err) {
+    if (isNew) {
+      state.citiesConfig.cities = state.citiesConfig.cities.filter((c) => c.id !== meta.id);
+      delete state.graph.cities[meta.id];
+    }
+    if (select) state.selected.delete(meta.id);
+    throw err;
   }
-
-  const entry = await fetchCityGraphEntry(meta);
-  saveCustomCityGraph(meta, entry);
-  state.graph.cities[meta.id] = entry;
-  return meta.id;
 }
 
 export function saveCustomCityGraph(city, graphEntry) {
@@ -809,13 +867,9 @@ export function initCityAdd(state, { onAdded, onDuplicate, onUseLocation, showTo
     onAdded?.(city, { loading: true });
 
     try {
-      let entry;
-      if (isNew) {
-        entry = await fetchCityGraphEntry(city);
+      const entry = await ensureCityDataLoaded(state, city.id);
+      if (isNew && entry && !isBuiltInCity(city.id)) {
         saveCustomCityGraph(city, entry);
-        state.graph.cities[city.id] = entry;
-      } else {
-        entry = await ensureCityDataLoaded(state, city.id);
       }
       if (!entry?.series?.temperature?.length) {
         throw new Error("Could not load climate data for that city.");

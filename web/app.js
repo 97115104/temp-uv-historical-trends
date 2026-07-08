@@ -80,6 +80,7 @@ const state = {
   attestationUrl: null,
   summaryRequestId: 0,
   loadingCities: new Set(),
+  cityLoadPromises: new Map(),
   builtInCityIds: new Set(),
 };
 
@@ -163,9 +164,17 @@ async function loadData() {
 
   initUI();
   renderHeader();
+  if (state.selected.size > 0) {
+    await loadSelectedCityData();
+    revealCharts();
+    syncControlsToState();
+  }
   if (urlCityState.unknownCityIds.length) {
     setLoading("Loading cities from link…");
     await resolveUrlCitySlugs(urlCityState.unknownCityIds);
+    await loadSelectedCityData();
+    revealCharts();
+    syncControlsToState();
   }
   if (state.selected.size === 0 && urlCityState.hadCitiesParam) {
     showToast("Could not load the city from this link — try searching by name.");
@@ -173,18 +182,14 @@ async function loadData() {
     setLoading("Finding your location…");
     await loadLocation({ prompt: false });
   }
-  if (state.selected.size > 0) {
-    await loadSelectedCityData();
-    revealCharts();
-    syncControlsToState();
-  }
   renderAll();
   setLoading(null);
 }
 
 async function loadSelectedCityData() {
-  const loaders = [...state.selected].map((cityId) => ensureCityDataLoaded(state, cityId));
-  await Promise.all(loaders);
+  for (const cityId of state.selected) {
+    await ensureCityDataLoaded(state, cityId);
+  }
   const dmin = computeDataPeriodMin();
   const dmax = computeDataPeriodMax();
   if (dmin) state.periodMin = dmin;

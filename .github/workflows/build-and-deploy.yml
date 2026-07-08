@@ -30,14 +30,11 @@ jobs:
         with:
           python-version: "3.11"
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
       - name: Install Python dependencies
         run: pip install -r requirements.txt
 
       - name: Build knowledge graph
+        if: github.event_name != 'push'
         run: python build_data.py
 
       - name: Run tests
@@ -45,13 +42,21 @@ jobs:
         env:
           PYTHONPATH: .
 
+      - uses: actions/setup-node@v4
+        if: github.event_name != 'push'
+        with:
+          node-version: "20"
+
       - name: Install Node dependencies
+        if: github.event_name != 'push'
         run: npm ci
 
       - name: Create attestation
+        if: github.event_name != 'push'
         run: npm run attest
 
       - name: Commit updated data
+        if: github.event_name != 'push'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

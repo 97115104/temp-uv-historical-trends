@@ -27,7 +27,7 @@ pytest tests/ -v
 | UV (2021+) | [Open-Meteo Historical Forecast](https://open-meteo.com/en/docs/historical-forecast-api) |
 | UV (2001–2020) | [NASA POWER](https://power.larc.nasa.gov/) `ALLSKY_SFC_UV_INDEX` |
 
-Values reflect the latest **complete calendar month**, not live conditions. CI rebuilds data on push to `main` and monthly on the 1st.
+Values reflect the latest **complete calendar month**, not live conditions. CI deploys on push to `main`; data is rebuilt monthly on the 1st.
 
 ## Attestation
 

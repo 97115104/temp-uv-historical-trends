@@ -2441,6 +2441,14 @@
         "yoy_delta": -0.1,
         "value_raw": 8.4,
         "source": "open_meteo_who"
+      },
+      {
+        "date": "2026-07",
+        "value": 8.4,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 8.4,
+        "source": "open_meteo_who"
       }
     ],
     "temperature": [
@@ -5707,6 +5715,12 @@
         "value": 17.67,
         "yoy_pct": null,
         "yoy_delta": 1.6
+      },
+      {
+        "date": "2026-07",
+        "value": 18.1154,
+        "yoy_pct": null,
+        "yoy_delta": 1.5412
       }
     ]
   },
@@ -5723,7 +5737,7 @@
         "4": 7.9714,
         "5": 7.8554,
         "6": 8.2643,
-        "7": 8.0255,
+        "7": 8.0399,
         "8": 8.2843,
         "9": 7.8857,
         "10": 6.0697,
@@ -5742,14 +5756,14 @@
         "source": "nasa_power",
         "confident": true
       },
-      "avg_yoy_pct": 0.4578,
-      "change_1993_to_2026_pct": -7.252
+      "avg_yoy_pct": 0.456,
+      "change_1993_to_2026_pct": 13.3664
     },
     "temperature": {
       "min": 6.6839,
       "max": 20.86,
       "start_value": 10.3645,
-      "end_value": 17.67,
+      "end_value": 18.1154,
       "seasonal_baseline": {
         "1": 9.9905,
         "2": 11.4377,
@@ -5757,7 +5771,7 @@
         "4": 13.9856,
         "5": 15.6306,
         "6": 17.3389,
-        "7": 17.9801,
+        "7": 17.983,
         "8": 18.2905,
         "9": 18.2698,
         "10": 16.5749,
@@ -5765,10 +5779,10 @@
         "12": 10.124
       },
       "trend": {
-        "per_decade": 0.1468,
-        "total": 0.6607,
+        "per_decade": 0.1604,
+        "total": 0.7217,
         "baseline": 14.3148,
-        "recent": 14.9385,
+        "recent": 14.9874,
         "baseline_period": "1981-1990",
         "recent_period": "2017-2026",
         "unit": "degC",
@@ -5776,12 +5790,12 @@
         "source": null,
         "confident": true
       },
-      "avg_yoy_delta": 0.0199,
-      "change_delta": -1.46
+      "avg_yoy_delta": 0.0228,
+      "change_delta": 0.9606
     }
   },
   "period": {
     "start": "1981-01",
-    "end": "2026-06"
+    "end": "2026-07"
   }
 }

@@ -5,15 +5,15 @@
     "period": {
       "start": "1981-01",
       "default_start": "1993-11",
-      "end": "2026-06",
-      "latest_nasa": "2026-06",
+      "end": "2026-07",
+      "latest_nasa": "2026-07",
       "earliest_temperature": "1981-01",
       "earliest_uv": "2001-01",
       "earliest_uv_who": "2021-01",
       "uv_who_start": "2021-01",
-      "calendar_month": "2026-06"
+      "calendar_month": "2026-07"
     },
-    "generated_at": "2026-07-08T01:10:35.031958+00:00",
+    "generated_at": "2026-08-01T12:35:32.952691+00:00",
     "sources": [
       {
         "id": "open_meteo_era5",
@@ -156,70 +156,70 @@
       "to": "loc:los-angeles-ca",
       "type": "comparedWith",
       "metric": "temperature",
-      "delta_trend_per_decade": 0.0367
+      "delta_trend_per_decade": 0.0383
     },
     {
       "from": "loc:covina-ca",
       "to": "loc:san-francisco-ca",
       "type": "comparedWith",
       "metric": "temperature",
-      "delta_trend_per_decade": 0.0273
+      "delta_trend_per_decade": 0.0404
     },
     {
       "from": "loc:covina-ca",
       "to": "loc:seattle-wa",
       "type": "comparedWith",
       "metric": "temperature",
-      "delta_trend_per_decade": 0.0563
+      "delta_trend_per_decade": 0.0506
     },
     {
       "from": "loc:covina-ca",
       "to": "loc:new-york-ny",
       "type": "comparedWith",
       "metric": "temperature",
-      "delta_trend_per_decade": -0.0248
+      "delta_trend_per_decade": -0.0617
     },
     {
       "from": "loc:los-angeles-ca",
       "to": "loc:san-francisco-ca",
       "type": "comparedWith",
       "metric": "temperature",
-      "delta_trend_per_decade": -0.0094
+      "delta_trend_per_decade": 0.0021
     },
     {
       "from": "loc:los-angeles-ca",
       "to": "loc:seattle-wa",
       "type": "comparedWith",
       "metric": "temperature",
-      "delta_trend_per_decade": 0.0196
+      "delta_trend_per_decade": 0.0123
     },
     {
       "from": "loc:los-angeles-ca",
       "to": "loc:new-york-ny",
       "type": "comparedWith",
       "metric": "temperature",
-      "delta_trend_per_decade": -0.0615
+      "delta_trend_per_decade": -0.1
     },
     {
       "from": "loc:san-francisco-ca",
       "to": "loc:seattle-wa",
       "type": "comparedWith",
       "metric": "temperature",
-      "delta_trend_per_decade": 0.029
+      "delta_trend_per_decade": 0.0102
     },
     {
       "from": "loc:san-francisco-ca",
       "to": "loc:new-york-ny",
       "type": "comparedWith",
       "metric": "temperature",
-      "delta_trend_per_decade": -0.0521
+      "delta_trend_per_decade": -0.1021
     },
     {
       "from": "loc:seattle-wa",
       "to": "loc:new-york-ny",
       "type": "comparedWith",
       "metric": "temperature",
-      "delta_trend_per_decade": -0.0811
+      "delta_trend_per_decade": -0.1123
     }
   ],
   "city_ids": [

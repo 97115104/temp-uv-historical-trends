@@ -2441,6 +2441,14 @@
         "yoy_delta": -0.05,
         "value_raw": 7.95,
         "source": "open_meteo_who"
+      },
+      {
+        "date": "2026-07",
+        "value": 7.95,
+        "yoy_pct": 0.0,
+        "yoy_delta": 0.0,
+        "value_raw": 7.95,
+        "source": "open_meteo_who"
       }
     ],
     "temperature": [
@@ -5707,6 +5715,12 @@
         "value": 22.9567,
         "yoy_pct": null,
         "yoy_delta": 0.3067
+      },
+      {
+        "date": "2026-07",
+        "value": 25.1346,
+        "yoy_pct": null,
+        "yoy_delta": -1.2396
       }
     ]
   },
@@ -5723,7 +5737,7 @@
         "4": 7.8805,
         "5": 7.2849,
         "6": 7.295,
-        "7": 7.4793,
+        "7": 7.4974,
         "8": 7.1471,
         "9": 6.694,
         "10": 5.574,
@@ -5742,14 +5756,14 @@
         "source": "nasa_power",
         "confident": true
       },
-      "avg_yoy_pct": 0.433,
-      "change_1993_to_2026_pct": 6.5941
+      "avg_yoy_pct": 0.4313,
+      "change_1993_to_2026_pct": 6.9008
     },
     "temperature": {
       "min": -6.2286,
       "max": 26.8065,
       "start_value": -5.1258,
-      "end_value": 22.9567,
+      "end_value": 25.1346,
       "seasonal_baseline": {
         "1": -0.3157,
         "2": 0.8109,
@@ -5757,7 +5771,7 @@
         "4": 10.9258,
         "5": 16.5612,
         "6": 21.8565,
-        "7": 24.9128,
+        "7": 24.9176,
         "8": 23.7857,
         "9": 19.9547,
         "10": 13.8533,
@@ -5765,10 +5779,10 @@
         "12": 2.9042
       },
       "trend": {
-        "per_decade": 0.1989,
-        "total": 0.8953,
+        "per_decade": 0.2625,
+        "total": 1.1814,
         "baseline": 11.9041,
-        "recent": 12.6561,
+        "recent": 12.8852,
         "baseline_period": "1981-1990",
         "recent_period": "2017-2026",
         "unit": "degC",
@@ -5776,12 +5790,12 @@
         "source": null,
         "confident": true
       },
-      "avg_yoy_delta": 0.0144,
-      "change_delta": 0.74
+      "avg_yoy_delta": 0.012,
+      "change_delta": 0.2411
     }
   },
   "period": {
     "start": "1981-01",
-    "end": "2026-06"
+    "end": "2026-07"
   }
 }
